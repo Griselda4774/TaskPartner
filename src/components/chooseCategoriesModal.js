@@ -9,12 +9,12 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
-import Categories from "../../../assets/data/Categories";
+import Categories from "../../assets/data/Categories";
 import {
   GREY_COLOR,
   PURPLE_COLOR,
   WHITE_TEXT_COLOR,
-} from "../../constants/constants";
+} from "../constants/constants";
 import { Divider } from "react-native-paper";
 
 const ChooseCategoriesModal = () => {

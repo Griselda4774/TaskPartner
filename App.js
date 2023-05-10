@@ -9,7 +9,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import Categories from "./assets/data/Categories";
-import ChooseCategoriesModal from "./src/utils/modal/chooseCategoriesModal";
+import ChooseCategoriesModal from "./src/components/chooseCategoriesModal";
 
 const App = () => {
   return (
