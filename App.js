@@ -9,22 +9,27 @@ import {
   SafeAreaView,
 } from "react-native";
 import Categories from "./assets/data/Categories";
-import ChooseCategoriesModal from "./src/components/chooseCategoriesModal";
+import ChooseCategoriesModal from "./src/components/ChooseCategoriesModal";
+import EditCategoriesModal from "./src/components/EditCategoryModal";
+import EditTaskScreen from "./src/components/EditTaskScreen";
+import EditTaskTitleModal from "./src/components/EditTaskTitleModal";
+import { BLACK_BACKGROUND_COLOR } from "./src/constants/Constants";
+import DeleteTaskModal from "./src/components/DeleteTaskModal";
+import EditPriorityModal from "./src/components/EditPriorityModal";
+import ChoosePriorityModal from "./src/components/ChooseTaskPriority";
 
 const App = () => {
   return (
-    <View style={styles.container}>
-      <ChooseCategoriesModal />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <EditTaskTitleModal />
+      <StatusBar style="light" />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "cyan",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: BLACK_BACKGROUND_COLOR,
   },
 });
 

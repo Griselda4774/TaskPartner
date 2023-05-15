@@ -13,9 +13,8 @@ import { PURPLE_COLOR } from "../constants/Constants";
 import ModalStyles from "./ModalStyles";
 import { LATO_FONTS } from "../constants/Constants";
 import { useFonts } from "expo-font";
-import Priority from "../../assets/data/Priorities";
 
-const ChooseCategoriesModal = () => {
+const EditCategoriesModal = () => {
   const [selectedID, setSelectedID] = useState("1");
   const [fontsLoaded] = useFonts(LATO_FONTS);
   if (!fontsLoaded) {
@@ -61,13 +60,27 @@ const ChooseCategoriesModal = () => {
               numColumns={3}
             />
           </View>
-          <TouchableOpacity style={ModalStyles.full_button} activeOpacity={0.3}>
-            <Text style={ModalStyles.title_white_text}>Add Category</Text>
-          </TouchableOpacity>
+          <View style={ModalStyles.half_button_wrapper}>
+            <TouchableOpacity
+              style={ModalStyles.half_button}
+              activeOpacity={0.3}
+            >
+              <Text style={ModalStyles.title_purple_text}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                ModalStyles.half_button,
+                { backgroundColor: PURPLE_COLOR },
+              ]}
+              activeOpacity={0.3}
+            >
+              <Text style={ModalStyles.title_white_text}>Edit</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
   );
 };
 
-export default ChooseCategoriesModal;
+export default EditCategoriesModal;

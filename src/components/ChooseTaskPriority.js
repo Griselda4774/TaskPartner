@@ -13,9 +13,9 @@ import { PURPLE_COLOR } from "../constants/Constants";
 import ModalStyles from "./ModalStyles";
 import { LATO_FONTS } from "../constants/Constants";
 import { useFonts } from "expo-font";
-import Priority from "../../assets/data/Priorities";
+import Priorities from "../../assets/data/Priorities";
 
-const ChooseCategoriesModal = () => {
+const ChoosePriorityModal = () => {
   const [selectedID, setSelectedID] = useState("1");
   const [fontsLoaded] = useFonts(LATO_FONTS);
   if (!fontsLoaded) {
@@ -27,47 +27,55 @@ const ChooseCategoriesModal = () => {
       <View style={ModalStyles.wrapper}>
         <View style={ModalStyles.container}>
           <View style={ModalStyles.title}>
-            <Text style={ModalStyles.title_white_text}>Choose Categories</Text>
+            <Text style={ModalStyles.title_white_text}>Task Priority</Text>
           </View>
           <View style={ModalStyles.body}>
             <FlatList
-              data={Categories}
+              data={Priorities}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
                 <Pressable
                   style={
                     selectedID == item.id
-                      ? [ModalStyles.item, { backgroundColor: PURPLE_COLOR }]
-                      : ModalStyles.item
+                      ? [
+                          ModalStyles.priority_item,
+                          { backgroundColor: PURPLE_COLOR },
+                        ]
+                      : ModalStyles.priority_item
                   }
                   onPress={() => {
                     setSelectedID(item.id);
                   }}
                 >
-                  <View
-                    style={[
-                      ModalStyles.item_wrapper,
-                      { backgroundColor: item.color },
-                    ]}
-                  >
-                    <Image source={item.src} />
-                  </View>
-                  <Text style={ModalStyles.body_flatlistItem_text}>
-                    {item.name}
-                  </Text>
+                  <Image source={require("../../assets/otherIcons/flag.png")} />
+                  <Text style={ModalStyles.body_text}>{item.id}</Text>
                 </Pressable>
               )}
               horizontal={false}
-              numColumns={3}
+              numColumns={4}
             />
           </View>
-          <TouchableOpacity style={ModalStyles.full_button} activeOpacity={0.3}>
-            <Text style={ModalStyles.title_white_text}>Add Category</Text>
-          </TouchableOpacity>
+          <View style={ModalStyles.half_button_wrapper}>
+            <TouchableOpacity
+              style={ModalStyles.half_button}
+              activeOpacity={0.3}
+            >
+              <Text style={ModalStyles.title_purple_text}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                ModalStyles.half_button,
+                { backgroundColor: PURPLE_COLOR },
+              ]}
+              activeOpacity={0.3}
+            >
+              <Text style={ModalStyles.title_white_text}>Save</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
   );
 };
 
-export default ChooseCategoriesModal;
+export default ChoosePriorityModal;
