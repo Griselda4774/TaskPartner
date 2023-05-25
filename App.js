@@ -9,6 +9,7 @@ import StartScreen from './src/screens/StartScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import UsernameBox from './src/components/UsernameBox';
 import PasswordBox from './src/components/PasswordBox';
+import PurpleButton from './src/components/PurpleButton';
 
 const MainStack = createStackNavigator();
 
@@ -21,10 +22,10 @@ export default function App() {
         <MainStack.Screen name="StartScreen" component={StartScreen} />
       </MainStack.Navigator>
     </NavigationContainer>
-    // <UsernameBox>
+    /* // <UsernameBox>
       
     // </UsernameBox>
-    // <PasswordBox></PasswordBox>
+    // <PasswordBox></PasswordBox> */
   );
 }
 

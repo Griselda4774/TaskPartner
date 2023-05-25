@@ -1,108 +1,58 @@
-import { StyleSheet, Text, View, Image, Pressable, Button } from "react-native";
+import { StyleSheet, Text, View, Image, KeyboardAvoidingView } from "react-native";
 import { useState } from "react";
 import GlobalStyle from "../components/GlobalStyle";
 import UsernameBox from "../components/UsernameBox";
 import PasswordBox from "../components/PasswordBox";
+import PurpleButton from "../components/PurpleButton";
+import GoBackButton from "../components/GoBackButton";
+import ThirdPartyButton from "../components/ThirdPartyButton";
+import AuthenticateFooter from "../components/AuthenticateFooter";
+
+import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 
 export default function LoginScreen() {
-  const onBackPressHandler = () => {
-    navigation.navigate("OnBoardingScreen_1");
-  };
 
-  const [pressableSkipIsHovering, SetPressableSkipIsHovering] = useState(false);
-
-  const SkipPressInHandler = () => {
-    SetPressableSkipIsHovering(true);
-  };
-
-  const SkipPressOutHandler = () => {
-    SetPressableSkipIsHovering(false);
-  };
 
   return (
+    // <KeyboardAvoidingWrapper>
     <View style={GlobalStyle.container}>
-      <Pressable
-        style={[GlobalStyle.pressable, { marginTop: 58 }]}
-        onPressIn={SkipPressInHandler}
-        onPressOut={SkipPressOutHandler}
-      >
-        <Text
-          style={[
-            GlobalStyle.pressable_text,
-            {
-              color: pressableSkipIsHovering
-                ? "#fff"
-                : "rgba(255, 255, 255, 0.44)",
-            },
-          ]}
-        >
-          BACK
-        </Text>
-      </Pressable>
+      <GoBackButton />
       <Text style={[GlobalStyle.utils_title_text, { marginLeft: 24 }]}>
         Login
       </Text>
       <View style={[styles.login_container, { justifyContent: "center" }]}>
         <UsernameBox style={{ marginTop: 55 }}></UsernameBox>
-        <PasswordBox style={{ marginBottom: 55 }}></PasswordBox>
+        <PasswordBox style={{ marginBottom: 80 }}></PasswordBox>
       </View>
       <View style={{ flex: 1 }}>
         <View style={styles.login_flexbox_container}>
-          <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? "#8687E780" : "#8875FF",
-                margin: 24,
-                marginTop: 0,
-                marginBottom: 0,
-              },
-              styles.button,
-            ]}
-          >
-            <Text style={[GlobalStyle.pressable_text]}>Login</Text>
-          </Pressable>
-
+          <PurpleButton />
           <View
             style={{
               borderBottomColor: "#fff",
               borderBottomWidth: StyleSheet.hairlineWidth,
-              height: '10%',
+              height: "10%",
               marginTop: 0,
               margin: 24,
             }}
-          /> 
-
-          <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? "#9875FF" : "#000",
-                margin: 24,
-                marginTop: 10,
-              },
-              styles.button,
-            ]}
-          >
-            <Text style={styles.button_text}>Login with Google</Text>
-          </Pressable>
-
-          <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? "#9875FF" : "#000",
-                margin: 24,
-                marginTop: 0,
-              },
-              styles.button,
-            ]}
-          >
-            <Text style={styles.button_text}>Login with Facebook</Text>
-          </Pressable>
+          />
+          <ThirdPartyButton
+            thirdPartyName="Google"
+            pressableStyle={{ marginTop: 10 }}
+            imageSource={require("../../assets/googleIcon.png")}
+          />
+          <ThirdPartyButton
+            thirdPartyName="Facebook"
+            pressableStyle={{ marginTop: 0 }}
+            imageSource={require("../../assets/facebookIcon.png")}
+          />
         </View>
       </View>
-      <View style={{ alignItems: "center" }}>
-        <Text style={styles.footer_text}>Don't have an account?</Text>
-      </View>
+      <AuthenticateFooter footerText="Don't have an account?" optionChose="Register" />
     </View>
+    // </KeyboardAvoidingWrapper>
   );
 }
 
@@ -116,6 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: "#000",
+    paddingBottom: 1,
   },
 
   login_info_text: {
@@ -124,24 +75,4 @@ const styles = StyleSheet.create({
     color: "background: #FFFFFFDE",
   },
 
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 8,
-    height: "20%",
-    borderColor: "#7875FF",
-    borderWidth: 2,
-  },
-
-  button_text: {
-    fontWeight: 500,
-    fontSize: 20,
-    color: "#fff",
-  },
-
-  footer_text: {
-    fontSize: 12,
-    fontWeight: 400,
-    color: "#979797",
-  },
 });

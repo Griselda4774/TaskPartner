@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, Pressable, Button } from "react-native";
 import { useState } from "react";
-import OnBoardingStyle from "../components/GlobalStyle";
+import GlobalStyle from "../components/GlobalStyle";
 
 export default function OnBoardingScreen1({ navigation }) {
 
@@ -23,16 +23,16 @@ export default function OnBoardingScreen1({ navigation }) {
   };
 
   return (
-    <View style={OnBoardingStyle.container}>
+    <View style={GlobalStyle.container}>
       <Pressable
-        style={[OnBoardingStyle.pressable, { marginTop: 58 }]}
+        style={[GlobalStyle.pressable, { marginTop: 58 }]}
         onPressIn={SkipPressInHandler}
         onPressOut={SkipPressOutHandler}
         onPress={onSkipPressHandler}
       >
         <Text
           style={[
-            OnBoardingStyle.pressable_text,
+            GlobalStyle.pressable_text,
             {
               color: pressableSkipIsHovering
                 ? "#fff"
@@ -43,29 +43,29 @@ export default function OnBoardingScreen1({ navigation }) {
           SKIP
         </Text>
       </Pressable>
-      <View style={OnBoardingStyle.body}>
+      <View style={GlobalStyle.body}>
         <Image
           source={require("../../assets/onBoardingPic1.png")}
-          style={OnBoardingStyle.image}
+          style={GlobalStyle.image}
         />
-        <Text style={OnBoardingStyle.utils_title_text}>Mange your tasks</Text>
-        <Text style={OnBoardingStyle.utils_info_text}>
+        <Text style={GlobalStyle.utils_title_text}>Mange your tasks</Text>
+        <Text style={GlobalStyle.utils_info_text}>
           You can easily manage all of your daily tasks in TaskPartner for free
         </Text>
       </View>
-      <View style={OnBoardingStyle.footer_view}>
+      <View style={GlobalStyle.footer_view}>
         <Pressable
-          style={[OnBoardingStyle.pressable]}
+          style={[GlobalStyle.pressable]}
         >
         </Pressable>
         <Pressable
           style={({ pressed }) => [
-            OnBoardingStyle.next_pressable,
+            GlobalStyle.next_pressable,
             { backgroundColor: pressed ? "#9875FF" : "#7875FF" },
           ]}
           onPress={onNextPressHandler}
         >
-          <Text style={OnBoardingStyle.next_pressable_text}>NEXT</Text>
+          <Text style={GlobalStyle.next_pressable_text}>NEXT</Text>
         </Pressable>
       </View>
     </View>

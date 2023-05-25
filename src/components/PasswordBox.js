@@ -7,7 +7,7 @@ const PasswordBox = (props) => {
     <View style={[styles.container, { ...props.style }]}>
       <Text style={styles.title_text}>Password</Text>
       <TextInput
-        placeholder="***********"
+        placeholder="* * * * * * * * * * *"
         style={styles.text_input}
         placeholderTextColor="#535353"
         secureTextEntry
