@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Modal, View, Text, TouchableOpacity } from "react-native";
-import { PURPLE_COLOR, WHITE_TEXT_COLOR } from "../constants/Constants";
+import { PURPLE_COLOR } from "../constants/Constants";
 import ModalStyles from "./ModalStyles";
 import { LATO_FONTS } from "../constants/Constants";
 import { useFonts } from "expo-font";
-import { TextInput } from "react-native-paper";
 
 const DeleteTaskModal = () => {
-  const [focusedId, setFocusedId] = useState("1");
   const [fontsLoaded] = useFonts(LATO_FONTS);
   if (!fontsLoaded) {
     return undefined;

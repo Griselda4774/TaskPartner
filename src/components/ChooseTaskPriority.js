@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
-import Categories from "../../assets/data/Categories";
 import { PURPLE_COLOR } from "../constants/Constants";
 import ModalStyles from "./ModalStyles";
 import { LATO_FONTS } from "../constants/Constants";

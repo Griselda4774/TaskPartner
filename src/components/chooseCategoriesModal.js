@@ -13,7 +13,6 @@ import { PURPLE_COLOR } from "../constants/Constants";
 import ModalStyles from "./ModalStyles";
 import { LATO_FONTS } from "../constants/Constants";
 import { useFonts } from "expo-font";
-import Priority from "../../assets/data/Priorities";
 
 const ChooseCategoriesModal = () => {
   const [selectedID, setSelectedID] = useState("1");
