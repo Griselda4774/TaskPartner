@@ -1,0 +1,70 @@
+import { StyleSheet } from "react-native";
+
+export default StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#000",
+  },
+
+  image: {
+    width: 213,
+    height: 278,
+    margin: 81,
+    marginTop: 84,
+  },
+
+  body: {
+    alignItems: "center",
+  },
+
+  utils_title_text: {
+    fontSize: 32,
+    fontWeight: 700,
+    color: "#fff",
+    marginTop: 50,
+  },
+
+  utils_info_text: {
+    fontSize: 16,
+    fontWeight: 400,
+    color: "#fff",
+    alignItems: "center",
+    margin: 38,
+    marginTop: 42,
+    textAlign: "center",
+  },
+
+  pressable: {
+    width: 42,
+    height: 24,
+    marginLeft: 24,
+  },
+
+  pressable_text: {
+    color: "rgba(255, 255, 255, 0.44)",
+    fontSize: 16,
+    fontWeight: 400,
+  },
+
+  next_pressable: {
+    backgroundColor: "#7875FF",
+    width: 90,
+    height: 48,
+    marginLeft: 225,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  next_pressable_text: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: 400,
+  },
+
+  footer_view: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
+});
