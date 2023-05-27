@@ -1,15 +1,12 @@
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import IntroScreen from './src/screens/IntroScreen';
 import IntroStackNavigator from './src/navigators/IntroStackNavigator';
+import AuthenticateStackNavigator from './src/navigators/AuthenticateStackNavigator';
+
 import StartScreen from './src/screens/StartScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
 import LoginScreen from './src/screens/LoginScreen';
-import UsernameBox from './src/components/UsernameBox';
-import PasswordBox from './src/components/PasswordBox';
-import PurpleButton from './src/components/PurpleButton';
 
 const MainStack = createStackNavigator();
 
@@ -17,15 +14,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <MainStack.Navigator screenOptions={{ headerShown: false }}>
-        <MainStack.Screen name="LoginScreen" component={LoginScreen} />
         <MainStack.Screen name="Intro" component={IntroStackNavigator} />
-        <MainStack.Screen name="StartScreen" component={StartScreen} />
+        <MainStack.Screen name="Authenticate" component={AuthenticateStackNavigator}/>
       </MainStack.Navigator>
     </NavigationContainer>
-    /* // <UsernameBox>
-      
-    // </UsernameBox>
-    // <PasswordBox></PasswordBox> */
   );
 }
 

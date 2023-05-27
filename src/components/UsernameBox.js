@@ -6,7 +6,11 @@ const UsernameBox = (props) => {
     return(
         <View style={[styles.container, {...props.style}]}>
             <Text style={styles.title_text}>Username</Text>
-            <TextInput placeholder="Enter your username" style={styles.text_input} placeholderTextColor='#535353'/>
+            <TextInput placeholder="Enter your username"
+                style={styles.text_input}
+                placeholderTextColor='#535353'
+                onChangeText={props.onChangeText}
+                />
         </View>
     );
 }

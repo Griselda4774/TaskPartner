@@ -9,6 +9,10 @@ export default function StartScreen({ navigation }){
         navigation.navigate("OnBoardingScreen_1");
     }
 
+    const onLoginPressHandler = () => {
+      navigation.navigate("Authenticate");
+    }
+
     const [pressableSkipIsHovering, SetPressableSkipIsHovering] =
       useState(false);
 
@@ -56,6 +60,7 @@ export default function StartScreen({ navigation }){
         </View>
         <View style={styles.footer_container}>
           <Pressable
+            onPress={onLoginPressHandler}
             style={({ pressed }) => [
               {
                 backgroundColor: pressed ? "#9875FF" : "#7875FF",

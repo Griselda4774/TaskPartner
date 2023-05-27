@@ -1,35 +1,15 @@
 import { StyleSheet, Text, View, Image, Pressable, Button } from "react-native";
 import { useState } from "react";
-import OnBoardingStyle from "../components/GlobalStyle";
+import GlobalStyle from "../components/GlobalStyle";
 
 export default function OnBoardingScreen3({ navigation }) {
-
-  const onSkipPressHandler = () => {
-    navigation.navigate("StartScreen");
-  };
 
   const onBackPressHandler = () => {
     navigation.navigate("OnBoardingScreen_2");
   };
 
   const onStartPressHandler = () => {
-    navigation.navigate("StartScreen");
-  };
-
-
-//LATER
-//   const onNextPressHandler = () => {
-//     navigation.navigate("");
-//   }
-
-  const [pressableSkipIsHovering, SetPressableSkipIsHovering] = useState(false);
-
-  const SkipPressInHandler = () => {
-    SetPressableSkipIsHovering(true);
-  };
-
-  const SkipPressOutHandler = () => {
-    SetPressableSkipIsHovering(false);
+    navigation.navigate("Start_Screen");
   };
 
   const [pressableBackIsHovering, SetPressableBackIsHovering] = useState(false);
@@ -43,47 +23,28 @@ export default function OnBoardingScreen3({ navigation }) {
   };
 
   return (
-    <View style={OnBoardingStyle.container}>
-      <Pressable
-        style={[OnBoardingStyle.pressable, { marginTop: 58 }]}
-        onPressIn={SkipPressInHandler}
-        onPressOut={SkipPressOutHandler}
-        onPress={onSkipPressHandler}
-      >
-        <Text
-          style={[
-            OnBoardingStyle.pressable_text,
-            {
-              color: pressableSkipIsHovering
-                ? "#fff"
-                : "rgba(255, 255, 255, 0.44)",
-            },
-          ]}
-        >
-          SKIP
-        </Text>
-      </Pressable>
-      <View style={OnBoardingStyle.body}>
+    <View style={GlobalStyle.container}>
+      <View style={[GlobalStyle.body, {marginTop: 85}]}>
         <Image
           source={require("../../assets/onBoardingPic3.png")}
-          style={OnBoardingStyle.image}
+          style={GlobalStyle.image}
         />
-        <Text style={OnBoardingStyle.utils_title_text}>Mange your tasks</Text>
-        <Text style={OnBoardingStyle.utils_info_text}>
+        <Text style={GlobalStyle.utils_title_text}>Mange your tasks</Text>
+        <Text style={GlobalStyle.utils_info_text}>
           You can organize your daily tasks by adding your tasks into separate
           categories
         </Text>
       </View>
-      <View style={OnBoardingStyle.footer_view}>
+      <View style={GlobalStyle.footer_view}>
         <Pressable
-          style={[OnBoardingStyle.pressable]}
+          style={[GlobalStyle.pressable]}
           onPressIn={BackPressInHandler}
           onPressOut={BackPressOutHandler}
           onPress={onBackPressHandler}
         >
           <Text
             style={[
-              OnBoardingStyle.pressable_text,
+              GlobalStyle.pressable_text,
               {
                 color: pressableBackIsHovering
                   ? "#fff"
@@ -96,7 +57,7 @@ export default function OnBoardingScreen3({ navigation }) {
         </Pressable>
         <Pressable
           style={({ pressed }) => [
-            OnBoardingStyle.next_pressable,
+            GlobalStyle.next_pressable,
             {
               backgroundColor: pressed ? "#9875FF" : "#7875FF",
               width: 150,
@@ -106,7 +67,7 @@ export default function OnBoardingScreen3({ navigation }) {
           ]}
           onPress={onStartPressHandler}
         >
-          <Text style={OnBoardingStyle.next_pressable_text}>GET STARTED</Text>
+          <Text style={GlobalStyle.next_pressable_text}>GET STARTED</Text>
         </Pressable>
       </View>
     </View>

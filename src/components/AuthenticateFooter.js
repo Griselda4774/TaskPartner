@@ -34,6 +34,7 @@ const AuthenticateFooter = (props) => {
         <Pressable
           onPressIn={OptionPressInHandler}
           onPressOut={OptionPressOutHandler}
+          onPress={props.onOptionPressFunction}
         >
           <Text
             style={[

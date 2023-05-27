@@ -12,45 +12,88 @@ import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 
-export default function LoginScreen() {
+export default function LoginScreen({navigation}) {
 
+  // Navigators:
+  const onBackPressHandler = () => {
+    navigation.navigate("Start_Screen");
+  };
+
+  const onRegisterPressHandler = () => {
+    navigation.navigate("Register_Screen");
+  };
+
+  //Use States:
+  const [LoginUsername, SetLoginUsername] = useState("");
+  const [LoginPassword, SetLoginPassword] = useState("");
+
+  const [IsEmptyLoginInput, SetIsEmptyLoginInput] = useState(true);
+  const [IsEmptyLoginUsername, SetIsEmptyLoginUsername] = useState(true);
+  const [IsEmptyLoginPassword, SetIsEmptyLoginPassword] = useState(true);
+
+  function onLoginUsernameTextChange(value) {
+    SetLoginUsername(value);
+    if (LoginUsername.trim().length === 0) SetIsEmptyLoginUsername(true);
+    else {
+      SetIsEmptyLoginUsername(false);
+      if (IsEmptyLoginPassword === false) SetIsEmptyLoginInput(false);
+    }
+  }
+
+  function onLoginPasswordTextChange(value) {
+    SetLoginPassword(value);
+    if (LoginPassword.trim().length === 0) SetIsEmptyLoginPassword(true);
+    else {
+      SetIsEmptyLoginPassword(false);
+      if (IsEmptyLoginUsername === false) SetIsEmptyLoginInput(false);
+    }
+  }
 
   return (
     // <KeyboardAvoidingWrapper>
     <View style={GlobalStyle.container}>
-      <GoBackButton />
+      <GoBackButton onPressFunction={onBackPressHandler} />
       <Text style={[GlobalStyle.utils_title_text, { marginLeft: 24 }]}>
         Login
       </Text>
       <View style={[styles.login_container, { justifyContent: "center" }]}>
-        <UsernameBox style={{ marginTop: 55 }}></UsernameBox>
-        <PasswordBox style={{ marginBottom: 80 }}></PasswordBox>
+        <UsernameBox
+          style={{ marginTop: 55 }}
+          onChangeText={onLoginUsernameTextChange}
+        />
+        <PasswordBox
+          style={{ marginBottom: 80, marginTop: 30 }}
+          title="Password"
+          onChangeText={onLoginPasswordTextChange}
+        />
       </View>
-      <View style={{ flex: 1 }}>
-        <View style={styles.login_flexbox_container}>
-          <PurpleButton />
-          <View
-            style={{
-              borderBottomColor: "#fff",
-              borderBottomWidth: StyleSheet.hairlineWidth,
-              height: "10%",
-              marginTop: 0,
-              margin: 24,
-            }}
-          />
-          <ThirdPartyButton
-            thirdPartyName="Google"
-            pressableStyle={{ marginTop: 10 }}
-            imageSource={require("../../assets/googleIcon.png")}
-          />
-          <ThirdPartyButton
-            thirdPartyName="Facebook"
-            pressableStyle={{ marginTop: 0 }}
-            imageSource={require("../../assets/facebookIcon.png")}
-          />
-        </View>
+      <View style={[{ flex: 1 }, styles.login_flexbox_container]}>
+        <PurpleButton isDisable={IsEmptyLoginInput}/>
+        <View
+          style={{
+            borderBottomColor: "#fff",
+            borderBottomWidth: StyleSheet.hairlineWidth,
+            height: "10%",
+            marginTop: 0,
+            margin: 24,
+          }}
+        />
+        <ThirdPartyButton
+          thirdPartyName="Google"
+          pressableStyle={{ marginTop: 10 }}
+          imageSource={require("../../assets/googleIcon.png")}
+        />
+        <ThirdPartyButton
+          thirdPartyName="Facebook"
+          pressableStyle={{ marginTop: 0 }}
+          imageSource={require("../../assets/facebookIcon.png")}
+        />
       </View>
-      <AuthenticateFooter footerText="Don't have an account?" optionChose="Register" />
+      <AuthenticateFooter
+        footerText="Don't have an account?"
+        optionChose="Register"
+        onOptionPressFunction={onRegisterPressHandler}
+      />
     </View>
     // </KeyboardAvoidingWrapper>
   );

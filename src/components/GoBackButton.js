@@ -4,7 +4,7 @@ import { Text, Pressable } from "react-native";
 import GlobalStyle from "./GlobalStyle";
 import { useState } from "react";
 
-const GoBackButton = () => {
+const GoBackButton = (props) => {
 
     const [pressableBackIsHovering, SetPressableBackIsHovering] =
       useState(false);
@@ -16,17 +16,13 @@ const GoBackButton = () => {
     const BackPressOutHandler = () => {
       SetPressableBackIsHovering(false);
     };
-
-    //LATER
-    // const onBackPressHandler = () => {
-    //   navigation.navigate("OnBoardingScreen_1");
-    // };
     
     return (
       <Pressable
         style={[GlobalStyle.pressable, { marginTop: 58 }]}
         onPressIn={BackPressInHandler}
         onPressOut={BackPressOutHandler}
+        onPress={props.onPressFunction}
       >
         <Text
           style={[

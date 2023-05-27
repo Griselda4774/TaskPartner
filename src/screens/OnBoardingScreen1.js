@@ -5,7 +5,7 @@ import GlobalStyle from "../components/GlobalStyle";
 export default function OnBoardingScreen1({ navigation }) {
 
   const onSkipPressHandler = () => {
-    navigation.navigate('StartScreen');
+    navigation.navigate('Start_Screen');
   }
 
   const onNextPressHandler = () => {

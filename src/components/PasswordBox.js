@@ -5,12 +5,13 @@ import { TextInput } from "react-native-gesture-handler";
 const PasswordBox = (props) => {
   return (
     <View style={[styles.container, { ...props.style }]}>
-      <Text style={styles.title_text}>Password</Text>
+      <Text style={styles.title_text}>{props.title}</Text>
       <TextInput
         placeholder="* * * * * * * * * * *"
         style={styles.text_input}
         placeholderTextColor="#535353"
         secureTextEntry
+        onChangeText={props.onChangeText}
       />
     </View>
   );
