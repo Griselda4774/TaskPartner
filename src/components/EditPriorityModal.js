@@ -4,16 +4,16 @@ import {
   View,
   FlatList,
   Text,
-  Image,
   TouchableOpacity,
   Pressable,
 } from "react-native";
-import Categories from "../../assets/data/Categories";
 import { PURPLE_COLOR } from "../constants/Constants";
 import ModalStyles from "./ModalStyles";
 import { LATO_FONTS } from "../constants/Constants";
 import { useFonts } from "expo-font";
 import Priorities from "../../assets/data/Priorities";
+import { SvgXml } from "react-native-svg";
+import { FlagIcon } from "../constants/Icons";
 
 const EditPriorityModal = () => {
   const [selectedID, setSelectedID] = useState("1");
@@ -47,7 +47,7 @@ const EditPriorityModal = () => {
                     setSelectedID(item.id);
                   }}
                 >
-                  <Image source={require("../../assets/otherIcons/flag.png")} />
+                  <SvgXml xml={FlagIcon} height={28} width={28} />
                   <Text style={ModalStyles.body_text}>{item.id}</Text>
                 </Pressable>
               )}

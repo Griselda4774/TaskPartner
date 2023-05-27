@@ -4,7 +4,6 @@ import {
   View,
   FlatList,
   Text,
-  Image,
   TouchableOpacity,
   Pressable,
 } from "react-native";
@@ -13,6 +12,7 @@ import { PURPLE_COLOR } from "../constants/Constants";
 import ModalStyles from "./ModalStyles";
 import { LATO_FONTS } from "../constants/Constants";
 import { useFonts } from "expo-font";
+import { SvgXml } from "react-native-svg";
 
 const ChooseCategoriesModal = () => {
   const [selectedID, setSelectedID] = useState("1");
@@ -49,7 +49,7 @@ const ChooseCategoriesModal = () => {
                       { backgroundColor: item.color },
                     ]}
                   >
-                    <Image source={item.src} />
+                    <SvgXml xml={item.icon} height={32} width={32} />
                   </View>
                   <Text style={ModalStyles.body_flatlistItem_text}>
                     {item.name}

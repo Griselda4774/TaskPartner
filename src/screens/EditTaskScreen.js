@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import {
   BLACK_BACKGROUND_COLOR,
   MODAL_WIDTH,
@@ -13,21 +13,22 @@ import { LATO_FONTS } from "../constants/Constants";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import CloseIcon from "../../assets/otherIcons/close.svg";
-import EditIcon from "../../assets/otherIcons/edit.svg";
-//import TrashIcon from "../../assets/otherIcons/trash.svg";
-import TimerIcon from "../../assets/otherIcons/timer.svg";
-import TagIcon from "../../assets/otherIcons/tag.svg";
-import FlagIcon from "../../assets/otherIcons/flag.svg";
-import { SvgUri, SvgXml, WithLocalSvg } from "react-native-svg";
+import { SvgXml } from "react-native-svg";
+import {
+  CloseIcon,
+  EditIcon,
+  TrashIcon,
+  TimerIcon,
+  TagIcon,
+  FlagIcon,
+  UniversityIcon,
+} from "../constants/Icons";
 
 const EditTaskScreen = () => {
-  //const trashIcon = require("../../assets/otherIcons/trash.svg");
   const insets = useSafeAreaInsets();
   const [taskSelected, setTaskSelected] = useState(false);
   const checkButtonOnPressHandler = () => {
     setTaskSelected(!taskSelected);
-    // console.log(require("fs").readdirSync("../../assets/otherIcons/trash.svg"));
   };
   const [fontsLoaded] = useFonts(LATO_FONTS);
   if (!fontsLoaded) {
@@ -49,7 +50,7 @@ const EditTaskScreen = () => {
     >
       <View style={styles.wrapper}>
         <TouchableOpacity style={styles.exit_icon}>
-          <CloseIcon height={24} width={24} />
+          <SvgXml xml={CloseIcon} height={28} width={28} />
         </TouchableOpacity>
         <View style={styles.task_infor}>
           <TouchableOpacity
@@ -80,13 +81,13 @@ const EditTaskScreen = () => {
           </View>
 
           <TouchableOpacity style={styles.edit_task_infor_button}>
-            <EditIcon height={28} width={28} />
+            <SvgXml xml={EditIcon} height={28} width={28} />
           </TouchableOpacity>
         </View>
         <View style={styles.edit_wrapper}>
           <View style={styles.edit_title}>
             <View style={styles.edit_title_icon_wrapper}>
-              <TimerIcon height={28} width={28} />
+              <SvgXml xml={TimerIcon} height={28} width={28} />
             </View>
             <Text style={ModalStyles.body_text}>Task Time:</Text>
           </View>
@@ -97,14 +98,16 @@ const EditTaskScreen = () => {
         <View style={styles.edit_wrapper}>
           <View style={styles.edit_title}>
             <View style={styles.edit_title_icon_wrapper}>
-              <TagIcon height={28} width={28} />
+              <SvgXml xml={TagIcon} height={28} width={28} />
             </View>
             <Text style={ModalStyles.body_text}>Task Category:</Text>
           </View>
           <TouchableOpacity style={styles.edit_button}>
-            <Image
-              source={require("../../assets/categoriesIcon/universityWithoutBG.png")}
-              style={{ marginRight: 16 }}
+            <SvgXml
+              xml={UniversityIcon}
+              height={32}
+              width={32}
+              style={{ marginRight: 8 }}
             />
             <Text style={styles.edit_button_text}>University</Text>
           </TouchableOpacity>
@@ -112,7 +115,7 @@ const EditTaskScreen = () => {
         <View style={styles.edit_wrapper}>
           <View style={styles.edit_title}>
             <View style={styles.edit_title_icon_wrapper}>
-              <FlagIcon height={28} width={28} />
+              <SvgXml xml={FlagIcon} height={28} width={28} />
             </View>
             <Text style={ModalStyles.body_text}>Task Priority:</Text>
           </View>
@@ -122,7 +125,7 @@ const EditTaskScreen = () => {
         </View>
         <TouchableOpacity style={styles.delete_wrapper}>
           <View style={styles.edit_title_icon_wrapper}>
-            {/* <TrashIcon height={28} width={28} /> */}
+            <SvgXml xml={TrashIcon} height={28} width={28} />
           </View>
           <Text style={styles.delete_title_text}>Delete Task</Text>
         </TouchableOpacity>
@@ -159,14 +162,10 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
     borderRadius: 8,
-    //marginTop: 10,
-    //marginBottom: 18,
   },
   task_infor: {
     justifyContent: "space-between",
     flexDirection: "row",
-    //marginTop: 18,
-    //marginBottom: 18,
   },
   check_button: {
     height: 24,
@@ -175,7 +174,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: WHITE_TEXT_COLOR,
     marginTop: 10,
-    //marginBottom: 10,
   },
   task_infor_wrapper: {
     width: 250,
@@ -193,8 +191,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    //marginTop: 18,
-    //marginBottom: 18,
   },
   edit_title: {
     flexDirection: "row",
@@ -204,7 +200,7 @@ const styles = StyleSheet.create({
   edit_title_icon_wrapper: { paddingRight: 8 },
 
   edit_button: {
-    height: 48,
+    height: 50,
     paddingLeft: 16,
     paddingRight: 16,
     backgroundColor: "#ffffff21",
@@ -223,7 +219,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 12,
-    //marginBottom: 18,
   },
   delete_title: {},
   delete_title_text: {

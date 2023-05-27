@@ -1,4 +1,4 @@
-const Task = [
+export const Tasks = [
   {
     taskID: 1,
     taskName: "Task 1",

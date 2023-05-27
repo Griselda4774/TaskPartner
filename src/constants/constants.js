@@ -1,6 +1,6 @@
 import { Dimensions } from "react-native";
-import Flag from "../../assets/otherIcons/flag.svg";
 export const BLACK_BACKGROUND_COLOR = "#090909";
+export const GREY_BACKGROUND_COLOR = "#363636";
 export const PURPLE_COLOR = "#8687E7";
 export const GREY_COLOR = "#606060";
 export const WHITE_TEXT_COLOR = "#eaeaea";
