@@ -7,7 +7,7 @@ const CalendarScreen = () => {
   return (
     <SafeAreaView>
       <Text>Calendar Screen</Text>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </SafeAreaView>
   );
 };

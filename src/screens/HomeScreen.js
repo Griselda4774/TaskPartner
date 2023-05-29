@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, TouchableOpacity, View, Image, StyleSheet } from "react-native";
 import ScreenStyle from "../components/ScreenStyle";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -17,13 +17,99 @@ import { RepeatIcon } from "../constants/Icons";
 import HomeScreenBodyWithTask from "../components/HomeScreenBodyWithTask";
 import { EmptyTask } from "../../assets/data/EmptyTask";
 import { Tasks } from "../../assets/data/Tasks";
+import { FIRESTORE_DB } from "../../firebaseConfig";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+  updateDoc,
+  doc,
+  setDoc,
+} from "firebase/firestore";
 
 const HomeScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
-  const [fontsLoaded] = useFonts(LATO_FONTS);
-  if (!fontsLoaded) {
-    return undefined;
-  }
+
+  // Get all task from firestore
+  const [tasks, setTasks] = useState([]);
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const tasksRef = collection(FIRESTORE_DB, "Task");
+        const querySnapshot = await getDocs(tasksRef);
+
+        const fetchedTasks = [];
+        querySnapshot.forEach((doc) => {
+          const task = doc.data();
+          fetchedTasks.push(task);
+        });
+
+        setTasks(fetchedTasks);
+      } catch (error) {
+        console.log("Error fetching tasks: ", error);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
+  // Add task to firestore
+  const addTask = async (taskID) => {
+    try {
+      const newDocRef = await addDoc(collection(FIRESTORE_DB, "Task"), {
+        taskID: taskID,
+        taskName: "New task 999",
+        taskDetail: "New task 999 detail",
+        taskCategory: "Work",
+        taskPriority: 4,
+        taskDueDate: "2021-10-10",
+        isCompleted: false,
+      });
+      console.log("Document written with ID: ", newDocRef.id);
+    } catch (error) {
+      console.log("Error adding document: ", error);
+    }
+  };
+
+  // Update task to firestore
+  // 1) Get document id
+  const findDocumentId = async (fieldValue) => {
+    const q = query(
+      collection(FIRESTORE_DB, "Task"),
+      where("taskID", "==", fieldValue)
+    );
+    try {
+      const querySnapshot = await getDocs(q);
+      let documentId;
+      querySnapshot.forEach((doc) => {
+        documentId = doc.id;
+      });
+      return documentId;
+    } catch (error) {
+      console.log("Error finding document id: ", error);
+    }
+  };
+
+  // 2) Update document
+  const updateDocument = async (documentId, item) => {
+    // const documentId = await findDocumentId(1);
+    try {
+      await updateDoc(doc(FIRESTORE_DB, "Task", documentId), {
+        taskID: documentId,
+        taskName: item.taskName,
+        taskDetail: item.taskDetail,
+        taskCategory: item.taskCategory,
+        taskPriority: item.taskPriority,
+        taskDueDate: item.taskDueDate,
+        isCompleted: item.isCompleted,
+      });
+    } catch (error) {
+      console.log("Error updating document: ", error);
+    }
+  };
+
   return (
     <View
       style={[
@@ -37,8 +123,19 @@ const HomeScreen = ({ navigation }) => {
       ]}
     >
       <View style={styles.header}>
-        {console.log(Tasks)}
-        <TouchableOpacity style={styles.avatar_wrapper}>
+        <TouchableOpacity
+          style={styles.avatar_wrapper}
+          onPress={() => {
+            // let task = [...tasks];
+            // task.sort((a, b) => {
+            //   return a.taskID - b.taskID;
+            // });
+            // console.log(task);
+            // // updateDocument();
+            // addTask(task[task.length - 1].taskID + 1);
+            // console.log(task);
+          }}
+        >
           <Image
             source={require("../../assets/avatar.jpg")}
             style={styles.avatar}
@@ -55,7 +152,7 @@ const HomeScreen = ({ navigation }) => {
         {Tasks.length === 0 ? (
           <HomeScreenBodyWithNoTask />
         ) : (
-          <HomeScreenBodyWithTask />
+          <HomeScreenBodyWithTask navigation={navigation} />
         )}
       </View>
       <StatusBar style="light" />

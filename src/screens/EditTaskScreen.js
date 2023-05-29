@@ -21,10 +21,10 @@ import {
   TimerIcon,
   TagIcon,
   FlagIcon,
-  UniversityIcon,
 } from "../constants/Icons";
+import Categories from "../../assets/data/Categories";
 
-const EditTaskScreen = () => {
+const EditTaskScreen = ({ route }) => {
   const insets = useSafeAreaInsets();
   const [taskSelected, setTaskSelected] = useState(false);
   const checkButtonOnPressHandler = () => {
@@ -34,6 +34,8 @@ const EditTaskScreen = () => {
   if (!fontsLoaded) {
     return undefined;
   }
+
+  const item = route.params;
 
   return (
     <View
@@ -70,12 +72,12 @@ const EditTaskScreen = () => {
                   fontFamily: "Lato-Regular",
                 }}
               >
-                Task title
+                {item.taskName}
               </Text>
             </View>
             <View style={styles.task_infor_container}>
               <Text style={[ModalStyles.body_text, { opacity: 0.8 }]}>
-                Task description
+                {item.taskDetail}
               </Text>
             </View>
           </View>
@@ -92,7 +94,16 @@ const EditTaskScreen = () => {
             <Text style={ModalStyles.body_text}>Task Time:</Text>
           </View>
           <TouchableOpacity style={styles.edit_button}>
-            <Text style={styles.edit_button_text}>To day at 00:00</Text>
+            <Text style={styles.edit_button_text}>
+              {new Date(item.taskDueDate).toLocaleDateString("en-CL", {
+                weekday: "short",
+                month: "numeric",
+                day: "numeric",
+                year: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              })}
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.edit_wrapper}>
@@ -104,12 +115,16 @@ const EditTaskScreen = () => {
           </View>
           <TouchableOpacity style={styles.edit_button}>
             <SvgXml
-              xml={UniversityIcon}
-              height={32}
-              width={32}
+              xml={
+                Categories.find(
+                  (category) => category.name == item.taskCategory
+                ).icon
+              }
+              height={28}
+              width={28}
               style={{ marginRight: 8 }}
             />
-            <Text style={styles.edit_button_text}>University</Text>
+            <Text style={styles.edit_button_text}>{item.taskCategory}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.edit_wrapper}>
@@ -120,7 +135,7 @@ const EditTaskScreen = () => {
             <Text style={ModalStyles.body_text}>Task Priority:</Text>
           </View>
           <TouchableOpacity style={styles.edit_button}>
-            <Text style={styles.edit_button_text}>To day at 00:00</Text>
+            <Text style={styles.edit_button_text}>{item.taskPriority}</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.delete_wrapper}>

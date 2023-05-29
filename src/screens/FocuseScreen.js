@@ -7,7 +7,7 @@ const FocuseScreen = () => {
   return (
     <SafeAreaView>
       <Text>Focuse Screen</Text>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </SafeAreaView>
   );
 };

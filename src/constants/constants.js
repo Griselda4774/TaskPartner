@@ -4,6 +4,7 @@ export const GREY_BACKGROUND_COLOR = "#363636";
 export const PURPLE_COLOR = "#8687E7";
 export const GREY_COLOR = "#606060";
 export const WHITE_TEXT_COLOR = "#eaeaea";
+export const GREY_TEXT_COLOR = "#a1a1a1";
 export const MODAL_WIDTH = 350;
 export const TITLE_MODAL_WIDTH = 330;
 export const HALF_BUTTON_WIDTH = 155;
