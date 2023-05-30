@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
-import { WHITE_TEXT_COLOR } from "../constants/Constants";
+import { WHITE_TEXT_COLOR } from "../constants/constants";
 
 const CheckButton = ({ size, style }) => {
   const [checked, setChecked] = useState(false);

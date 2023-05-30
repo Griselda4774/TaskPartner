@@ -7,7 +7,7 @@ import {
   GREY_TEXT_COLOR,
   LATO_FONTS,
   WHITE_TEXT_COLOR,
-} from "../constants/Constants";
+} from "../constants/constants";
 import { useFonts } from "expo-font";
 import ExpandableComponent from "./ExpandableComponent";
 import { ScrollView } from "react-native-virtualized-view";

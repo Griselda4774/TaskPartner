@@ -9,7 +9,7 @@ import {
   LATO_FONTS,
   BLACK_BACKGROUND_COLOR,
   SCREEN_WIDTH,
-} from "../constants/Constants";
+} from "../constants/constants";
 import { useFonts } from "expo-font";
 import { Svg, SvgXml } from "react-native-svg";
 import HomeScreenBodyWithNoTask from "../components/HomeScreenBodyWithNoTask";

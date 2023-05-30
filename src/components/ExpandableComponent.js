@@ -15,7 +15,7 @@ import {
   GREY_TEXT_COLOR,
   PURPLE_COLOR,
   WHITE_TEXT_COLOR,
-} from "../constants/Constants";
+} from "../constants/constants";
 import { Tasks } from "../../assets/data/Tasks";
 import CheckButton from "./CheckButton";
 import Categories from "../../assets/data/Categories";

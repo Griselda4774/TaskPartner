@@ -6,7 +6,7 @@ import {
   SCREEN_WIDTH,
   LATO_FONTS,
   WHITE_TEXT_COLOR,
-} from "../constants/Constants";
+} from "../constants/constants";
 import { useFonts } from "expo-font";
 
 const HomeScreenBodyWithNoTask = () => {

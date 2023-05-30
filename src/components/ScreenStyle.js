@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { BLACK_BACKGROUND_COLOR, SCREEN_HEIGHT } from "../constants/Constants";
+import { BLACK_BACKGROUND_COLOR, SCREEN_HEIGHT } from "../constants/constants";
 
 const ScreenStyle = StyleSheet.create({
   container: {
