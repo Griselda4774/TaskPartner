@@ -1,5 +1,11 @@
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import StackNavigator from "./src/navigators/StackNavigator";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { useFonts } from "expo-font";
+import { LATO_FONTS } from "./src/constants/constants";
+
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import IntroStackNavigator from './src/navigators/IntroStackNavigator';
 import AuthenticateStackNavigator from './src/navigators/AuthenticateStackNavigator';
@@ -8,7 +14,11 @@ import CalenderScreen from './src/screens/CalendarScreen';
 
 const MainStack = createStackNavigator();
 
-export default function App() {
+const App = () => {
+  const [fontsLoaded] = useFonts(LATO_FONTS);
+  if (!fontsLoaded) {
+    return undefined;
+  }
   return (
     // <NavigationContainer>
     //   <MainStack.Navigator screenOptions={{ headerShown: false }}>
@@ -16,7 +26,14 @@ export default function App() {
     //     <MainStack.Screen name="Authenticate" component={AuthenticateStackNavigator}/>
     //   </MainStack.Navigator>
     // </NavigationContainer>
-    <CalenderScreen/>
-  );
-}
+    // <CalenderScreen/>
 
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <StackNavigator />
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
+};
+
+export default App;

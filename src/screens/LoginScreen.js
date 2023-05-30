@@ -8,10 +8,6 @@ import GoBackButton from "../components/GoBackButton";
 import ThirdPartyButton from "../components/ThirdPartyButton";
 import AuthenticateFooter from "../components/AuthenticateFooter";
 
-import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
-
 export default function LoginScreen({navigation}) {
 
   // Navigators:
