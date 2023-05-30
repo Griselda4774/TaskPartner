@@ -8,14 +8,12 @@ import GoBackButton from "../components/GoBackButton";
 import AuthenticateFooter from "../components/AuthenticateFooter";
 
 import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
 
 export default function RegisterScreen({navigation}) {
 
   //Navigators:
   const onGoToLoginHandler = () => {
-    navigation.navigate("Login_Screen");
+    navigation.replace("Login_Screen");
   };
 
   //Use States:

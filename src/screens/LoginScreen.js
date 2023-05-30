@@ -20,7 +20,7 @@ export default function LoginScreen({navigation}) {
   };
 
   const onRegisterPressHandler = () => {
-    navigation.navigate("Register_Screen");
+    navigation.replace("Register_Screen");
   };
 
   //Use States:
