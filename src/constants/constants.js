@@ -24,3 +24,4 @@ export const ITEM_WORK_COLOR = "#FF9680";
 export const LATO_FONTS = {
   "Lato-Regular": require("../../assets/fonts/Lato-Regular.ttf"),
 };
+export const TEST = "TEST";
