@@ -7,9 +7,9 @@ import {
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
   WHITE_TEXT_COLOR,
-} from "../constants/Constants";
+  LATO_FONTS,
+} from "../constants/constants";
 import ModalStyles from "../components/ModalStyles";
-import { LATO_FONTS } from "../constants/Constants";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

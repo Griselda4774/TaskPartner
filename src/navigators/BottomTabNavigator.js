@@ -10,7 +10,7 @@ import {
   PURPLE_COLOR,
   WHITE_TEXT_COLOR,
   LATO_FONTS,
-} from "../constants/Constants";
+} from "../constants/constants";
 import { SvgXml } from "react-native-svg";
 import { HomeBarIcon, HomeBarFocusedIcon, AddIcon } from "../constants/Icons";
 import EmptyScreen from "../screens/EmptyScreen";

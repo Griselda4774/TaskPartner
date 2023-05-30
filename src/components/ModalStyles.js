@@ -8,7 +8,7 @@ import {
   SCREEN_HEIGHT,
   TITLE_MODAL_WIDTH,
   WHITE_TEXT_COLOR,
-} from "../constants/Constants";
+} from "../constants/constants";
 
 const ModalStyles = StyleSheet.create({
   wrapper: {
