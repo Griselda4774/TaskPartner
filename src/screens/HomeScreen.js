@@ -26,7 +26,7 @@ import {
   where,
   updateDoc,
   doc,
-  setDoc,
+  deleteDoc,
 } from "firebase/firestore";
 
 const HomeScreen = ({ navigation }) => {
@@ -75,10 +75,10 @@ const HomeScreen = ({ navigation }) => {
 
   // Update task to firestore
   // 1) Get document id
-  const findDocumentId = async (fieldValue) => {
+  const findDocumentId = async (taskID) => {
     const q = query(
       collection(FIRESTORE_DB, "Task"),
-      where("taskID", "==", fieldValue)
+      where("taskID", "==", taskID)
     );
     try {
       const querySnapshot = await getDocs(q);
@@ -93,11 +93,10 @@ const HomeScreen = ({ navigation }) => {
   };
 
   // 2) Update document
-  const updateDocument = async (documentId, item) => {
-    // const documentId = await findDocumentId(1);
+  const updateDocument = async (item) => {
+    const documentId = await findDocumentId(item.taskID);
     try {
       await updateDoc(doc(FIRESTORE_DB, "Task", documentId), {
-        taskID: documentId,
         taskName: item.taskName,
         taskDetail: item.taskDetail,
         taskCategory: item.taskCategory,
@@ -107,6 +106,17 @@ const HomeScreen = ({ navigation }) => {
       });
     } catch (error) {
       console.log("Error updating document: ", error);
+    }
+  };
+
+  // Delete task from firestore
+  const deleteTask = async (taskID) => {
+    const documentId = await findDocumentId(taskID);
+    try {
+      await deleteDoc(doc(FIRESTORE_DB, "Task", documentId));
+      console.log("Document successfully deleted!");
+    } catch (error) {
+      console.log("Error deleting document: ", error);
     }
   };
 
@@ -134,6 +144,7 @@ const HomeScreen = ({ navigation }) => {
             // // updateDocument();
             // addTask(task[task.length - 1].taskID + 1);
             // console.log(task);
+            // deleteTask(8);
           }}
         >
           <Image
