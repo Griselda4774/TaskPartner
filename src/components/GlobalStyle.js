@@ -10,7 +10,7 @@ export default StyleSheet.create({
     width: 213,
     height: 278,
     margin: 81,
-    marginTop: 84,
+    marginTop: 44,
   },
 
   body: {

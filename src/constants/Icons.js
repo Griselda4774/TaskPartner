@@ -20,6 +20,7 @@ import Repeat from "../../assets/otherIcons/repeat.svg";
 import Add from "../../assets/otherIcons/add.svg";
 import Search from "../../assets/otherIcons/search.svg";
 import ArrowDown from "../../assets/otherIcons/arrowDown.svg";
+import Back from "../../assets/otherIcons/back.svg";
 
 export const CloseIcon = Close.toString();
 export const EditIcon = Edit.toString();
@@ -43,3 +44,4 @@ export const RepeatIcon = Repeat.toString();
 export const AddIcon = Add.toString();
 export const SearchIcon = Search.toString();
 export const ArrowDownIcon = ArrowDown.toString();
+export const BackIcon = Back.toString();

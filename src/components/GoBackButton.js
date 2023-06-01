@@ -3,6 +3,8 @@ import React from "react";
 import { Text, Pressable } from "react-native";
 import GlobalStyle from "./GlobalStyle";
 import { useState } from "react";
+import { SvgXml } from "react-native-svg";
+import { BackIcon } from "../constants/Icons";
 
 const GoBackButton = (props) => {
 
@@ -23,6 +25,7 @@ const GoBackButton = (props) => {
         onPressIn={BackPressInHandler}
         onPressOut={BackPressOutHandler}
         onPress={props.onPressFunction}
+        hitSlop={{ top: 20, bottom: 20, right: 20, left: 20 }}
       >
         <Text
           style={[
@@ -34,7 +37,7 @@ const GoBackButton = (props) => {
             },
           ]}
         >
-          BACK
+          <SvgXml xml={BackIcon} width={10} height={20} />
         </Text>
       </Pressable>
     );

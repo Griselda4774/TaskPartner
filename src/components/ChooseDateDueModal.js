@@ -11,9 +11,17 @@ const ChooseDateDueModal = () => {
         <View style={ModalStyles.container}>
           <DatePicker
             mode="calendar"
-            options={{ backgroundColor: "#000" }}
             current="2023-05-22"
             selected="2023-05-22"
+            options={{
+              backgroundColor: "#363636",
+              textHeaderColor: "#FFFFFFDE",
+              textDefaultColor: "#FFFFFFDE",
+              selectedTextColor: "#FFFFFFDE",
+              mainColor: "#8687E7",
+              textSecondaryColor: "#FFFFFFDE",
+              borderColor: "#979797",
+            }}
           />
         </View>
       </View>

@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, Image, Pressable, Button } from "react-native";
 import { useState } from "react";
 import GlobalStyle from "../components/GlobalStyle";
+import { SvgXml } from "react-native-svg";
+import { BackIcon } from "../constants/Icons";
 
 
 export default function StartScreen({ navigation }){
@@ -31,6 +33,7 @@ export default function StartScreen({ navigation }){
           onPressIn={SkipPressInHandler}
           onPressOut={SkipPressOutHandler}
           onPress={onBackPressHandler}
+          hitSlop={{top: 20, bottom: 20, right: 20, left: 20}}
         >
           <Text
             style={[
@@ -42,7 +45,7 @@ export default function StartScreen({ navigation }){
               },
             ]}
           >
-            BACK
+            <SvgXml xml={BackIcon} width={10} height={20}/>
           </Text>
         </Pressable>
         <View style={GlobalStyle.body}>
@@ -111,6 +114,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
-    marginTop: 270,
+    marginTop: 200,
   },
 });

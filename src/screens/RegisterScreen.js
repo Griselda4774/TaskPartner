@@ -57,7 +57,7 @@ export default function RegisterScreen({navigation}) {
     // <KeyboardAvoidingWrapper>
     <View style={GlobalStyle.container}>
       <GoBackButton onPressFunction={onGoToLoginHandler} />
-      <Text style={[GlobalStyle.utils_title_text, { marginLeft: 24 }]}>
+      <Text style={[GlobalStyle.utils_title_text, { marginLeft: 24, marginTop: 20, }]}>
         Register
       </Text>
       <View

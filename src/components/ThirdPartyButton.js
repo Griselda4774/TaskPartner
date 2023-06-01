@@ -25,7 +25,7 @@ const ThirdPartyButton = (props) => {
           <Image style={[styles.image, {...props.imageStyle}]} source={props.imageSource} />
         </View>
         
-        <View style={{flex: 5, justifyContent: 'center', marginLeft: 60}}>
+        <View style={{flex: 4, justifyContent: 'center', marginLeft: 60}}>
           <Text style={styles.button_text}>Login with {props.thirdPartyName}</Text>
         </View>
       </View>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 
     button_text: {
       fontWeight: 500,
-      fontSize: 20,
+      fontSize: 18,
       color: "#fff",
     },
 

@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
-import { PURPLE_COLOR } from "../constants/Constants";
+import { PURPLE_COLOR } from "../constants/constants";
 import ModalStyles from "./ModalStyles";
-import { LATO_FONTS } from "../constants/Constants";
+import { LATO_FONTS } from "../constants/constants";
 import { useFonts } from "expo-font";
 import Priorities from "../../assets/data/Priorities";
 import { SvgXml } from "react-native-svg";

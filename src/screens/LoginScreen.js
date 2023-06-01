@@ -8,6 +8,7 @@ import GoBackButton from "../components/GoBackButton";
 import ThirdPartyButton from "../components/ThirdPartyButton";
 import AuthenticateFooter from "../components/AuthenticateFooter";
 
+
 export default function LoginScreen({navigation}) {
 
   // Navigators:
@@ -49,16 +50,16 @@ export default function LoginScreen({navigation}) {
     // <KeyboardAvoidingWrapper>
     <View style={GlobalStyle.container}>
       <GoBackButton onPressFunction={onBackPressHandler} />
-      <Text style={[GlobalStyle.utils_title_text, { marginLeft: 24 }]}>
+      <Text style={[GlobalStyle.utils_title_text, { marginLeft: 24, marginTop: 20, }]}>
         Login
       </Text>
-      <View style={[styles.login_container, { justifyContent: "center" }]}>
+      <View style={[styles.login_container, { justifyContent: "center"}]}>
         <UsernameBox
-          style={{ marginTop: 55 }}
+          style={{ marginTop: 30, marginBottom: 20, }}
           onChangeText={onLoginUsernameTextChange}
         />
         <PasswordBox
-          style={{ marginBottom: 80, marginTop: 30 }}
+          style={{ marginBottom: 70 }}
           title="Password"
           onChangeText={onLoginPasswordTextChange}
         />
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
   },
 
   login_container: {
-    flex: 1,
+    height: 300,
     padding: 24,
     backgroundColor: "#000",
     paddingBottom: 1,
