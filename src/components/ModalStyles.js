@@ -24,7 +24,7 @@ const ModalStyles = StyleSheet.create({
     borderRadius: 8,
   },
   title: {
-    padding: 15,
+    padding: 18,
     alignItems: "center",
     borderBottomWidth: 1,
     borderBottomColor: "#ffffff80",
@@ -32,18 +32,16 @@ const ModalStyles = StyleSheet.create({
     alignSelf: "center",
   },
   title_white_text: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "500",
     color: WHITE_TEXT_COLOR,
     fontFamily: "Lato-Regular",
-    letterSpacing: 0.5,
   },
   title_purple_text: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "500",
     color: PURPLE_COLOR,
     fontFamily: "Lato-Regular",
-    letterSpacing: 0.5,
   },
   body: {
     alignItems: "center",
@@ -57,7 +55,6 @@ const ModalStyles = StyleSheet.create({
     color: WHITE_TEXT_COLOR,
     fontSize: 16,
     fontFamily: "Lato-Regular",
-    letterSpacing: 0.5,
   },
   item: {
     margin: 16,

@@ -1,22 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, View, Text, TouchableOpacity } from "react-native";
-import { PURPLE_COLOR, WHITE_TEXT_COLOR } from "../constants/Constants";
+import {
+  PURPLE_COLOR,
+  WHITE_TEXT_COLOR,
+  LATO_FONTS,
+} from "../constants/constants";
 import ModalStyles from "./ModalStyles";
-import { LATO_FONTS } from "../constants/Constants";
 import { useFonts } from "expo-font";
 import { TextInput } from "react-native-paper";
+import { useDispatch } from "react-redux";
+import { editTask } from "../redux/actions";
 
-const EditTaskTitleModal = () => {
+const EditTaskTitleModal = ({ visible, onRequestClose, task }) => {
   const [focusedId, setFocusedId] = useState("1");
-  const [fontsLoaded] = useFonts(LATO_FONTS);
-  if (!fontsLoaded) {
-    return undefined;
-  }
+  useEffect(() => {
+    setFocusedId("1");
+  }, [visible]);
+
+  const dispatch = useDispatch();
+  const [taskName, setTaskName] = useState(task.taskName);
+  const [taskDetail, setTaskDetail] = useState(task.taskDetail);
 
   return (
-    <Modal visible={true} transparent={true}>
+    <Modal
+      visible={visible}
+      transparent={true}
+      onRequestClose={onRequestClose}
+      animationType="slide"
+    >
       <View style={ModalStyles.wrapper}>
-        <View style={ModalStyles.container}>
+        <View style={[ModalStyles.container, { marginBottom: 64 }]}>
           <View style={ModalStyles.title}>
             <Text style={ModalStyles.title_white_text}>Edit Task Title</Text>
           </View>
@@ -30,16 +43,19 @@ const EditTaskTitleModal = () => {
                       {
                         borderWidth: 1,
                         borderColor: "#ffffff80",
-                        paddingLeft: 8,
+                        paddingLeft: 4,
                       },
                     ]
               }
               textColor={focusedId == "2" ? "#eaeaea90" : WHITE_TEXT_COLOR}
-              defaultValue="Old Task title"
+              defaultValue={task.taskName}
               selectionColor={WHITE_TEXT_COLOR}
               underlineStyle={{ width: 0 }}
               onFocus={() => {
                 setFocusedId("1");
+              }}
+              onChangeText={(text) => {
+                setTaskName(text);
               }}
             />
             <TextInput
@@ -51,16 +67,19 @@ const EditTaskTitleModal = () => {
                       {
                         borderWidth: 1,
                         borderColor: "#ffffff80",
-                        paddingLeft: 8,
+                        paddingLeft: 4,
                       },
                     ]
               }
               textColor={focusedId == "1" ? "#eaeaea90" : WHITE_TEXT_COLOR}
-              defaultValue="Old Task description"
+              defaultValue={task.taskDetail}
               selectionColor={WHITE_TEXT_COLOR}
               underlineStyle={{ width: 0 }}
               onFocus={() => {
                 setFocusedId("2");
+              }}
+              onChangeText={(text) => {
+                setTaskDetail(text);
               }}
             />
           </View>
@@ -68,6 +87,7 @@ const EditTaskTitleModal = () => {
             <TouchableOpacity
               style={ModalStyles.half_button}
               activeOpacity={0.3}
+              onPress={onRequestClose}
             >
               <Text style={ModalStyles.title_purple_text}>Cancel</Text>
             </TouchableOpacity>
@@ -77,6 +97,12 @@ const EditTaskTitleModal = () => {
                 { backgroundColor: PURPLE_COLOR },
               ]}
               activeOpacity={0.3}
+              onPress={() => {
+                task.taskName = taskName;
+                task.taskDetail = taskDetail;
+                dispatch(editTask(task));
+                onRequestClose();
+              }}
             >
               <Text style={ModalStyles.title_white_text}>Edit</Text>
             </TouchableOpacity>

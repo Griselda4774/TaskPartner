@@ -12,10 +12,11 @@ const PasswordBox = (props) => {
         placeholderTextColor="#535353"
         secureTextEntry
         onChangeText={props.onChangeText}
+        keyboardAppearance="dark"
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -70,7 +70,7 @@ const TaskCategory = ({ categories, item }) => {
   );
 };
 
-const ExpandableComponent = ({ title, listItem, navigation }) => {
+const ExpandableComponent = ({ title, listItem, navigation, titleWidth }) => {
   const [heightLayout, setHeightLayout] = useState(0);
   const [expanded, setExpanded] = useState(true);
   useEffect(() => {
@@ -85,89 +85,96 @@ const ExpandableComponent = ({ title, listItem, navigation }) => {
     setExpanded(!expanded);
   };
 
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.title_wrapper}
-        onPress={titleOnPressHandler}
-      >
-        <View>
-          <Text style={styles.title_text}>{title}</Text>
-        </View>
-        <View>
-          <SvgXml
-            xml={ArrowDownIcon}
-            height={20}
-            width={20}
-            style={expanded ? { transform: [{ rotate: "180deg" }] } : null}
-          />
-        </View>
-      </TouchableOpacity>
-      <View
-        style={{
-          height: heightLayout,
-          overflow: "hidden",
-          width: "100%",
-        }}
-      >
-        <FlatList
-          data={Tasks}
-          keyExtractor={(item) => item.taskID}
-          renderItem={({ item }) => {
-            const itemOnPressHandler = (item) => {
-              navigation.navigate("EditTask", item);
-            };
-            return (
-              <TouchableOpacity
-                onPress={() => {
-                  itemOnPressHandler(item);
-                }}
-              >
-                <View style={styles.task_item_wrapper}>
-                  <View style={styles.check_button_wrapper}>
-                    <CheckButton size={24} />
-                  </View>
-                  <View style={styles.task_infor_wrapper}>
-                    <View style={styles.task_title_wrapper}>
-                      <Text
-                        style={
-                          item.isCompleted
-                            ? [
-                                styles.task_title_text,
-                                {
-                                  textDecorationLine: "line-through",
-                                  color: GREY_TEXT_COLOR,
-                                },
-                              ]
-                            : [styles.task_title_text]
-                        }
-                      >
-                        {item.taskName}
-                      </Text>
+  if (listItem.length == 0) {
+    return null;
+  } else {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={[styles.title_wrapper, { width: titleWidth }]}
+          onPress={titleOnPressHandler}
+        >
+          <View>
+            <SvgXml
+              xml={ArrowDownIcon}
+              height={20}
+              width={20}
+              style={expanded ? null : { transform: [{ rotate: "270deg" }] }}
+            />
+          </View>
+          <View style={{ marginLeft: 8 }}>
+            <Text style={styles.title_text}>{title}</Text>
+          </View>
+          <View style={{ marginLeft: 8 }}>
+            <Text style={styles.title_text}>{listItem.length}</Text>
+          </View>
+        </TouchableOpacity>
+        <View
+          style={{
+            height: heightLayout,
+            overflow: "hidden",
+            width: "100%",
+          }}
+        >
+          <FlatList
+            data={listItem}
+            keyExtractor={(item) => item.taskID}
+            renderItem={({ item }) => {
+              const itemOnPressHandler = (item) => {
+                navigation.navigate("EditTask", item);
+              };
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    itemOnPressHandler(item);
+                  }}
+                >
+                  <View style={styles.task_item_wrapper}>
+                    <View style={styles.check_button_wrapper}>
+                      <CheckButton size={24} task={item} />
                     </View>
-                    <View style={styles.task_body}>
-                      <View style={styles.task_due_wrapper}>
-                        <TaskDueDateText item={item} />
+                    <View style={styles.task_infor_wrapper}>
+                      <View style={styles.task_title_wrapper}>
+                        <Text
+                          style={
+                            item.isCompleted
+                              ? [
+                                  styles.task_title_text,
+                                  {
+                                    textDecorationLine: "line-through",
+                                    color: GREY_TEXT_COLOR,
+                                  },
+                                ]
+                              : [styles.task_title_text]
+                          }
+                        >
+                          {item.taskName}
+                        </Text>
                       </View>
-                      <View style={styles.task_type_wrapper}>
-                        <TaskCategory categories={Categories} item={item} />
-                        <View style={styles.task_priority_wrapper}>
-                          <SvgXml xml={FlagIcon} height={20} width={20} />
-                          <Text style={styles.task_priority_text}>
-                            {item.taskPriority}
-                          </Text>
+                      <View style={styles.task_body}>
+                        <View style={styles.task_due_wrapper}>
+                          <TaskDueDateText item={item} />
+                        </View>
+                        <View style={styles.task_type_wrapper}>
+                          <TaskCategory categories={Categories} item={item} />
+                          <View style={styles.task_priority_wrapper}>
+                            <SvgXml xml={FlagIcon} height={20} width={20} />
+                            <Text style={styles.task_priority_text}>
+                              {item.taskPriority}
+                            </Text>
+                          </View>
                         </View>
                       </View>
                     </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-        />
+                </TouchableOpacity>
+              );
+            }}
+          />
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 };
 
 const styles = StyleSheet.create({
@@ -177,10 +184,9 @@ const styles = StyleSheet.create({
   },
   title_wrapper: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: GREY_BACKGROUND_COLOR,
-    width: "28%",
     borderRadius: 8,
     padding: 8,
   },

@@ -7,23 +7,26 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
-import { PURPLE_COLOR } from "../constants/Constants";
+import { PURPLE_COLOR } from "../constants/constants";
 import ModalStyles from "./ModalStyles";
-import { LATO_FONTS } from "../constants/Constants";
+import { LATO_FONTS } from "../constants/constants";
 import { useFonts } from "expo-font";
 import Priorities from "../../assets/data/Priorities";
 import { SvgXml } from "react-native-svg";
 import { FlagIcon } from "../constants/Icons";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { editTask } from "../redux/actions";
 
-const EditPriorityModal = () => {
-  const [selectedID, setSelectedID] = useState("1");
-  const [fontsLoaded] = useFonts(LATO_FONTS);
-  if (!fontsLoaded) {
-    return undefined;
-  }
+const EditPriorityModal = ({ visible, onRequestClose, task }) => {
+  const dispatch = useDispatch();
+  const [selectedID, setSelectedID] = useState(task.taskPriority);
+  useEffect(() => {
+    setSelectedID(task.taskPriority);
+  }, [visible]);
 
   return (
-    <Modal visible={true} transparent={true}>
+    <Modal visible={visible} transparent={true} animationType="slide">
       <View style={ModalStyles.wrapper}>
         <View style={ModalStyles.container}>
           <View style={ModalStyles.title}>
@@ -59,6 +62,7 @@ const EditPriorityModal = () => {
             <TouchableOpacity
               style={ModalStyles.half_button}
               activeOpacity={0.3}
+              onPress={onRequestClose}
             >
               <Text style={ModalStyles.title_purple_text}>Cancel</Text>
             </TouchableOpacity>
@@ -68,6 +72,11 @@ const EditPriorityModal = () => {
                 { backgroundColor: PURPLE_COLOR },
               ]}
               activeOpacity={0.3}
+              onPress={() => {
+                task.taskPriority = selectedID;
+                dispatch(editTask(task));
+                onRequestClose();
+              }}
             >
               <Text style={ModalStyles.title_white_text}>Edit</Text>
             </TouchableOpacity>

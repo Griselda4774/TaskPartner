@@ -5,12 +5,11 @@ import GlobalStyle from "./GlobalStyle";
 import { useState } from "react";
 
 const PurpleButton = (props) => {
+  const [IsDisable, SetIsDisable] = useState(true);
 
-    const [IsDisable, SetIsDisable] = useState(true);
-
-    return (
-      <View style={[styles.container, {...props.viewStyle}]}>
-        {/* {IsDisable ? (
+  return (
+    <View style={[styles.container, { ...props.viewStyle }]}>
+      {/* {IsDisable ? (
           <Pressable
             disabled={props.isDisable}
             onPress={props.onPressFunction}
@@ -45,28 +44,27 @@ const PurpleButton = (props) => {
             </Text>
           </Pressable>
         )} */}
-        <Pressable
-          disabled={props.isDisable}
-          onPress={props.onPressFunction}
-          style={({ pressed }) => [
-            {
-              backgroundColor: pressed ? "#8687E780" : "#8687E7",
-              flex: 1,
-            },
-            styles.button,
-            { ...props.style },
-          ]}
-        >
-          <Text style={[GlobalStyle.pressable_text, { color: "#fff" }]}>
-            Login
-          </Text>
-        </Pressable>
-      </View>
-    );
+      <Pressable
+        disabled={props.isDisable}
+        onPress={props.onPressFunction}
+        style={({ pressed }) => [
+          {
+            backgroundColor: pressed ? "#8687E780" : "#8687E7",
+            flex: 1,
+          },
+          styles.button,
+          { ...props.style },
+        ]}
+      >
+        <Text style={[GlobalStyle.pressable_text, { color: "#fff" }]}>
+          Login
+        </Text>
+      </Pressable>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-
   container: {
     borderRadius: 8,
     height: "20%",
@@ -78,10 +76,9 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-  
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
 export default PurpleButton;

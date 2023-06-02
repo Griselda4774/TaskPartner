@@ -1,11 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import EditTaskScreen from "../screens/EditTaskScreen";
-import BottomTabNavigator from "../navigators/BottomTabNavigator";
+import BottomTabNavigator from "./BottomTabNavigator";
 
 const Stack = createStackNavigator();
 
-const StackNavigator = () => {
+const TaskStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ header: () => null }}>
       <Stack.Screen name="BottomTab" component={BottomTabNavigator} />
@@ -14,4 +14,4 @@ const StackNavigator = () => {
   );
 };
 
-export default StackNavigator;
+export default TaskStackNavigator;

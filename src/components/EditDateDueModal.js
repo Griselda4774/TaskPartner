@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-native-modern-datepicker";
 import { View, Text, TouchableOpacity, Modal } from "react-native";
 import ModalStyles from "./ModalStyles";
@@ -9,10 +9,17 @@ import {
   WHITE_TEXT_COLOR,
 } from "../constants/constants";
 
-const ChooseDateDueModal = ({ visible, onRequestClose, task }) => {
-  let now = new Date();
+const EditDateDueModal = ({ visible, onRequestClose, task }) => {
   const [dateString, setDateString] = useState("");
-  const [timeString, setTimeString] = useState("00:00");
+  const [timeString, setTimeString] = useState("");
+
+  const [date, setDate] = useState(
+    new Date(task.taskDueDate).toLocaleDateString("en-CA")
+  );
+  useEffect(() => {
+    setDate(new Date(task.taskDueDate).toLocaleDateString("en-CA"));
+  }, [visible]);
+
   return (
     <Modal visible={visible} transparent={true} animationType="slide">
       <View style={ModalStyles.wrapper}>
@@ -31,8 +38,8 @@ const ChooseDateDueModal = ({ visible, onRequestClose, task }) => {
                 textHeaderFontSize: 18,
               }}
               mode="datepicker"
-              current={now.toLocaleDateString("en-CA")}
-              selected={now.toLocaleDateString("en-CA")}
+              current={date}
+              selected={date}
               minuteInterval={1}
               onDateChange={(date) => {
                 setDateString(date);
@@ -45,11 +52,7 @@ const ChooseDateDueModal = ({ visible, onRequestClose, task }) => {
               <TouchableOpacity
                 style={ModalStyles.half_button}
                 activeOpacity={0.3}
-                onPress={() => {
-                  now.setHours(now.getHours() + 1);
-                  task.taskDueDate = now.toString();
-                  onRequestClose();
-                }}
+                onPress={onRequestClose}
               >
                 <Text style={ModalStyles.title_purple_text}>Cancel</Text>
               </TouchableOpacity>
@@ -62,17 +65,15 @@ const ChooseDateDueModal = ({ visible, onRequestClose, task }) => {
                 onPress={() => {
                   const [year, month, day] = dateString.split("/");
                   const [hours, minutes] = timeString.split(":");
-                  task.taskDueDate = new Date(
-                    year,
-                    month - 1,
-                    day,
-                    hours,
-                    minutes
-                  ).toString();
-                  onRequestClose();
+                  console.log(
+                    `${year}, ${month}, ${day}, ${hours}, ${minutes}`
+                  );
+                  console.log(
+                    new Date(year, month - 1, day, hours, minutes).toString()
+                  );
                 }}
               >
-                <Text style={ModalStyles.title_white_text}>Save</Text>
+                <Text style={ModalStyles.title_white_text}>Edit</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -82,4 +83,4 @@ const ChooseDateDueModal = ({ visible, onRequestClose, task }) => {
   );
 };
 
-export default ChooseDateDueModal;
+export default EditDateDueModal;

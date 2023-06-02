@@ -2,91 +2,89 @@ import { StyleSheet, Text, View, Image, Pressable, Button } from "react-native";
 import { useState } from "react";
 import GlobalStyle from "../components/GlobalStyle";
 
+export default function StartScreen({ navigation }) {
+  const onBackPressHandler = () => {
+    navigation.navigate("OnBoardingScreen_1");
+  };
 
-export default function StartScreen({ navigation }){
+  const onLoginPressHandler = () => {
+    navigation.navigate("Authenticate");
+  };
 
-    const onBackPressHandler = () => {
-        navigation.navigate("OnBoardingScreen_1");
-    }
+  const [pressableSkipIsHovering, SetPressableSkipIsHovering] = useState(false);
 
-    const onLoginPressHandler = () => {
-      navigation.navigate("Authenticate");
-    }
+  const SkipPressInHandler = () => {
+    SetPressableSkipIsHovering(true);
+  };
 
-    const [pressableSkipIsHovering, SetPressableSkipIsHovering] =
-      useState(false);
+  const SkipPressOutHandler = () => {
+    SetPressableSkipIsHovering(false);
+  };
 
-    const SkipPressInHandler = () => {
-      SetPressableSkipIsHovering(true);
-    };
-
-    const SkipPressOutHandler = () => {
-      SetPressableSkipIsHovering(false);
-    };
-
-    return (
-      <View style={GlobalStyle.container}>
-        <Pressable
-          style={[GlobalStyle.pressable, { marginTop: 58 }]}
-          onPressIn={SkipPressInHandler}
-          onPressOut={SkipPressOutHandler}
-          onPress={onBackPressHandler}
+  return (
+    <View style={GlobalStyle.container}>
+      <Pressable
+        style={[GlobalStyle.pressable, { marginTop: 58 }]}
+        onPressIn={SkipPressInHandler}
+        onPressOut={SkipPressOutHandler}
+        onPress={onBackPressHandler}
+      >
+        <Text
+          style={[
+            GlobalStyle.pressable_text,
+            {
+              color: pressableSkipIsHovering
+                ? "#fff"
+                : "rgba(255, 255, 255, 0.44)",
+            },
+          ]}
         >
-          <Text
-            style={[
-              GlobalStyle.pressable_text,
-              {
-                color: pressableSkipIsHovering
-                  ? "#fff"
-                  : "rgba(255, 255, 255, 0.44)",
-              },
-            ]}
-          >
-            BACK
-          </Text>
-        </Pressable>
-        <View style={GlobalStyle.body}>
-          <Text
-            style={[
-              GlobalStyle.utils_title_text,
-              { fontSize: 35, marginTop: 75 },
-            ]}
-          >
-            Welcome to TaskPartner
-          </Text>
-          <Text style={[GlobalStyle.utils_info_text, { fontSize: 20 }]}>
-            Please login by your Google account or continue with Guest mode
-          </Text>
-        </View>
-        <View style={styles.footer_container}>
-          <Pressable
-            onPress={onLoginPressHandler}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? "#9875FF" : "#7875FF",
-                width: 150,
-                height: 48,
-              },
-              styles.button,
-            ]}
-          >
-            <Text style={styles.button_text}>LOGIN</Text>
-          </Pressable>
-          <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? "#9875FF" : "#000",
-                width: 150,
-                height: 48,
-              },
-              styles.button,
-            ]}
-          >
-            <Text style={styles.button_text}>GUEST</Text>
-          </Pressable>
-        </View>
+          BACK
+        </Text>
+      </Pressable>
+      <View style={GlobalStyle.body}>
+        <Text
+          style={[
+            GlobalStyle.utils_title_text,
+            { fontSize: 35, marginTop: 75 },
+          ]}
+        >
+          Welcome to TaskPartner
+        </Text>
+        <Text style={[GlobalStyle.utils_info_text, { fontSize: 20 }]}>
+          Please login by your Google account or continue with Guest mode
+        </Text>
       </View>
-    );
+      <View style={styles.footer_container}>
+        <Pressable
+          onPress={onLoginPressHandler}
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? "#9875FF" : "#7875FF",
+              width: 150,
+              height: 48,
+            },
+            styles.button,
+          ]}
+        >
+          <Text style={styles.button_text}>LOGIN</Text>
+        </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? "#9875FF" : "#000",
+              width: 150,
+              height: 48,
+            },
+            styles.button,
+          ]}
+          onPress={() => navigation.navigate("Task")}
+        >
+          <Text style={styles.button_text}>GUEST</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

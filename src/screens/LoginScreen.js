@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, Image, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  KeyboardAvoidingView,
+} from "react-native";
 import { useState } from "react";
 import GlobalStyle from "../components/GlobalStyle";
 import UsernameBox from "../components/UsernameBox";
@@ -8,8 +14,7 @@ import GoBackButton from "../components/GoBackButton";
 import ThirdPartyButton from "../components/ThirdPartyButton";
 import AuthenticateFooter from "../components/AuthenticateFooter";
 
-export default function LoginScreen({navigation}) {
-
+export default function LoginScreen({ navigation }) {
   // Navigators:
   const onBackPressHandler = () => {
     navigation.navigate("Start_Screen");
@@ -64,7 +69,7 @@ export default function LoginScreen({navigation}) {
         />
       </View>
       <View style={[{ flex: 1 }, styles.login_flexbox_container]}>
-        <PurpleButton isDisable={IsEmptyLoginInput}/>
+        <PurpleButton isDisable={IsEmptyLoginInput} />
         <View
           style={{
             borderBottomColor: "#fff",
@@ -113,5 +118,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "background: #FFFFFFDE",
   },
-
 });

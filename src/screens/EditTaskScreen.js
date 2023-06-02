@@ -23,19 +23,23 @@ import {
   FlagIcon,
 } from "../constants/Icons";
 import Categories from "../../assets/data/Categories";
+import EditTaskTitleModal from "../components/EditTaskTitleModal";
+import EditCategoriesModal from "../components/EditCategoryModal";
+import EditPriorityModal from "../components/EditPriorityModal";
+import ChooseDateDueModal from "../components/ChooseDateDueModal";
+import DeleteTaskModal from "../components/DeleteTaskModal";
+import CheckButton from "../components/CheckButton";
+import EditDateDueModal from "../components/EditDateDueModal";
 
-const EditTaskScreen = ({ route }) => {
+const EditTaskScreen = ({ route, navigation }) => {
   const insets = useSafeAreaInsets();
-  const [taskSelected, setTaskSelected] = useState(false);
-  const checkButtonOnPressHandler = () => {
-    setTaskSelected(!taskSelected);
-  };
-  const [fontsLoaded] = useFonts(LATO_FONTS);
-  if (!fontsLoaded) {
-    return undefined;
-  }
+  const [enableEditTitle, setEnableEditTitle] = useState(false);
+  const [enableEditCategory, setEnableEditCategory] = useState(false);
+  const [enableEditPriority, setEnableEditPriority] = useState(false);
+  const [enableEditDueDate, setEnableEditDueDate] = useState(false);
+  const [enableDeleteTask, setEnableDeleteTask] = useState(false);
 
-  const item = route.params;
+  let item = route.params;
 
   return (
     <View
@@ -51,18 +55,16 @@ const EditTaskScreen = ({ route }) => {
       ]}
     >
       <View style={styles.wrapper}>
-        <TouchableOpacity style={styles.exit_icon}>
+        <TouchableOpacity
+          style={styles.exit_icon}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
           <SvgXml xml={CloseIcon} height={28} width={28} />
         </TouchableOpacity>
         <View style={styles.task_infor}>
-          <TouchableOpacity
-            style={
-              taskSelected
-                ? [styles.check_button, { backgroundColor: "#ffffff95" }]
-                : [styles.check_button, { backgroundColor: "#363636" }]
-            }
-            onPress={checkButtonOnPressHandler}
-          />
+          <CheckButton size={28} task={item} />
           <View style={styles.task_infor_wrapper}>
             <View style={styles.task_infor_container}>
               <Text
@@ -82,7 +84,12 @@ const EditTaskScreen = ({ route }) => {
             </View>
           </View>
 
-          <TouchableOpacity style={styles.edit_task_infor_button}>
+          <TouchableOpacity
+            style={styles.edit_task_infor_button}
+            onPress={() => {
+              setEnableEditTitle(true);
+            }}
+          >
             <SvgXml xml={EditIcon} height={28} width={28} />
           </TouchableOpacity>
         </View>
@@ -93,7 +100,12 @@ const EditTaskScreen = ({ route }) => {
             </View>
             <Text style={ModalStyles.body_text}>Task Time:</Text>
           </View>
-          <TouchableOpacity style={styles.edit_button}>
+          <TouchableOpacity
+            style={styles.edit_button}
+            onPress={() => {
+              setEnableEditDueDate(true);
+            }}
+          >
             <Text style={styles.edit_button_text}>
               {new Date(item.taskDueDate).toLocaleDateString("en-CL", {
                 weekday: "short",
@@ -113,7 +125,12 @@ const EditTaskScreen = ({ route }) => {
             </View>
             <Text style={ModalStyles.body_text}>Task Category:</Text>
           </View>
-          <TouchableOpacity style={styles.edit_button}>
+          <TouchableOpacity
+            style={styles.edit_button}
+            onPress={() => {
+              setEnableEditCategory(true);
+            }}
+          >
             <SvgXml
               xml={
                 Categories.find(
@@ -134,20 +151,64 @@ const EditTaskScreen = ({ route }) => {
             </View>
             <Text style={ModalStyles.body_text}>Task Priority:</Text>
           </View>
-          <TouchableOpacity style={styles.edit_button}>
+          <TouchableOpacity
+            style={styles.edit_button}
+            onPress={() => {
+              setEnableEditPriority(true);
+            }}
+          >
             <Text style={styles.edit_button_text}>{item.taskPriority}</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.delete_wrapper}>
+        <TouchableOpacity
+          style={styles.delete_wrapper}
+          onPress={() => {
+            setEnableDeleteTask(true);
+          }}
+        >
           <View style={styles.edit_title_icon_wrapper}>
             <SvgXml xml={TrashIcon} height={28} width={28} />
           </View>
           <Text style={styles.delete_title_text}>Delete Task</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.edit_task_button} activeOpacity={0.3}>
-        <Text style={styles.edit_task_button_text}>Edit Task</Text>
-      </TouchableOpacity>
+
+      <EditTaskTitleModal
+        visible={enableEditTitle}
+        onRequestClose={() => {
+          setEnableEditTitle(false);
+        }}
+        task={item}
+      />
+      <EditCategoriesModal
+        visible={enableEditCategory}
+        onRequestClose={() => {
+          setEnableEditCategory(false);
+        }}
+        task={item}
+      />
+      <EditPriorityModal
+        visible={enableEditPriority}
+        task={item}
+        onRequestClose={() => {
+          setEnableEditPriority(false);
+        }}
+      />
+      <EditDateDueModal
+        visible={enableEditDueDate}
+        task={item}
+        onRequestClose={() => {
+          setEnableEditDueDate(false);
+        }}
+      />
+      <DeleteTaskModal
+        visible={enableDeleteTask}
+        task={item}
+        onRequestClose={() => {
+          setEnableDeleteTask(false);
+        }}
+        navigation={navigation}
+      />
       <StatusBar style="light" />
     </View>
   );
@@ -181,14 +242,7 @@ const styles = StyleSheet.create({
   task_infor: {
     justifyContent: "space-between",
     flexDirection: "row",
-  },
-  check_button: {
-    height: 24,
-    width: 24,
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: WHITE_TEXT_COLOR,
-    marginTop: 10,
+    alignItems: "center",
   },
   task_infor_wrapper: {
     width: 250,
@@ -240,7 +294,6 @@ const styles = StyleSheet.create({
     color: "#FF4949",
     fontSize: 16,
     fontFamily: "Lato-Regular",
-    letterSpacing: 0.5,
   },
   edit_task_button: {
     alignItems: "center",
@@ -256,7 +309,6 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: WHITE_TEXT_COLOR,
     fontFamily: "Lato-Regular",
-    letterSpacing: 0.5,
   },
 });
 

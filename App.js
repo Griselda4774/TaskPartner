@@ -1,16 +1,20 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import StackNavigator from "./src/navigators/StackNavigator";
+import TaskStackNavigator from "./src/navigators/TaskStackNavigator";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import { LATO_FONTS } from "./src/constants/constants";
 
-import 'react-native-gesture-handler';
-import { createStackNavigator } from '@react-navigation/stack';
-import IntroStackNavigator from './src/navigators/IntroStackNavigator';
-import AuthenticateStackNavigator from './src/navigators/AuthenticateStackNavigator';
+import "react-native-gesture-handler";
+import { createStackNavigator } from "@react-navigation/stack";
+import IntroStackNavigator from "./src/navigators/IntroStackNavigator";
+import AuthenticateStackNavigator from "./src/navigators/AuthenticateStackNavigator";
 
-import CalenderScreen from './src/screens/CalendarScreen';
+import CalenderScreen from "./src/screens/CalendarScreen";
+import AppStackNavigator from "./src/navigators/AppStackNavigator";
+
+import { Provider } from "react-redux";
+import store from "./src/redux/store";
 
 const MainStack = createStackNavigator();
 
@@ -28,11 +32,13 @@ const App = () => {
     // </NavigationContainer>
     // <CalenderScreen/>
 
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <StackNavigator />
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <AppStackNavigator />
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </Provider>
   );
 };
 

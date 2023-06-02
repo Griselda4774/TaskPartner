@@ -28,9 +28,14 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
+import { useSelector, useDispatch } from "react-redux";
+import AddTaskModal from "../components/AddTaskModal";
 
 const HomeScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
+  const taskList = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
+  const [enableAddTask, setEnableAddTask] = useState(false);
 
   // Get all task from firestore
   const [tasks, setTasks] = useState([]);
@@ -145,6 +150,11 @@ const HomeScreen = ({ navigation }) => {
             // addTask(task[task.length - 1].taskID + 1);
             // console.log(task);
             // deleteTask(8);
+            console.log(
+              taskList.sort((a, b) => {
+                a.taskID - b.taskID;
+              })
+            );
           }}
         >
           <Image
@@ -160,12 +170,19 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.body}>
-        {Tasks.length === 0 ? (
+        {taskList.length === 0 ? (
           <HomeScreenBodyWithNoTask />
         ) : (
-          <HomeScreenBodyWithTask navigation={navigation} />
+          <HomeScreenBodyWithTask navigation={navigation} taskList={taskList} />
         )}
       </View>
+
+      <AddTaskModal
+        visible={enableAddTask}
+        onRequestClose={() => {
+          setEnableAddTask(false);
+        }}
+      />
       <StatusBar style="light" />
     </View>
   );
