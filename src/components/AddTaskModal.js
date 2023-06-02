@@ -34,7 +34,6 @@ const AddTaskModal = ({ visible, onRequestClose }) => {
   const now = new Date();
   const taskListSorted = [...taskList].sort((a, b) => a.taskID - b.taskID);
   const newID = taskListSorted[taskListSorted.length - 1].taskID + 1;
-  console.log(newID);
   now.setHours(now.getHours() + 2);
   const [task, setTask] = useState({
     taskID: newID,
@@ -49,14 +48,21 @@ const AddTaskModal = ({ visible, onRequestClose }) => {
   useEffect(() => {
     setFocusedId("1");
     setTask({
-      ...task,
+      taskID: newID,
       taskName: "",
       taskDetail: "",
       taskCategory: "Design",
       taskPriority: 1,
-      taskDueDate: "",
+      taskDueDate: now.toString(),
+      isCompleted: false,
     });
   }, [visible]);
+
+  useEffect(() => {
+    const taskListSorted = [...taskList].sort((a, b) => a.taskID - b.taskID);
+    const newID = taskListSorted[taskListSorted.length - 1].taskID + 1;
+    setTask((prevTask) => ({ ...prevTask, taskID: newID }));
+  }, [taskList]);
 
   const [enableChooseCategory, setEnableChooseCategory] = useState(false);
   const [enableChoosePriority, setEnableChoosePriority] = useState(false);
