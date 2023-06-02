@@ -12,6 +12,7 @@ import AuthenticateStackNavigator from './src/navigators/AuthenticateStackNaviga
 
 import CalenderScreen from './src/screens/CalendarScreen';
 import ChooseDateDueModal from "./src/components/ChooseDateDueModal";
+import SettingsScreen from "./src/screens/SettingsScreen";
 
 const MainStack = createStackNavigator();
 
@@ -30,7 +31,7 @@ const App = () => {
 
 
     // <SafeAreaProvider>
-    //   <ChooseDateDueModal/>
+    //   <SettingsScreen/>
     // </SafeAreaProvider>
 
     <SafeAreaProvider>

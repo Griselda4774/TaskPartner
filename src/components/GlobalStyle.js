@@ -67,4 +67,11 @@ export default StyleSheet.create({
     alignItems: "center",
     flex: 1,
   },
+
+  screen_header_text: {
+    color: "#fff",
+    fontSize: 22,
+    fontWeight: 400,
+    marginBottom: 15,
+  },
 });

@@ -22,6 +22,21 @@ import Search from "../../assets/otherIcons/search.svg";
 import ArrowDown from "../../assets/otherIcons/arrowDown.svg";
 import Back from "../../assets/otherIcons/back.svg";
 
+//ProfileScreen
+import Camera from "../../assets/otherIcons/ProfileScreen/camera.svg";
+import Flash from "../../assets/otherIcons/ProfileScreen/flash.svg";
+import Info_Circle from "../../assets/otherIcons/ProfileScreen/info-circle.svg";
+import Key from "../../assets/otherIcons/ProfileScreen/key.svg";
+import Like from "../../assets/otherIcons/ProfileScreen/like.svg";
+import LogOut from "../../assets/otherIcons/ProfileScreen/logout.svg";
+import Menu from "../../assets/otherIcons/ProfileScreen/menu.svg";
+import Setting from "../../assets/otherIcons/ProfileScreen/setting.svg";
+import User from "../../assets/otherIcons/ProfileScreen/user.svg";
+import Language from "../../assets/otherIcons/ProfileScreen/language-square.svg";
+import Brush from "../../assets/otherIcons/ProfileScreen/brush.svg";
+import Text from "../../assets/otherIcons/ProfileScreen/text.svg";
+
+
 export const CloseIcon = Close.toString();
 export const EditIcon = Edit.toString();
 export const TrashIcon = Trash.toString();
@@ -45,3 +60,17 @@ export const AddIcon = Add.toString();
 export const SearchIcon = Search.toString();
 export const ArrowDownIcon = ArrowDown.toString();
 export const BackIcon = Back.toString();
+
+//ProfileScreen
+export const CameraIcon = Camera.toString();
+export const FlashIcon = Flash.toString();
+export const InfoCircleIcon = Info_Circle.toString();
+export const KeyIcon = Key.toString();
+export const LikeIcon = Like.toString();
+export const LogOutIcon = LogOut.toString();
+export const MenuIcon = Menu.toString();
+export const SettingIcon = Setting.toString();
+export const UserIcon = User.toString();
+export const BrushIcon = Brush.toString();
+export const TextIcon = Text.toString();
+export const LanguageIcon = Language.toString();

@@ -9,7 +9,6 @@ import {
   Pressable,
 } from "react-native";
 import { useState } from "react";
-import { ScrollView } from "react-native-virtualized-view";
 
 import GlobalStyle from "../components/GlobalStyle";
 import TaskInfoList from "../components/TaskInfoList";
@@ -39,10 +38,8 @@ const CalenderScreen = ({ navigation }) => {
   }
 
   return (
-    <View style={GlobalStyle.container}>
-      <View style={{ alignItems: "center" }}>
-        <Text style={styles.header_text}>Calendar</Text>
-      </View>
+    <View style={[GlobalStyle.container, {alignItems: 'center'}]}>
+      <Text style={GlobalStyle.screen_header_text}>Calendar</Text>
       <View style={{ height: 120 }}>
         <CalendarTopBar/>
       </View>
@@ -81,13 +78,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 
-  header_text: {
-    color: "#fff",
-    fontSize: 22,
-    fontWeight: 400,
-    marginTop: 40,
-    marginBottom: 15,
-  },
 });
 
 export default CalenderScreen;

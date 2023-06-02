@@ -3,7 +3,7 @@ import React from "react";
 import HomeScreen from "../screens/HomeScreen";
 import CalendarScreen from "../screens/CalendarScreen";
 import FocuseScreen from "../screens/FocuseScreen";
-import ProfileScreen from "../screens/ProfileScreen";
+import ProfileStackNavigator from "./ProfileStackNavigator";
 import { View, TouchableOpacity, Text } from "react-native";
 import {
   GREY_BACKGROUND_COLOR,
@@ -79,7 +79,7 @@ const BottomTabNavigator = () => {
         }}
       />
       <BottomTab.Screen name="Focuse" component={FocuseScreen} />
-      <BottomTab.Screen name="Profile" component={ProfileScreen} />
+      <BottomTab.Screen name="Profile" component={ProfileStackNavigator} />
     </BottomTab.Navigator>
   );
 };

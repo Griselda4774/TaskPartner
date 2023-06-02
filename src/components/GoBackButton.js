@@ -21,7 +21,7 @@ const GoBackButton = (props) => {
     
     return (
       <Pressable
-        style={[GlobalStyle.pressable, { marginTop: 58 }]}
+        style={[GlobalStyle.pressable, { marginTop: 58 }, {...props.buttonStyle}]}
         onPressIn={BackPressInHandler}
         onPressOut={BackPressOutHandler}
         onPress={props.onPressFunction}
