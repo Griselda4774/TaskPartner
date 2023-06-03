@@ -27,13 +27,20 @@ import ChoosePriorityModal from "./ChoosePriorityModal";
 import ChooseDateDueModal from "./ChooseDateDueModal";
 import { useSelector, useDispatch } from "react-redux";
 import { addTask } from "../redux/actions";
+import { addTaskToFirestore } from "../firebase/task";
 
 const AddTaskModal = ({ visible, onRequestClose }) => {
-  const taskList = useSelector((state) => state.tasks);
+  const taskList = useSelector((state) => state.tasks.tasks);
+  const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const now = new Date();
-  const taskListSorted = [...taskList].sort((a, b) => a.taskID - b.taskID);
-  const newID = taskListSorted[taskListSorted.length - 1].taskID + 1;
+  let newID;
+  if (taskList.length == 0) {
+    newID = 1;
+  } else {
+    const taskListSorted = [...taskList].sort((a, b) => a.taskID - b.taskID);
+    newID = taskListSorted[taskListSorted.length - 1].taskID + 1;
+  }
   now.setHours(now.getHours() + 2);
   const [task, setTask] = useState({
     taskID: newID,
@@ -43,6 +50,7 @@ const AddTaskModal = ({ visible, onRequestClose }) => {
     taskPriority: 1,
     taskDueDate: now.toString(),
     isCompleted: false,
+    userID: user.email,
   });
   const [focusedId, setFocusedId] = useState("1");
   useEffect(() => {
@@ -55,13 +63,18 @@ const AddTaskModal = ({ visible, onRequestClose }) => {
       taskPriority: 1,
       taskDueDate: now.toString(),
       isCompleted: false,
+      userID: user.email,
     });
   }, [visible]);
 
   useEffect(() => {
-    const taskListSorted = [...taskList].sort((a, b) => a.taskID - b.taskID);
-    const newID = taskListSorted[taskListSorted.length - 1].taskID + 1;
-    setTask((prevTask) => ({ ...prevTask, taskID: newID }));
+    if (taskList.length == 0) {
+      setTask((prevTask) => ({ ...prevTask, taskID: 1 }));
+    } else {
+      const taskListSorted = [...taskList].sort((a, b) => a.taskID - b.taskID);
+      const newID = taskListSorted[taskListSorted.length - 1].taskID + 1;
+      setTask((prevTask) => ({ ...prevTask, taskID: newID }));
+    }
   }, [taskList]);
 
   const [enableChooseCategory, setEnableChooseCategory] = useState(false);
@@ -184,6 +197,7 @@ const AddTaskModal = ({ visible, onRequestClose }) => {
               disabled={enableAddTask}
               onPress={() => {
                 dispatch(addTask(task));
+                addTaskToFirestore(task);
                 onRequestClose();
               }}
             >

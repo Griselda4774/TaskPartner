@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, Image, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  KeyboardAvoidingView,
+} from "react-native";
 import { useState } from "react";
 import GlobalStyle from "../components/GlobalStyle";
 import UsernameBox from "../components/UsernameBox";
@@ -6,12 +12,15 @@ import PasswordBox from "../components/PasswordBox";
 import PurpleButton from "../components/PurpleButton";
 import GoBackButton from "../components/GoBackButton";
 import AuthenticateFooter from "../components/AuthenticateFooter";
+import { registerUser } from "../firebase/user";
 
-import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
-
-export default function RegisterScreen({navigation}) {
-
+export default function RegisterScreen({ navigation }) {
   //Navigators:
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
   const onGoToLoginHandler = () => {
     navigation.replace("Login_Screen");
   };
@@ -66,16 +75,29 @@ export default function RegisterScreen({navigation}) {
           { justifyContent: "center", backgroundColor: "#000" },
         ]}
       >
-        <UsernameBox style={{ marginTop: 30 }}/>
+        <UsernameBox
+          style={{ marginTop: 30 }}
+          onChangeText={(text) => {
+            setUser({ ...user, email: text });
+          }}
+        />
         <PasswordBox
           style={{ marginBottom: 30, marginTop: 30 }}
           title="Password"
-
+          onChangeText={(text) => {
+            setUser({ ...user, password: text });
+          }}
         />
         <PasswordBox style={{ marginBottom: 10 }} title="Confirm Password" />
       </View>
       <View style={[{ flex: 1 }, styles.login_flexbox_container]}>
-        <PurpleButton viewStyle={{ marginTop: 50 }} />
+        <PurpleButton
+          viewStyle={{ marginTop: 50 }}
+          onPressFunction={() => {
+            console.log(user);
+            registerUser(user.email, user.password);
+          }}
+        />
       </View>
       <AuthenticateFooter
         footerText="Already have an account?"
@@ -88,7 +110,6 @@ export default function RegisterScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-
   login_flexbox_container: {
     backgroundColor: "#000",
     height: "100%",
@@ -106,5 +127,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "background: #FFFFFFDE",
   },
-
 });

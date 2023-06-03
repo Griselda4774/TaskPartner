@@ -10,6 +10,7 @@ import { useFonts } from "expo-font";
 import { TextInput } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { editTask } from "../redux/actions";
+import { updateDocumentToFirestore } from "../firebase/task";
 
 const EditTaskTitleModal = ({ visible, onRequestClose, task }) => {
   const [focusedId, setFocusedId] = useState("1");
@@ -101,6 +102,7 @@ const EditTaskTitleModal = ({ visible, onRequestClose, task }) => {
                 task.taskName = taskName;
                 task.taskDetail = taskDetail;
                 dispatch(editTask(task));
+                updateDocumentToFirestore(task);
                 onRequestClose();
               }}
             >

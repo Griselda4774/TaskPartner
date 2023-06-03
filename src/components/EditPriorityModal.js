@@ -17,6 +17,7 @@ import { FlagIcon } from "../constants/Icons";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { editTask } from "../redux/actions";
+import { updateDocumentToFirestore } from "../firebase/task";
 
 const EditPriorityModal = ({ visible, onRequestClose, task }) => {
   const dispatch = useDispatch();
@@ -75,6 +76,7 @@ const EditPriorityModal = ({ visible, onRequestClose, task }) => {
               onPress={() => {
                 task.taskPriority = selectedID;
                 dispatch(editTask(task));
+                updateDocumentToFirestore(task);
                 onRequestClose();
               }}
             >

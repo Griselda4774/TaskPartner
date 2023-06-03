@@ -5,10 +5,8 @@ import { SearchIcon } from "../constants/Icons";
 import {
   GREY_COLOR,
   GREY_TEXT_COLOR,
-  LATO_FONTS,
   WHITE_TEXT_COLOR,
 } from "../constants/constants";
-import { useFonts } from "expo-font";
 import ExpandableComponent from "./ExpandableComponent";
 import { ScrollView } from "react-native-virtualized-view";
 
@@ -41,21 +39,25 @@ const HomeScreenBodyWithTask = ({ navigation, taskList }) => {
         <ExpandableComponent
           title={"Tasks"}
           navigation={navigation}
-          listItem={taskList.filter(
-            (task) =>
-              task.taskName.toLowerCase().includes(keySearch.toLowerCase()) &&
-              !task.isCompleted
-          )}
+          listItem={taskList
+            .filter(
+              (task) =>
+                task.taskName.toLowerCase().includes(keySearch.toLowerCase()) &&
+                !task.isCompleted
+            )
+            .sort((a, b) => a.taskName.localeCompare(b.taskName))}
           titleWidth={104}
         />
         <ExpandableComponent
           title={"Completed"}
           navigation={navigation}
-          listItem={taskList.filter(
-            (task) =>
-              task.taskName.toLowerCase().includes(keySearch.toLowerCase()) &&
-              task.isCompleted
-          )}
+          listItem={taskList
+            .filter(
+              (task) =>
+                task.taskName.toLowerCase().includes(keySearch.toLowerCase()) &&
+                task.isCompleted
+            )
+            .sort((a, b) => a.taskName.localeCompare(b.taskName))}
           titleWidth={136}
         />
       </ScrollView>

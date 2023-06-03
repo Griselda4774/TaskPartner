@@ -13,6 +13,7 @@ import ModalStyles from "./ModalStyles";
 import { SvgXml } from "react-native-svg";
 import { useDispatch } from "react-redux";
 import { editTask } from "../redux/actions";
+import { updateDocumentToFirestore } from "../firebase/task";
 
 const EditCategoriesModal = ({ visible, onRequestClose, task }) => {
   const dispatch = useDispatch();
@@ -84,6 +85,7 @@ const EditCategoriesModal = ({ visible, onRequestClose, task }) => {
                   return category.name == selected;
                 }).name;
                 dispatch(editTask(task));
+                updateDocumentToFirestore(task);
                 onRequestClose();
               }}
             >

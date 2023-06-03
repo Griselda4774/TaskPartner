@@ -6,6 +6,7 @@ import { LATO_FONTS } from "../constants/constants";
 import { useFonts } from "expo-font";
 import { useDispatch } from "react-redux";
 import { deleteTask } from "../redux/actions";
+import { deleteTaskFromFirestore } from "../firebase/task";
 
 const DeleteTaskModal = ({ visible, onRequestClose, task, navigation }) => {
   const dispatch = useDispatch();
@@ -50,6 +51,7 @@ const DeleteTaskModal = ({ visible, onRequestClose, task, navigation }) => {
               activeOpacity={0.3}
               onPress={() => {
                 dispatch(deleteTask(task));
+                deleteTaskFromFirestore(task);
                 onRequestClose();
                 navigation.navigate("Home");
               }}

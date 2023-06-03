@@ -8,17 +8,26 @@ import {
   PURPLE_COLOR,
   WHITE_TEXT_COLOR,
 } from "../constants/constants";
+import { useDispatch } from "react-redux";
+import { editTask } from "../redux/actions";
+import { updateDocumentToFirestore } from "../firebase/task";
 
 const EditDateDueModal = ({ visible, onRequestClose, task }) => {
-  const [dateString, setDateString] = useState("");
-  const [timeString, setTimeString] = useState("");
-
-  const [date, setDate] = useState(
+  const [dateString, setDateString] = useState(
     new Date(task.taskDueDate).toLocaleDateString("en-CA")
   );
+  const [timeString, setTimeString] = useState(
+    new Date(task.taskDueDate).toLocaleString("en-CA", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    })
+  );
   useEffect(() => {
-    setDate(new Date(task.taskDueDate).toLocaleDateString("en-CA"));
+    setDateString(new Date(task.taskDueDate).toLocaleDateString("en-CA"));
   }, [visible]);
+
+  const dispatch = useDispatch();
 
   return (
     <Modal visible={visible} transparent={true} animationType="slide">
@@ -38,8 +47,8 @@ const EditDateDueModal = ({ visible, onRequestClose, task }) => {
                 textHeaderFontSize: 18,
               }}
               mode="datepicker"
-              current={date}
-              selected={date}
+              current={dateString}
+              selected={dateString}
               minuteInterval={1}
               onDateChange={(date) => {
                 setDateString(date);
@@ -65,12 +74,16 @@ const EditDateDueModal = ({ visible, onRequestClose, task }) => {
                 onPress={() => {
                   const [year, month, day] = dateString.split("/");
                   const [hours, minutes] = timeString.split(":");
-                  console.log(
-                    `${year}, ${month}, ${day}, ${hours}, ${minutes}`
-                  );
-                  console.log(
-                    new Date(year, month - 1, day, hours, minutes).toString()
-                  );
+                  task.taskDueDate = new Date(
+                    year,
+                    month - 1,
+                    day,
+                    hours,
+                    minutes
+                  ).toString();
+                  dispatch(editTask(task));
+                  updateDocumentToFirestore(task);
+                  onRequestClose();
                 }}
               >
                 <Text style={ModalStyles.title_white_text}>Edit</Text>

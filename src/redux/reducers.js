@@ -1,10 +1,10 @@
 import { Tasks } from "../../assets/data/Tasks";
 
 const taskListInitialState = {
-  tasks: [...Tasks],
+  tasks: [],
 };
 
-const taskListReducer = (state = taskListInitialState, action) => {
+export const taskListReducer = (state = taskListInitialState, action) => {
   switch (action.type) {
     case "GET_TASKS":
       return {
@@ -30,9 +30,33 @@ const taskListReducer = (state = taskListInitialState, action) => {
           (task) => task.taskID != action.payload.taskID
         ),
       };
+    case "RESET_TASKS":
+      return {
+        ...state,
+        tasks: [],
+      };
     default:
       return state;
   }
 };
 
-export default taskListReducer;
+const userInitialState = {
+  user: {
+    email: "",
+    isLogin: false,
+  },
+};
+
+export const userReducer = (state = userInitialState, action) => {
+  switch (action.type) {
+    case "LOGIN":
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case "LOGOUT":
+      return { ...state, user: userInitialState.user };
+    default:
+      return state;
+  }
+};

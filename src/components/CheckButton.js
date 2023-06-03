@@ -5,6 +5,7 @@ import { SvgXml } from "react-native-svg";
 import { TickIcon } from "../constants/Icons";
 import { useDispatch } from "react-redux";
 import { editTask } from "../redux/actions";
+import { updateDocumentToFirestore } from "../firebase/task";
 
 const CheckButton = ({ size, style, task }) => {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const CheckButton = ({ size, style, task }) => {
         let newTask = task;
         newTask.isCompleted = !isChecked;
         dispatch(editTask(newTask));
+        updateDocumentToFirestore(newTask);
       }}
     >
       {isChecked ? (
