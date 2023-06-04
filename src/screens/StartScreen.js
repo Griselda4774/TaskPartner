@@ -9,11 +9,15 @@ export default function StartScreen({ navigation }){
 
     const onBackPressHandler = () => {
         navigation.navigate("OnBoardingScreen_1");
-    }
+    };
 
     const onLoginPressHandler = () => {
       navigation.navigate("Authenticate");
-    }
+    };
+
+    const onGuestPressHandler = () => {
+      navigation.replace("BottomTab");
+    };
 
     const [pressableSkipIsHovering, SetPressableSkipIsHovering] =
       useState(false);
@@ -84,6 +88,7 @@ export default function StartScreen({ navigation }){
               },
               styles.button,
             ]}
+            onPress={onGuestPressHandler}
           >
             <Text style={styles.button_text}>GUEST</Text>
           </Pressable>

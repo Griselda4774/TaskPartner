@@ -1,20 +1,19 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 
-const TaskStateButton = (props) => {
+const TaskStateButton = ({ onPressHandler, isPress, title, style}) => {
   return (
-    <Pressable
-      onPress={props.OnPressHandler}
-      pressed={props.isPress}
-      style={[
-        styles.button,
-        {...props.style}
-      ]}
-    >
-      <Text style={styles.button_text}>{props.title}</Text>
-    </Pressable>
+    <View>
+      <Pressable
+        onPress={onPressHandler}
+        pressed={isPress}
+        style={[styles.button, { ...style }]}
+      >
+        <Text style={styles.button_text}>{title}</Text>
+      </Pressable>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   button: {

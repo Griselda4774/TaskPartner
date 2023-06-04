@@ -10,54 +10,71 @@ import AuthenticateFooter from "../components/AuthenticateFooter";
 import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
 
 export default function RegisterScreen({navigation}) {
+  //Use States:
+  const [username, SetUsername] = useState("");
+  const [password, SetPassword] = useState("");
+  const [confirmPassword, SetConfirmPassword] = useState("");
+
+  const [isEmptyInput, SetIsEmptyInput] = useState(true);
+  const [isEmptyUsername, SetIsEmptyUsername] = useState(true);
+  const [isEmptyPassword, SetIsEmptyPassword] = useState(true);
+  const [isEmptyConfirmPassword, SetIsEmptyConfirmPassword] = useState(true);
 
   //Navigators:
   const onGoToLoginHandler = () => {
-    navigation.replace("Login_Screen");
+    navigation.popToTop("Login_Screen");
   };
 
-  //Use States:
-  // const [Username, SetUsername] = useState("");
-  // const [Password, SetPassword] = useState("");
-  // const [ConfirmPassword, SetConfirmPassword] = useState("");
+  const onBackPressHandler = () => {
+    navigation.navigate("Login_Screen");
+  };
 
-  // const [IsEmptyInput, SetIsEmptyInput] = useState(true);
-  // const [IsEmptyUsername, SetIsEmptyUsername] = useState(true);
-  // const [IsEmptyPassword, SetIsEmptyPassword] = useState(true);
-  // const [IsEmptyConfirmPassword, SetIsEmptyConfirmPassword] = useState(true);
 
-  // function onUsernameTextChange(value) {
-  //   SetUsername(value);
-  //   if (Username.trim().length === 0) SetIsEmptyUsername(true);
-  //   else {
-  //     SetIsEmptyUsername(false);
-  //     if (IsEmptyPassword === false && IsEmptyConfirmPassword === false) SetIsEmptyInput(false);
-  //   }
-  // }
+  const onRegisterPressHandler = () => {
+    navigation.popToTop();
+  };
 
-  // function onPasswordTextChange(value) {
-  //   SetPassword(value);
-  //   if (Password.trim().length === 0) SetIsEmptyPassword(true);
-  //   else {
-  //     SetIsEmptyPassword(false);
-  //     if (IsEmptyUsername === false && IsEmptyConfirmPassword === false) SetIsEmptyInput(false);
-  //   }
-  // }
+  //Function:
+  function onUsernameTextChange(value) {
+    SetUsername(value);
+    if (username.trim().length === 0) SetIsEmptyUsername(true);
+    else {
+      SetIsEmptyUsername(false);
+      if (isEmptyPassword === false && isEmptyConfirmPassword === false)
+        SetIsEmptyInput(false);
+    }
+  }
 
-  // function onConfirmPasswordTextChange(value) {
-  //   SetConfirmPassword(value);
-  //   if (ConfirmPassword.trim().length === 0) SetIsEmptyConfirmPassword(true);
-  //   else {
-  //     SetIsEmptyConfirmPassword(false);
-  //     if (IsEmptyUsername === false && IsEmptyPassword === false) SetIsEmptyInput(false);
-  //   }
-  // }
+  function onPasswordTextChange(value) {
+    SetPassword(value);
+    if (password.trim().length === 0) SetIsEmptyPassword(true);
+    else {
+      SetIsEmptyPassword(false);
+      if (isEmptyUsername === false && isEmptyConfirmPassword === false)
+        SetIsEmptyInput(false);
+    }
+  }
+
+  function onConfirmPasswordTextChange(value) {
+    SetConfirmPassword(value);
+    if (confirmPassword.trim().length === 0) SetIsEmptyConfirmPassword(true);
+    else {
+      SetIsEmptyConfirmPassword(false);
+      if (isEmptyUsername === false && isEmptyPassword === false)
+        SetIsEmptyInput(false);
+    }
+  }
 
   return (
     // <KeyboardAvoidingWrapper>
     <View style={GlobalStyle.container}>
-      <GoBackButton onPressFunction={onGoToLoginHandler} />
-      <Text style={[GlobalStyle.utils_title_text, { marginLeft: 24, marginTop: 20, }]}>
+      <GoBackButton onPressFunction={onBackPressHandler} />
+      <Text
+        style={[
+          GlobalStyle.utils_title_text,
+          { marginLeft: 24, marginTop: 20 },
+        ]}
+      >
         Register
       </Text>
       <View
@@ -66,16 +83,27 @@ export default function RegisterScreen({navigation}) {
           { justifyContent: "center", backgroundColor: "#000" },
         ]}
       >
-        <UsernameBox style={{ marginTop: 30 }}/>
+        <UsernameBox
+          style={{ marginTop: 30 }}
+          onChangeText={onUsernameTextChange}
+        />
         <PasswordBox
           style={{ marginBottom: 30, marginTop: 30 }}
           title="Password"
-
+          onChangeText={onPasswordTextChange}
         />
-        <PasswordBox style={{ marginBottom: 10 }} title="Confirm Password" />
+        <PasswordBox
+          style={{ marginBottom: 10 }}
+          title="Confirm Password"
+          onChangeText={onConfirmPasswordTextChange}
+        />
       </View>
       <View style={[{ flex: 1 }, styles.login_flexbox_container]}>
-        <PurpleButton viewStyle={{ marginTop: 50 }} />
+        <PurpleButton
+          viewStyle={{ marginTop: 50 }}
+          title="Register"
+          onPressFunction={onRegisterPressHandler}
+        />
       </View>
       <AuthenticateFooter
         footerText="Already have an account?"

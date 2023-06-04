@@ -2,14 +2,14 @@ import { StyleSheet, Text, View, Image, Pressable, Button } from "react-native";
 import { useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
 
-const UsernameBox = (props) => {
+const UsernameBox = ({style, onChangeText}) => {
     return(
-        <View style={[styles.container, {...props.style}]}>
+        <View style={[styles.container, {...style}]}>
             <Text style={styles.title_text}>Username</Text>
             <TextInput placeholder="Enter your username"
                 style={styles.text_input}
                 placeholderTextColor='#535353'
-                onChangeText={props.onChangeText}
+                onChangeText={onChangeText}
                 />
         </View>
     );

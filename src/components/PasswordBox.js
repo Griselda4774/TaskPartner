@@ -2,20 +2,20 @@ import { StyleSheet, Text, View, Image, Pressable, Button } from "react-native";
 import { useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
 
-const PasswordBox = (props) => {
+const PasswordBox = ({ style, title, onChangeText }) => {
   return (
-    <View style={[styles.container, { ...props.style }]}>
-      <Text style={styles.title_text}>{props.title}</Text>
+    <View style={[styles.container, { ...style }]}>
+      <Text style={styles.title_text}>{title}</Text>
       <TextInput
         placeholder="* * * * * * * * * * *"
         style={styles.text_input}
         placeholderTextColor="#535353"
         secureTextEntry
-        onChangeText={props.onChangeText}
+        onChangeText={onChangeText}
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

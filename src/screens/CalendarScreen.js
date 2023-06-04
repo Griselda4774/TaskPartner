@@ -19,6 +19,11 @@ const CalenderScreen = ({ navigation }) => {
 
   const [isTodayPressed, SetIsTodayPressed] = useState(true);
   const [isCompletedPressed, SetIsCompletedPressed] = useState(false);
+  const [selectedDate, SetSelectedDate] = useState(new Date());
+  
+  const handleSelectedDateReceived = (date) => {
+    SetSelectedDate(date);
+  };
 
   function onTodayPressedHandler()
   {
@@ -39,15 +44,15 @@ const CalenderScreen = ({ navigation }) => {
 
   return (
     <View style={[GlobalStyle.container, {alignItems: 'center'}]}>
-      <Text style={GlobalStyle.screen_header_text}>Calendar</Text>
-      <View style={{ height: 120 }}>
-        <CalendarTopBar/>
+      <Text style={[GlobalStyle.screen_header_text, {marginTop: 50}]}>Calendar</Text>
+      <View style={{ height: 120, }}>
+        <CalendarTopBar onSelectedDateReceived={handleSelectedDateReceived}/>
       </View>
-      <View style={{ marginHorizontal: 20 }}>
-        <View style={styles.task_state_switch}>
+      <View style={{ marginHorizontal: 20, }}>
+        <View style={[styles.task_state_switch, {marginHorizontal: 8,}]}>
           <TaskStateButton
             title="Today"
-            OnPressHandler={onTodayPressedHandler}
+            onPressHandler={onTodayPressedHandler}
             style={{
               backgroundColor:  isTodayPressed  ? "#8687E7" : "#4C4C4C",
               borderColor:  isTodayPressed  ? "#8687E7" : "#C0C0C0",
@@ -55,14 +60,14 @@ const CalenderScreen = ({ navigation }) => {
           />
           <TaskStateButton
             title="Completed"
-            OnPressHandler={onCompletedPressedHandler}
+            onPressHandler={onCompletedPressedHandler}
             style={{
               backgroundColor:  isTodayPressed  ? "#4C4C4C" : "#8687E7",
               borderColor:  isTodayPressed  ? "#C0C0C0" : "#8687E7",
             }}
           />
         </View>
-        <TaskInfoList title={"All Tasks"} navigation={navigation} />
+          <TaskInfoList navigation={navigation} isCompletedMode={isCompletedPressed} selectedDate={selectedDate}/>
       </View>
     </View>
   );
@@ -72,9 +77,10 @@ const styles = StyleSheet.create({
   task_state_switch: {
     alignItems: "center",
     justifyContent: "center",
-    height: 105,
-    marginTop: 25,
-    backgroundColor: "#4C4C4C",
+    height: 80,
+    marginTop: 20,
+    borderColor: "#4C4C4C",
+    borderWidth: 2,
     flexDirection: "row",
   },
 

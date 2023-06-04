@@ -17,7 +17,7 @@ export default function LoginScreen({navigation}) {
   };
 
   const onRegisterPressHandler = () => {
-    navigation.replace("Register_Screen");
+    navigation.navigate("Register_Screen");
   };
 
   //Use States:
@@ -65,7 +65,7 @@ export default function LoginScreen({navigation}) {
         />
       </View>
       <View style={[{ flex: 1 }, styles.login_flexbox_container]}>
-        <PurpleButton isDisable={IsEmptyLoginInput}/>
+        <PurpleButton isDisable={IsEmptyLoginInput} title="Login"/>
         <View
           style={{
             borderBottomColor: "#fff",
@@ -92,7 +92,7 @@ export default function LoginScreen({navigation}) {
         onOptionPressFunction={onRegisterPressHandler}
       />
     </View>
-    // </KeyboardAvoidingWrapper>
+    // </KeyboardAvoidingWrapper> 
   );
 }
 

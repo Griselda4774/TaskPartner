@@ -4,12 +4,12 @@ import { Pressable, Text, StyleSheet, View } from "react-native";
 import GlobalStyle from "./GlobalStyle";
 import { useState } from "react";
 
-const PurpleButton = (props) => {
+const PurpleButton = ({viewStyle, isDisable, onPressFunction, style, title}) => {
 
     const [IsDisable, SetIsDisable] = useState(true);
 
     return (
-      <View style={[styles.container, {...props.viewStyle}]}>
+      <View style={[styles.container, {...viewStyle}]}>
         {/* {IsDisable ? (
           <Pressable
             disabled={props.isDisable}
@@ -46,19 +46,19 @@ const PurpleButton = (props) => {
           </Pressable>
         )} */}
         <Pressable
-          disabled={props.isDisable}
-          onPress={props.onPressFunction}
+          disabled={isDisable}
+          onPress={onPressFunction}
           style={({ pressed }) => [
             {
               backgroundColor: pressed ? "#8687E780" : "#8687E7",
               flex: 1,
             },
             styles.button,
-            { ...props.style },
+            { ...style },
           ]}
         >
           <Text style={[GlobalStyle.pressable_text, { color: "#fff" }]}>
-            Login
+            {title}
           </Text>
         </Pressable>
       </View>

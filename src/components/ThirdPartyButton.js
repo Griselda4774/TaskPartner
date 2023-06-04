@@ -2,7 +2,7 @@ import React from "react";
 
 import { Pressable, Text, StyleSheet, Image, View } from "react-native";
 
-const ThirdPartyButton = (props) => {
+const ThirdPartyButton = ({pressableStyle, imageStyle, imageSource, thirdPartyName}) => {
   return (
     <Pressable
       style={({ pressed }) => [
@@ -11,7 +11,7 @@ const ThirdPartyButton = (props) => {
           margin: 24,
         },
         styles.button,
-        { ...props.pressableStyle },
+        { ...pressableStyle },
       ]}
     >
       <View
@@ -22,11 +22,11 @@ const ThirdPartyButton = (props) => {
         }}
       >
         <View style={[styles.container, {flex: 1}]}>
-          <Image style={[styles.image, {...props.imageStyle}]} source={props.imageSource} />
+          <Image style={[styles.image, {...imageStyle}]} source={imageSource} />
         </View>
         
         <View style={{flex: 4, justifyContent: 'center', marginLeft: 60}}>
-          <Text style={styles.button_text}>Login with {props.thirdPartyName}</Text>
+          <Text style={styles.button_text}>Login with {thirdPartyName}</Text>
         </View>
       </View>
     </Pressable>

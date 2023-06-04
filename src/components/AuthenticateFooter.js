@@ -4,7 +4,7 @@ import { View, Pressable, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 
 
-const AuthenticateFooter = (props) => {
+const AuthenticateFooter = ({footerText, onOptionPressFunction, optionChose}) => {
 
     const [pressableOptionIsHovering, SetPressableOptionIsHovering] =
       useState(false);
@@ -30,11 +30,11 @@ const AuthenticateFooter = (props) => {
           flexDirection: "row",
         }}
       >
-        <Text style={styles.footer_text}>{props.footerText}</Text>
+        <Text style={styles.footer_text}>{footerText}</Text>
         <Pressable
           onPressIn={OptionPressInHandler}
           onPressOut={OptionPressOutHandler}
-          onPress={props.onOptionPressFunction}
+          onPress={onOptionPressFunction}
         >
           <Text
             style={[
@@ -47,7 +47,7 @@ const AuthenticateFooter = (props) => {
               },
             ]}
           >
-            {props.optionChose}
+            {optionChose}
           </Text>
         </Pressable>
       </View>

@@ -33,6 +33,7 @@ const TaskDueDateText = ({ item }) => {
       clearInterval(interval);
     };
   }, []);
+
   return (
     <Text
       style={
@@ -70,8 +71,159 @@ const TaskCategory = ({ categories, item }) => {
   );
 };
 
+const DisplayMode = (navigation, isCompletedMode, selectedDate) => {
 
-const TaskInfoList = ({ navigation }) => {
+  if (isCompletedMode) {
+    return (
+      <FlatList
+        data={Tasks}
+        keyExtractor={(item) => item.taskID}
+        renderItem={({ item }) => {
+
+          const itemOnPressHandler = (item) => {
+            navigation.navigate("EditTask", item);
+          };
+
+          const dueDate = new Date(item.taskDueDate);
+
+          const isSelectedDate =
+            dueDate.getDate() === selectedDate.getDate() &&
+            dueDate.getMonth() === selectedDate.getMonth() &&
+            dueDate.getFullYear() === selectedDate.getFullYear();
+
+          return (
+            <View>
+              {(item.isCompleted && isSelectedDate) ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    itemOnPressHandler(item);
+                  }}
+                >
+                  <View style={styles.task_item_wrapper}>
+                    <View style={styles.check_button_wrapper}>
+                      <CheckButton size={24} />
+                    </View>
+                    <View style={styles.task_infor_wrapper}>
+                      <View style={styles.task_title_wrapper}>
+                        <Text
+                          style={
+                            item.isCompleted
+                              ? [
+                                  styles.task_title_text,
+                                  {
+                                    textDecorationLine: "line-through",
+                                    color: GREY_TEXT_COLOR,
+                                  },
+                                ]
+                              : [styles.task_title_text]
+                          }
+                        >
+                          {item.taskName}
+                        </Text>
+                      </View>
+                      <View style={styles.task_body}>
+                        <View style={styles.task_due_wrapper}>
+                          <TaskDueDateText item={item} />
+                        </View>
+                        <View style={styles.task_type_wrapper}>
+                          <TaskCategory categories={Categories} item={item} />
+                          <View style={styles.task_priority_wrapper}>
+                            <SvgXml xml={FlagIcon} height={20} width={20} />
+                            <Text style={styles.task_priority_text}>
+                              {item.taskPriority}
+                            </Text>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              ) : (
+                null
+              )}
+            </View>
+          );
+        }}
+      />
+    );
+  } else {
+    return (
+      <FlatList
+        style={{height: 200}}
+        data={Tasks}
+        keyExtractor={(item) => item.taskID}
+        renderItem={({ item }) => {
+
+          const itemOnPressHandler = (item) => {
+            navigation.navigate("EditTask", item);
+          };
+
+          const dueDate = new Date(item.taskDueDate);
+
+          const isSelectedDate =
+            dueDate.getDate() === selectedDate.getDate() &&
+            dueDate.getMonth() === selectedDate.getMonth() &&
+            dueDate.getFullYear() === selectedDate.getFullYear();
+          
+          return (
+            <View>
+              {isSelectedDate ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    itemOnPressHandler(item);
+                  }}
+                >
+                  <View style={styles.task_item_wrapper}>
+                    <View style={styles.check_button_wrapper}>
+                      <CheckButton size={24} />
+                    </View>
+                    <View style={styles.task_infor_wrapper}>
+                      <View style={styles.task_title_wrapper}>
+                        <Text
+                          style={
+                            item.isCompleted
+                              ? [
+                                  styles.task_title_text,
+                                  {
+                                    textDecorationLine: "line-through",
+                                    color: GREY_TEXT_COLOR,
+                                  },
+                                ]
+                              : [styles.task_title_text]
+                          }
+                        >
+                          {item.taskName}
+                        </Text>
+                      </View>
+                      <View style={styles.task_body}>
+                        <View style={styles.task_due_wrapper}>
+                          <TaskDueDateText item={item} />
+                        </View>
+                        <View style={styles.task_type_wrapper}>
+                          <TaskCategory categories={Categories} item={item} />
+                          <View style={styles.task_priority_wrapper}>
+                            <SvgXml xml={FlagIcon} height={20} width={20} />
+                            <Text style={styles.task_priority_text}>
+                              {item.taskPriority}
+                            </Text>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              ) : (
+                null
+              )}
+            </View>
+          );
+        }}
+      />
+    );
+  }
+};
+
+const TaskInfoList = ({ navigation, isCompletedMode, selectedDate}) => {
 
   const [heightLayout, setHeightLayout] = useState(0);
   const [expanded, setExpanded] = useState(true);
@@ -85,62 +237,8 @@ const TaskInfoList = ({ navigation }) => {
 
 
   return (
-    <View style={{ overflow: "hidden", width: "100%", height: heightLayout }}>
-      <FlatList
-        data={Tasks}
-        keyExtractor={(item) => item.taskID}
-        renderItem={({ item }) => {
-          const itemOnPressHandler = (item) => {
-            navigation.navigate("EditTask", item);
-          };
-          return (
-            <TouchableOpacity
-              onPress={() => {
-                itemOnPressHandler(item);
-              }}
-            >
-              <View style={styles.task_item_wrapper}>
-                <View style={styles.check_button_wrapper}>
-                  <CheckButton size={24} />
-                </View>
-                <View style={styles.task_infor_wrapper}>
-                  <View style={styles.task_title_wrapper}>
-                    <Text
-                      style={
-                        item.isCompleted
-                          ? [
-                              styles.task_title_text,
-                              {
-                                textDecorationLine: "line-through",
-                                color: GREY_TEXT_COLOR,
-                              },
-                            ]
-                          : [styles.task_title_text]
-                      }
-                    >
-                      {item.taskName}
-                    </Text>
-                  </View>
-                  <View style={styles.task_body}>
-                    <View style={styles.task_due_wrapper}>
-                      <TaskDueDateText item={item} />
-                    </View>
-                    <View style={styles.task_type_wrapper}>
-                      <TaskCategory categories={Categories} item={item} />
-                      <View style={styles.task_priority_wrapper}>
-                        <SvgXml xml={FlagIcon} height={20} width={20} />
-                        <Text style={styles.task_priority_text}>
-                          {item.taskPriority}
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </TouchableOpacity>
-          );
-        }}
-      />
+    <View style={{ flex: 1 }}>
+      {DisplayMode(navigation, isCompletedMode, selectedDate)}
     </View>
   );
 };
@@ -150,15 +248,7 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 16,
   },
-  title_wrapper: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: GREY_BACKGROUND_COLOR,
-    width: "28%",
-    borderRadius: 8,
-    padding: 8,
-  },
+
   title_text: {
     color: WHITE_TEXT_COLOR,
     fontSize: 14,

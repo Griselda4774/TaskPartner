@@ -16,7 +16,7 @@ const ProfileScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ alignItems: "center", marginTop: 65, }}>
+      <View style={{ alignItems: "center", marginTop: 50, }}>
         <Text style={GlobalStyle.screen_header_text}>Profile</Text>
         <Image
           style={styles.avatar}

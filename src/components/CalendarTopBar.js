@@ -5,17 +5,27 @@ import { useState, useEffect } from "react";
 import { SvgXml } from "react-native-svg";
 import { BackIcon } from "../constants/Icons";
 
-const CalendarTopBar = () => {
+const CalendarTopBar = ({onSelectedDateReceived}) => {
+  
+  //Use states:
+  const [selectedDate, SetSelectedDate] = useState(new Date());
+  
+  const [currentDate, SetCurrentDate] = useState(new Date());
+  
+  const [chosenMonth, SetChosenMonth] = useState(new Date().getMonth());
+  const [chosenYear, SetChosenYear] = useState(new Date().getFullYear());
+  
+  const months = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER",
+                  "OCTOBER", "NOVEMBER", "DECEMBER"];
+  
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  
+    //Function:
 
-    const [selectedDate, SetSelectedDate] = useState(null);
-
-    const [currentDate, SetCurrentDate] = useState(new Date());
-
-    const [chosenMonth, SetChosenMonth] = useState(0);
-    const [chosenYear, SetChosenYear] = useState(2023);
-
-    const months = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER",
-                    "OCTOBER", "NOVEMBER", "DECEMBER"];
+    // const selectedDateHandler = (date) => {
+    //   SetSelectedDate(date);
+    //   onSelectedDateReceived(selectedDate);
+    // };
     
     const onNextPressHandler = () => {
 
@@ -43,46 +53,43 @@ const CalendarTopBar = () => {
       SetChosenMonth(tempMonth);
       SetChosenYear(tempYear);
     };
-    
 
-  // Update current date every minute
+    function getDaysInMonth(month, year) {
+      var date = new Date(year, month, 1);
+      var days = [];
+      while (date.getMonth() === month) {
+        days.push(new Date(date));
+        date.setDate(date.getDate() + 1);
+      }
+      return days;
+    }
+
+    const daysInCurrentMonth = getDaysInMonth(chosenMonth, chosenYear);
+    
+  // Update current date every second
   useEffect(() => {
     const timer = setInterval(() => {
       SetCurrentDate(new Date());
-    }, 60000);
+    }, 1000);
 
     return () => {
       clearInterval(timer);
     };
   }, []);
-
-  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-  function getDaysInMonth(month, year) {
-    var date = new Date(year, month, 1);
-    var days = [];
-    while (date.getMonth() === month) {
-      days.push(new Date(date));
-      date.setDate(date.getDate() + 1);
-    }
-    return days;
-  }
-
-  const daysInCurrentMonth = getDaysInMonth(
-    chosenMonth,
-    chosenYear,
-  );
+  
 
   const renderDay = (item) => {
 
     const dayOfWeek = daysOfWeek[item.getDay()];
     const dateOfMonth = item.getDate();
+    
 
-    const date = new Date();
+    // const date = new Date();
     // const currentDayIndex = currentDate.getDay();
 
-    // const isSelected = item === selectedDay;
-    const isSelected = item.getDate() === selectedDate;
+    const isSelected = (item.getDate() === selectedDate.getDate() &&
+                        item.getMonth() === selectedDate.getMonth() &&
+                        selectedDate.getFullYear() === item.getFullYear());
 
     // //Check to see if the Date in the array is today or not
     // if (item < currentDayIndex) {
@@ -98,18 +105,11 @@ const CalendarTopBar = () => {
     //   date.getMonth() === currentDate.getMonth() &&
     //   date.getFullYear() === currentDate.getFullYear();
 
-    function CheckIsWeekend(date)
-    {
-      if(date.getDay() === 0 || date.getDay() === 6)
-        return true;
-      return false;
-    }
-
-    const isWeekend = CheckIsWeekend(item);
+    const isWeekend = (item.getDay() === 0 || item.getDay() === 6) ? true : false;
       
     return (
       <Pressable
-        onPress={() => SetSelectedDate(item.getDate())}
+        onPress={() => {SetSelectedDate(item); onSelectedDateReceived(item)}}
         style={[
           styles.dayContainer,
           { backgroundColor: isSelected ? "#8687E7" : "#272727" },
@@ -126,7 +126,6 @@ const CalendarTopBar = () => {
             {dateOfMonth}
           </Text>
         </View>
-        <View style={styles.circle}></View>
       </Pressable>
     );
   };
@@ -158,7 +157,7 @@ const CalendarTopBar = () => {
             onPressIn={BackPressInHandler}
             onPressOut={BackPressOutHandler}
             onPress={onPreviousPressHandler}
-            hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }}
+            hitSlop={{ top: 20, bottom: 20, right: 20, left: 20 }}
           >
             <Text
               style={[

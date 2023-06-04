@@ -59,7 +59,7 @@ export const Tasks = [
     taskDetail: "This is task 7",
     taskPriority: 7,
     taskCategory: "Music",
-    taskDueDate: "Sun May 28 2023 14:52:00 GMT+0700",
+    taskDueDate: "Sun June 05 2023 14:52:00 GMT+0700",
     isCompleted: false,
   },
 ];

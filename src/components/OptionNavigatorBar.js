@@ -3,11 +3,11 @@ import React from 'react'
 import { SvgXml } from 'react-native-svg'
 import { BackIcon, } from '../constants/Icons';
 
-const OptionNavigatorBar = (props) => {
+const OptionNavigatorBar = ({onPressFunction, icon, title}) => {
   return (
-    <Pressable onPress={props.onPressFunction} style={styles.container}>
-      <SvgXml xml={props.icon} width={24} height={24} style={{marginRight: 20,}}/>
-      <Text style={styles.option_text}>{props.title}</Text>
+    <Pressable onPress={onPressFunction} style={styles.container}>
+      <SvgXml xml={icon} width={24} height={24} style={{marginRight: 20,}}/>
+      <Text style={styles.option_text}>{title}</Text>
       <View style={{alignItems: 'flex-end', flex: 1, marginRight: 5}}>
         <SvgXml xml={BackIcon} width={16} height={16} style={{transform: [{rotate: '180deg'}]}}/>
       </View>
