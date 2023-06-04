@@ -29,6 +29,7 @@ import { fetchTasks } from "../firebase/task";
 const HomeScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const taskList = useSelector((state) => state.tasks.tasks);
+  const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const [enableAddTask, setEnableAddTask] = useState(false);
 
@@ -92,10 +93,13 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.body}>
-        {taskList.length === 0 ? (
+        {taskList.filter((task) => task.userID == user.email).length == 0 ? (
           <HomeScreenBodyWithNoTask />
         ) : (
-          <HomeScreenBodyWithTask navigation={navigation} taskList={taskList} />
+          <HomeScreenBodyWithTask
+            navigation={navigation}
+            taskList={taskList.filter((task) => task.userID == user.email)}
+          />
         )}
       </View>
 

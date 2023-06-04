@@ -23,6 +23,7 @@ const App = () => {
   if (!fontsLoaded) {
     return undefined;
   }
+
   return (
     // <NavigationContainer>
     //   <MainStack.Navigator screenOptions={{ headerShown: false }}>

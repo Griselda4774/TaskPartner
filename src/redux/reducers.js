@@ -44,6 +44,7 @@ const userInitialState = {
   user: {
     email: "",
     isLogin: false,
+    userID: "",
   },
 };
 
@@ -52,10 +53,14 @@ export const userReducer = (state = userInitialState, action) => {
     case "LOGIN":
       return {
         ...state,
-        user: action.payload,
+        user: {
+          email: action.payload.email,
+          isLogin: action.payload.isLogin,
+          userID: action.payload.userID,
+        },
       };
     case "LOGOUT":
-      return { ...state, user: userInitialState.user };
+      return { ...state, user: { email: "", isLogin: false, userID: "" } };
     default:
       return state;
   }

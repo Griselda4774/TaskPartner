@@ -94,8 +94,12 @@ export default function RegisterScreen({ navigation }) {
         <PurpleButton
           viewStyle={{ marginTop: 50 }}
           onPressFunction={() => {
-            console.log(user);
-            registerUser(user.email, user.password);
+            try {
+              registerUser(user.email, user.password);
+              navigation.navigate("Login_Screen");
+            } catch (error) {
+              console.log(error);
+            }
           }}
         />
       </View>

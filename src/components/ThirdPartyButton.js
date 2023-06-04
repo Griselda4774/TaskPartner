@@ -13,6 +13,7 @@ const ThirdPartyButton = (props) => {
         styles.button,
         { ...props.pressableStyle },
       ]}
+      onPress={props.onPressFunction}
     >
       <View
         style={{
@@ -21,12 +22,17 @@ const ThirdPartyButton = (props) => {
           alignItems: "center",
         }}
       >
-        <View style={[styles.container, {flex: 1}]}>
-          <Image style={[styles.image, {...props.imageStyle}]} source={props.imageSource} />
+        <View style={[styles.container, { flex: 1 }]}>
+          <Image
+            style={[styles.image, { ...props.imageStyle }]}
+            source={props.imageSource}
+          />
         </View>
-        
-        <View style={{flex: 5, justifyContent: 'center', marginLeft: 60}}>
-          <Text style={styles.button_text}>Login with {props.thirdPartyName}</Text>
+
+        <View style={{ flex: 5, justifyContent: "center", marginLeft: 60 }}>
+          <Text style={styles.button_text}>
+            Login with {props.thirdPartyName}
+          </Text>
         </View>
       </View>
     </Pressable>
@@ -34,10 +40,9 @@ const ThirdPartyButton = (props) => {
 };
 
 const styles = StyleSheet.create({
-
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   button: {
@@ -47,18 +52,18 @@ const styles = StyleSheet.create({
     height: "20%",
     borderColor: "#7875FF",
     borderWidth: 2,
-    },
+  },
 
-    button_text: {
-      fontWeight: 500,
-      fontSize: 20,
-      color: "#fff",
-    },
+  button_text: {
+    fontWeight: 500,
+    fontSize: 20,
+    color: "#fff",
+  },
 
-    image: {
-      width: 24,
-      height: 24,
-    }
+  image: {
+    width: 24,
+    height: 24,
+  },
 });
 
 export default ThirdPartyButton;

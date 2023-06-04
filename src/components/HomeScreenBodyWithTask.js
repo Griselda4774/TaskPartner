@@ -9,9 +9,12 @@ import {
 } from "../constants/constants";
 import ExpandableComponent from "./ExpandableComponent";
 import { ScrollView } from "react-native-virtualized-view";
+import { useSelector } from "react-redux";
 
 const HomeScreenBodyWithTask = ({ navigation, taskList }) => {
   const [keySearch, setKeySearch] = useState("");
+  const user = useSelector((state) => state.user.user);
+
   return (
     <View style={styles.body}>
       <View style={styles.search_bar}>

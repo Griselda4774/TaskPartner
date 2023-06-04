@@ -7,7 +7,10 @@ const Stack = createStackNavigator();
 
 const TaskStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ header: () => null }}>
+    <Stack.Navigator
+      screenOptions={{ header: () => null }}
+      initialRouteName="BottomTab"
+    >
       <Stack.Screen name="BottomTab" component={BottomTabNavigator} />
       <Stack.Screen name="EditTask" component={EditTaskScreen} />
     </Stack.Navigator>

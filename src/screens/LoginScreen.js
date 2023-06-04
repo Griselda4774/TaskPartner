@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,6 +14,16 @@ import PurpleButton from "../components/PurpleButton";
 import GoBackButton from "../components/GoBackButton";
 import ThirdPartyButton from "../components/ThirdPartyButton";
 import AuthenticateFooter from "../components/AuthenticateFooter";
+import {
+  loginUser,
+  loginWithGoogle,
+  loginWithGoogle2,
+  logoutUser,
+} from "../firebase/user";
+import { onAuthStateChanged, getRedirectResult } from "firebase/auth";
+import { FIREBASE_AUTH } from "../../firebaseConfig";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "../redux/actions";
 
 export default function LoginScreen({ navigation }) {
   // Navigators:
@@ -50,6 +61,11 @@ export default function LoginScreen({ navigation }) {
     }
   }
 
+  const userState = useSelector((state) => state.user.user);
+  useEffect(() => {
+    console.log("userState: ", userState);
+  }, [userState]);
+
   return (
     // <KeyboardAvoidingWrapper>
     <View style={GlobalStyle.container}>
@@ -69,7 +85,17 @@ export default function LoginScreen({ navigation }) {
         />
       </View>
       <View style={[{ flex: 1 }, styles.login_flexbox_container]}>
-        <PurpleButton isDisable={IsEmptyLoginInput} />
+        <PurpleButton
+          isDisable={IsEmptyLoginInput}
+          onPressFunction={() => {
+            try {
+              loginUser(LoginUsername, LoginPassword);
+              navigation.navigate("Task");
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        />
         <View
           style={{
             borderBottomColor: "#fff",
@@ -88,6 +114,13 @@ export default function LoginScreen({ navigation }) {
           thirdPartyName="Facebook"
           pressableStyle={{ marginTop: 0 }}
           imageSource={require("../../assets/facebookIcon.png")}
+          onPressFunction={() => {
+            try {
+              logoutUser();
+            } catch (error) {
+              console.log(error);
+            }
+          }}
         />
       </View>
       <AuthenticateFooter
