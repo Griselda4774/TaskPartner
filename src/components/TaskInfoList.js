@@ -101,7 +101,7 @@ const DisplayMode = (navigation, isCompletedMode, selectedDate) => {
                 >
                   <View style={styles.task_item_wrapper}>
                     <View style={styles.check_button_wrapper}>
-                      <CheckButton size={24} />
+                      <CheckButton size={24} task={item}/>
                     </View>
                     <View style={styles.task_infor_wrapper}>
                       <View style={styles.task_title_wrapper}>

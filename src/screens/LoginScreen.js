@@ -1,15 +1,31 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView, Keyboard, Pressable } from "react-native";
-import { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  KeyboardAvoidingView,
+  Keyboard, Pressable,
+} from "react-native";
+import { useState } from "react";
 import GlobalStyle from "../components/GlobalStyle";
 import UsernameBox from "../components/UsernameBox";
 import PasswordBox from "../components/PasswordBox";
 import PurpleButton from "../components/PurpleButton";
 import ThirdPartyButton from "../components/ThirdPartyButton";
 import AuthenticateFooter from "../components/AuthenticateFooter";
-import { LATO_FONTS } from "../constants/constants";
+import {
+  loginUser,
+  loginWithGoogle,
+  loginWithGoogle2,
+  logoutUser,
+} from "../firebase/user";
+import { onAuthStateChanged, getRedirectResult } from "firebase/auth";
+import { FIREBASE_AUTH } from "../../firebaseConfig";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "../redux/actions";
 
-
-export default function LoginScreen({navigation}) {
+export default function LoginScreen({ navigation }) {
   //Use States:
   const [LoginEmail, SetLoginEmail] = useState("");
   const [LoginPassword, SetLoginPassword] = useState("");
@@ -61,25 +77,39 @@ export default function LoginScreen({navigation}) {
     return emailRegex.test(email);
   }
 
-  //TESTING DATA, DELETE LATER:
-  let correctEmail = "admin@gmail.com";
-  let correctPassword = "admin";
-  //TESTING DATA, DELETE LATER:
-
   const onLoginPressHandler = () => {
-    if (LoginEmail === correctEmail && LoginPassword === correctPassword) {
-      //Login authenticate
-      SetIsValidEmail(true);
-      SetIsValidPassword(true);
-      alert("Login successful");
-      // navigation.replace("BottomTab");
-    } else {
-      if (LoginEmail !== correctEmail) SetIsValidEmail(false);
-      if (LoginPassword !== correctPassword) SetIsValidPassword(false);
-    }
+    // if (LoginEmail === correctEmail && LoginPassword === correctPassword) {
+    //   //Login authenticate
+    //   SetIsValidEmail(true);
+    //   SetIsValidPassword(true);
+    //   alert("Login successful");
+    //   try {
+    //         loginUser(LoginEmail, LoginPassword);
+    //         navigation.replace("BottomTab");
+    //         // navigation.navigate("Task");
+    //       } catch (error) {
+    //           console.log(error);
+    //       }
+    // } else {
+    //   if (LoginEmail !== correctEmail) SetIsValidEmail(false);
+    //   if (LoginPassword !== correctPassword) SetIsValidPassword(false);
+    // }
+    try {
+            loginUser(LoginEmail, LoginPassword);
+            // navigation.replace("BottomTab");
+            navigation.navigate("Task");
+          } catch (error) {
+              console.log(error);
+          }
+    
   };
 
   const onBackGroundPressHandler = () => Keyboard.dismiss();
+
+  const userState = useSelector((state) => state.user.user);
+  useEffect(() => {
+    console.log("userState: ", userState);
+  }, [userState]);
 
   return (
     // <KeyboardAvoidingWrapper>
@@ -135,6 +165,13 @@ export default function LoginScreen({navigation}) {
           thirdPartyName="Facebook"
           pressableStyle={{ marginTop: 0 }}
           imageSource={require("../../assets/facebookIcon.png")}
+          onPressFunction={() => {
+            try {
+              logoutUser();
+            } catch (error) {
+              console.log(error);
+            }
+          }}
         />
       </View>
       <AuthenticateFooter
@@ -165,5 +202,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "background: #FFFFFFDE",
   },
-
 });

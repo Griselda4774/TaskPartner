@@ -4,15 +4,14 @@ import { PURPLE_COLOR } from "../constants/constants";
 import ModalStyles from "./ModalStyles";
 import { LATO_FONTS } from "../constants/constants";
 import { useFonts } from "expo-font";
+import { useDispatch } from "react-redux";
+import { deleteTask } from "../redux/actions";
+import { deleteTaskFromFirestore } from "../firebase/task";
 
-const DeleteTaskModal = () => {
-  const [fontsLoaded] = useFonts(LATO_FONTS);
-  if (!fontsLoaded) {
-    return undefined;
-  }
-
+const DeleteTaskModal = ({ visible, onRequestClose, task, navigation }) => {
+  const dispatch = useDispatch();
   return (
-    <Modal visible={true} transparent={true}>
+    <Modal visible={visible} transparent={true} animationType="slide">
       <View style={ModalStyles.wrapper}>
         <View style={ModalStyles.container}>
           <View style={ModalStyles.title}>
@@ -33,13 +32,14 @@ const DeleteTaskModal = () => {
                 { marginTop: 8, marginBottom: 24 },
               ]}
             >
-              Task title: Old task title
+              Task title: {task.taskName}
             </Text>
           </View>
           <View style={ModalStyles.half_button_wrapper}>
             <TouchableOpacity
               style={ModalStyles.half_button}
               activeOpacity={0.3}
+              onPress={onRequestClose}
             >
               <Text style={ModalStyles.title_purple_text}>Cancel</Text>
             </TouchableOpacity>
@@ -49,6 +49,12 @@ const DeleteTaskModal = () => {
                 { backgroundColor: PURPLE_COLOR },
               ]}
               activeOpacity={0.3}
+              onPress={() => {
+                dispatch(deleteTask(task));
+                deleteTaskFromFirestore(task);
+                onRequestClose();
+                navigation.navigate("Home");
+              }}
             >
               <Text style={ModalStyles.title_white_text}>Delete</Text>
             </TouchableOpacity>

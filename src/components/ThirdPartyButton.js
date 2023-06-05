@@ -2,7 +2,7 @@ import React from "react";
 
 import { Pressable, Text, StyleSheet, Image, View } from "react-native";
 
-const ThirdPartyButton = ({pressableStyle, imageStyle, imageSource, thirdPartyName}) => {
+const ThirdPartyButton = ({pressableStyle, imageStyle, imageSource, thirdPartyName, onPressFunction}) => {
   return (
     <Pressable
       style={({ pressed }) => [
@@ -13,6 +13,7 @@ const ThirdPartyButton = ({pressableStyle, imageStyle, imageSource, thirdPartyNa
         styles.button,
         { ...pressableStyle },
       ]}
+      onPress={onPressFunction}
     >
       <View
         style={{
@@ -34,10 +35,9 @@ const ThirdPartyButton = ({pressableStyle, imageStyle, imageSource, thirdPartyNa
 };
 
 const styles = StyleSheet.create({
-
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   button: {
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     height: "20%",
     borderColor: "#7875FF",
     borderWidth: 2,
-    },
+  },
 
     button_text: {
       fontWeight: 500,
@@ -56,10 +56,10 @@ const styles = StyleSheet.create({
       fontFamily: "Lato-Regular",
     },
 
-    image: {
-      width: 24,
-      height: 24,
-    }
+  image: {
+    width: 24,
+    height: 24,
+  },
 });
 
 export default ThirdPartyButton;

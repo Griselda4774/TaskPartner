@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, TextInput } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { SearchIcon } from "../constants/Icons";
 import {
   GREY_COLOR,
   GREY_TEXT_COLOR,
-  LATO_FONTS,
   WHITE_TEXT_COLOR,
 } from "../constants/constants";
-import { useFonts } from "expo-font";
 import ExpandableComponent from "./ExpandableComponent";
 import { ScrollView } from "react-native-virtualized-view";
+import { useSelector } from "react-redux";
 
-const HomeScreenBodyWithTask = ({ navigation }) => {
+const HomeScreenBodyWithTask = ({ navigation, taskList }) => {
+  const [keySearch, setKeySearch] = useState("");
+  const user = useSelector((state) => state.user.user);
+
   return (
     <View style={styles.body}>
       <View style={styles.search_bar}>
@@ -24,11 +26,43 @@ const HomeScreenBodyWithTask = ({ navigation }) => {
             placeholder="Search for your task..."
             placeholderTextColor={GREY_COLOR}
             style={styles.search_input}
+            keyboardAppearance="dark"
+            onChangeText={(text) => {
+              setKeySearch(text);
+            }}
           />
         </View>
       </View>
-      <ScrollView nestedScrollEnabled={true} style={{ width: "100%" }}>
-        <ExpandableComponent title={"All Tasks"} navigation={navigation} />
+      <ScrollView
+        nestedScrollEnabled={true}
+        style={{ width: "100%" }}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      >
+        <ExpandableComponent
+          title={"Tasks"}
+          navigation={navigation}
+          listItem={taskList
+            .filter(
+              (task) =>
+                task.taskName.toLowerCase().includes(keySearch.toLowerCase()) &&
+                !task.isCompleted    
+            )
+            .sort((a, b) => a.taskName.localeCompare(b.taskName))}
+          titleWidth={104}
+        />
+        <ExpandableComponent
+          title={"Completed"}
+          navigation={navigation}
+          listItem={taskList
+            .filter(
+              (task) =>
+                task.taskName.toLowerCase().includes(keySearch.toLowerCase()) &&
+                task.isCompleted
+            )
+            .sort((a, b) => a.taskName.localeCompare(b.taskName))}
+          titleWidth={136}
+        />
       </ScrollView>
     </View>
   );

@@ -18,6 +18,7 @@ const PasswordBox = ({ style, title, onChangeText, errorMessage, isValid }) => {
         placeholderTextColor="#535353"
         secureTextEntry
         onChangeText={onChangeText}
+        keyboardAppearance="dark"
       />
       <Text style={styles.errormessage_text}>{errorMessage}</Text>
     </View>

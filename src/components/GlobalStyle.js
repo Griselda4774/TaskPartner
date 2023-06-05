@@ -33,6 +33,7 @@ export default StyleSheet.create({
     margin: 38,
     marginTop: 42,
     textAlign: "center",
+    fontFamily: "Lato-Regular",
   },
 
   pressable: {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   View,
@@ -10,19 +10,25 @@ import {
 import Categories from "../../assets/data/Categories";
 import { PURPLE_COLOR } from "../constants/constants";
 import ModalStyles from "./ModalStyles";
-import { LATO_FONTS } from "../constants/constants";
-import { useFonts } from "expo-font";
 import { SvgXml } from "react-native-svg";
+import { useDispatch } from "react-redux";
+import { editTask } from "../redux/actions";
+import { updateDocumentToFirestore } from "../firebase/task";
 
-const EditCategoriesModal = () => {
-  const [selectedID, setSelectedID] = useState("1");
-  const [fontsLoaded] = useFonts(LATO_FONTS);
-  if (!fontsLoaded) {
-    return undefined;
-  }
+const EditCategoriesModal = ({ visible, onRequestClose, task }) => {
+  const dispatch = useDispatch();
+  const [selected, setSelected] = useState(task.taskCategory);
+  useEffect(() => {
+    setSelected(task.taskCategory);
+  }, [visible]);
 
   return (
-    <Modal visible={true} transparent={true}>
+    <Modal
+      visible={visible}
+      transparent={true}
+      onRequestClose={onRequestClose}
+      animationType="slide"
+    >
       <View style={ModalStyles.wrapper}>
         <View style={ModalStyles.container}>
           <View style={ModalStyles.title}>
@@ -35,12 +41,12 @@ const EditCategoriesModal = () => {
               renderItem={({ item }) => (
                 <Pressable
                   style={
-                    selectedID == item.id
+                    selected == item.name
                       ? [ModalStyles.item, { backgroundColor: PURPLE_COLOR }]
                       : ModalStyles.item
                   }
                   onPress={() => {
-                    setSelectedID(item.id);
+                    setSelected(item.name);
                   }}
                 >
                   <View
@@ -64,6 +70,7 @@ const EditCategoriesModal = () => {
             <TouchableOpacity
               style={ModalStyles.half_button}
               activeOpacity={0.3}
+              onPress={onRequestClose}
             >
               <Text style={ModalStyles.title_purple_text}>Cancel</Text>
             </TouchableOpacity>
@@ -73,6 +80,14 @@ const EditCategoriesModal = () => {
                 { backgroundColor: PURPLE_COLOR },
               ]}
               activeOpacity={0.3}
+              onPress={() => {
+                task.taskCategory = Categories.find((category) => {
+                  return category.name == selected;
+                }).name;
+                dispatch(editTask(task));
+                updateDocumentToFirestore(task);
+                onRequestClose();
+              }}
             >
               <Text style={ModalStyles.title_white_text}>Edit</Text>
             </TouchableOpacity>

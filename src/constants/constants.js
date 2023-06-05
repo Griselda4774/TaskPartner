@@ -23,4 +23,5 @@ export const ITEM_UNIVERSITY_COLOR = "#809CFF";
 export const ITEM_WORK_COLOR = "#FF9680";
 export const LATO_FONTS = {
   "Lato-Regular": require("../../assets/fonts/Lato-Regular.ttf"),
+  "Lato-Bold": require("../../assets/fonts/Lato-Bold.ttf"),
 };

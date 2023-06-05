@@ -4,8 +4,9 @@ import GlobalStyle from "../components/GlobalStyle";
 import { SvgXml } from "react-native-svg";
 import { BackIcon } from "../constants/Icons";
 
+export default function StartScreen({ navigation }) {
 
-export default function StartScreen({ navigation }){
+  const [pressableSkipIsHovering, SetPressableSkipIsHovering] = useState(false);
 
     const onBackPressHandler = () => {
         navigation.navigate("OnBoardingScreen_1");
@@ -16,11 +17,8 @@ export default function StartScreen({ navigation }){
     };
 
     const onGuestPressHandler = () => {
-      navigation.replace("BottomTab");
+      navigation.replace("Task");
     };
-
-    const [pressableSkipIsHovering, SetPressableSkipIsHovering] =
-      useState(false);
 
     const SkipPressInHandler = () => {
       SetPressableSkipIsHovering(true);
@@ -33,7 +31,7 @@ export default function StartScreen({ navigation }){
     return (
       <View style={GlobalStyle.container}>
         <Pressable
-          style={[GlobalStyle.pressable, { marginTop: 58 }]}
+          style={[GlobalStyle.pressable, { marginTop: 60 }]}
           onPressIn={SkipPressInHandler}
           onPressOut={SkipPressOutHandler}
           onPress={onBackPressHandler}
@@ -94,7 +92,7 @@ export default function StartScreen({ navigation }){
           </Pressable>
         </View>
       </View>
-    );
+  );
 }
 
 const styles = StyleSheet.create({

@@ -64,7 +64,6 @@ const PurpleButton = ({viewStyle, onPressFunction, style, title}) => {
 };
 
 const styles = StyleSheet.create({
-
   container: {
     borderRadius: 8,
     height: "20%",
@@ -76,10 +75,9 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-  
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
 export default PurpleButton;

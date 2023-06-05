@@ -7,15 +7,16 @@ import IntroStackNavigator from "./IntroStackNavigator";
 
 const Stack = createStackNavigator();
 
-const StackNavigator = () => {
+const TaskStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ header: () => null }}>
-      <Stack.Screen name="Intro" component={IntroStackNavigator}/>
-      <Stack.Screen name="Authenticate" component={AuthenticateStackNavigator}/>
+    <Stack.Navigator
+      screenOptions={{ header: () => null }}
+      initialRouteName="BottomTab"
+    >
       <Stack.Screen name="BottomTab" component={BottomTabNavigator} />
       <Stack.Screen name="EditTask" component={EditTaskScreen} />
     </Stack.Navigator>
   );
 };
 
-export default StackNavigator;
+export default TaskStackNavigator;

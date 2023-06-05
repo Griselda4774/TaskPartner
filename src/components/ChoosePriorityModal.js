@@ -14,16 +14,16 @@ import { useFonts } from "expo-font";
 import Priorities from "../../assets/data/Priorities";
 import { SvgXml } from "react-native-svg";
 import { FlagIcon } from "../constants/Icons";
+import { useEffect } from "react";
 
-const ChoosePriorityModal = () => {
-  const [selectedID, setSelectedID] = useState("1");
-  const [fontsLoaded] = useFonts(LATO_FONTS);
-  if (!fontsLoaded) {
-    return undefined;
-  }
+const ChoosePriorityModal = ({ visible, onRequestClose, task }) => {
+  const [selectedID, setSelectedID] = useState(task.taskPriority);
+  useEffect(() => {
+    setSelectedID(task.taskPriority);
+  }, [visible]);
 
   return (
-    <Modal visible={true} transparent={true}>
+    <Modal visible={visible} transparent={true} animationType="slide">
       <View style={ModalStyles.wrapper}>
         <View style={ModalStyles.container}>
           <View style={ModalStyles.title}>
@@ -59,6 +59,7 @@ const ChoosePriorityModal = () => {
             <TouchableOpacity
               style={ModalStyles.half_button}
               activeOpacity={0.3}
+              onPress={onRequestClose}
             >
               <Text style={ModalStyles.title_purple_text}>Cancel</Text>
             </TouchableOpacity>
@@ -68,6 +69,10 @@ const ChoosePriorityModal = () => {
                 { backgroundColor: PURPLE_COLOR },
               ]}
               activeOpacity={0.3}
+              onPress={() => {
+                task.taskPriority = selectedID;
+                onRequestClose();
+              }}
             >
               <Text style={ModalStyles.title_white_text}>Save</Text>
             </TouchableOpacity>

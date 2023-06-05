@@ -13,16 +13,16 @@ import ModalStyles from "./ModalStyles";
 import { LATO_FONTS } from "../constants/constants";
 import { useFonts } from "expo-font";
 import { SvgXml } from "react-native-svg";
+import { useEffect } from "react";
 
-const ChooseCategoriesModal = () => {
-  const [selectedID, setSelectedID] = useState("1");
-  const [fontsLoaded] = useFonts(LATO_FONTS);
-  if (!fontsLoaded) {
-    return undefined;
-  }
+const ChooseCategoriesModal = ({ visible, onRequestClose, task }) => {
+  const [selected, setSelected] = useState(task.taskCategory);
+  useEffect(() => {
+    setSelected(task.taskCategory);
+  }, [visible]);
 
   return (
-    <Modal visible={true} transparent={true}>
+    <Modal visible={visible} transparent={true} animationType="slide">
       <View style={ModalStyles.wrapper}>
         <View style={ModalStyles.container}>
           <View style={ModalStyles.title}>
@@ -35,12 +35,12 @@ const ChooseCategoriesModal = () => {
               renderItem={({ item }) => (
                 <Pressable
                   style={
-                    selectedID == item.id
+                    selected == item.name
                       ? [ModalStyles.item, { backgroundColor: PURPLE_COLOR }]
                       : ModalStyles.item
                   }
                   onPress={() => {
-                    setSelectedID(item.id);
+                    setSelected(item.name);
                   }}
                 >
                   <View
@@ -60,7 +60,14 @@ const ChooseCategoriesModal = () => {
               numColumns={3}
             />
           </View>
-          <TouchableOpacity style={ModalStyles.full_button} activeOpacity={0.3}>
+          <TouchableOpacity
+            style={ModalStyles.full_button}
+            activeOpacity={0.3}
+            onPress={() => {
+              task.taskCategory = selected;
+              onRequestClose();
+            }}
+          >
             <Text style={ModalStyles.title_white_text}>Add Category</Text>
           </TouchableOpacity>
         </View>

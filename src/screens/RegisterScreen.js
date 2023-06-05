@@ -1,4 +1,12 @@
-import { StyleSheet, Text, View, Keyboard, KeyboardAvoidingView, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  KeyboardAvoidingView,
+  Keyboard,
+  Pressable
+} from "react-native";
 import { useState, useEffect } from "react";
 import GlobalStyle from "../components/GlobalStyle";
 import UsernameBox from "../components/UsernameBox";
@@ -6,6 +14,7 @@ import PasswordBox from "../components/PasswordBox";
 import PurpleButton from "../components/PurpleButton";
 import GoBackButton from "../components/GoBackButton";
 import AuthenticateFooter from "../components/AuthenticateFooter";
+import { registerUser } from "../firebase/user";
 
 import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
 
@@ -124,7 +133,12 @@ export default function RegisterScreen({navigation}) {
       }
       else
       {
-        alert("Register successful");
+        try {
+              registerUser(email, password);
+              navigation.navigate("Login_Screen");
+            } catch (error) {
+              console.log(error);
+            }
       }
   };
 
@@ -205,7 +219,6 @@ export default function RegisterScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-
   login_flexbox_container: {
     backgroundColor: "#000",
     height: "100%",
@@ -223,5 +236,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "background: #FFFFFFDE",
   },
-
 });

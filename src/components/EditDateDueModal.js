@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-native-modern-datepicker";
 import { View, Text, TouchableOpacity, Modal } from "react-native";
 import ModalStyles from "./ModalStyles";
@@ -8,11 +8,27 @@ import {
   PURPLE_COLOR,
   WHITE_TEXT_COLOR,
 } from "../constants/constants";
+import { useDispatch } from "react-redux";
+import { editTask } from "../redux/actions";
+import { updateDocumentToFirestore } from "../firebase/task";
 
-const ChooseDateDueModal = ({ visible, onRequestClose, task }) => {
-  let now = new Date();
-  const [dateString, setDateString] = useState("");
-  const [timeString, setTimeString] = useState("00:00");
+const EditDateDueModal = ({ visible, onRequestClose, task }) => {
+  const [dateString, setDateString] = useState(
+    new Date(task.taskDueDate).toLocaleDateString("en-CA")
+  );
+  const [timeString, setTimeString] = useState(
+    new Date(task.taskDueDate).toLocaleString("en-CA", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    })
+  );
+  useEffect(() => {
+    setDateString(new Date(task.taskDueDate).toLocaleDateString("en-CA"));
+  }, [visible]);
+
+  const dispatch = useDispatch();
+
   return (
     <Modal visible={visible} transparent={true} animationType="slide">
       <View style={ModalStyles.wrapper}>
@@ -31,8 +47,8 @@ const ChooseDateDueModal = ({ visible, onRequestClose, task }) => {
                 textHeaderFontSize: 18,
               }}
               mode="datepicker"
-              current={now.toLocaleDateString("en-CA")}
-              selected={now.toLocaleDateString("en-CA")}
+              current={dateString}
+              selected={dateString}
               minuteInterval={1}
               onDateChange={(date) => {
                 setDateString(date);
@@ -45,11 +61,7 @@ const ChooseDateDueModal = ({ visible, onRequestClose, task }) => {
               <TouchableOpacity
                 style={ModalStyles.half_button}
                 activeOpacity={0.3}
-                onPress={() => {
-                  now.setHours(now.getHours() + 1);
-                  task.taskDueDate = now.toString();
-                  onRequestClose();
-                }}
+                onPress={onRequestClose}
               >
                 <Text style={ModalStyles.title_purple_text}>Cancel</Text>
               </TouchableOpacity>
@@ -69,10 +81,12 @@ const ChooseDateDueModal = ({ visible, onRequestClose, task }) => {
                     hours,
                     minutes
                   ).toString();
+                  dispatch(editTask(task));
+                  updateDocumentToFirestore(task);
                   onRequestClose();
                 }}
               >
-                <Text style={ModalStyles.title_white_text}>Save</Text>
+                <Text style={ModalStyles.title_white_text}>Edit</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -82,4 +96,4 @@ const ChooseDateDueModal = ({ visible, onRequestClose, task }) => {
   );
 };
 
-export default ChooseDateDueModal;
+export default EditDateDueModal;

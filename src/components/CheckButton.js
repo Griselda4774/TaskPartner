@@ -1,38 +1,53 @@
 import React, { useState } from "react";
-import { TouchableOpacity, StyleSheet } from "react-native";
-import { WHITE_TEXT_COLOR } from "../constants/constants";
+import { TouchableOpacity, StyleSheet, Image } from "react-native";
+import { PURPLE_COLOR, WHITE_TEXT_COLOR } from "../constants/constants";
+import { SvgXml } from "react-native-svg";
+import { TickIcon } from "../constants/Icons";
+import { useDispatch } from "react-redux";
+import { editTask } from "../redux/actions";
+import { updateDocumentToFirestore } from "../firebase/task";
 
-const CheckButton = ({ size, style }) => {
-  const [checked, setChecked] = useState(false);
+const CheckButton = ({ size, style, task }) => {
+  const dispatch = useDispatch();
+  const [isChecked, setIsChecked] = useState(task.isCompleted);
 
   return (
     <TouchableOpacity
-      style={
-        checked
-          ? [
-              styles.check_button,
-              { width: size, height: size },
-              { backgroundColor: "#ffffff95" },
-              style,
-            ]
-          : [
-              styles.check_button,
-              { width: size, height: size },
-              { backgroundColor: "#363636" },
-              style,
-            ]
-      }
-      onPress={() => setChecked(!checked)}
-    ></TouchableOpacity>
+      style={[
+        !isChecked
+          ? {
+              borderColor: WHITE_TEXT_COLOR,
+            }
+          : {
+              borderColor: PURPLE_COLOR,
+            },
+        style,
+        {
+          width: size,
+          height: size,
+          borderRadius: 50,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "transparent",
+          borderWidth: size / 12,
+        },
+      ]}
+      onPress={() => {
+        setIsChecked(!isChecked);
+        let newTask = task;
+        newTask.isCompleted = !isChecked;
+        dispatch(editTask(newTask));
+        updateDocumentToFirestore(newTask);
+      }}
+    >
+      {isChecked ? (
+        <Image
+          source={require("../../assets/otherIcons/tick.png")}
+          style={{ height: 24, width: 24, tintColor: "#8687E7" }}
+        />
+      ) : null}
+    </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  check_button: {
-    borderRadius: 50,
-    borderWidth: 1.6,
-    borderColor: WHITE_TEXT_COLOR,
-  },
-});
 
 export default CheckButton;
