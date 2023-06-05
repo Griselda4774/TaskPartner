@@ -28,11 +28,30 @@ export const fetchTasks = async () => {
   }
 };
 
+//Get task by user from firestore
+export const fetchTasksByUser = async (user) => {
+  try {
+    const q = query(
+      collection(FIRESTORE_DB, "Task"),
+      where("userID", "==", user.email)
+    );
+    const querySnapshot = await getDocs(q);
+    const tasks = [];
+    querySnapshot.forEach((doc) => {
+      const task = doc.data();
+      tasks.push(task);
+    });
+    return tasks;
+  } catch (error) {
+    console.log("Error fetching tasks: ", error);
+  }
+};
+
 // Add task to firestore
 export const addTaskToFirestore = async (task) => {
   try {
     const newDocRef = await addDoc(collection(FIRESTORE_DB, "Task"), {
-      taskID: task.taskID,
+      taskID: "",
       taskName: task.taskName,
       taskDetail: task.taskDetail,
       taskCategory: task.taskCategory,
@@ -41,7 +60,11 @@ export const addTaskToFirestore = async (task) => {
       isCompleted: false,
       userID: task.userID,
     });
-    console.log("Document written with ID: ", newDocRef.id);
+    console.log("Document written with ID: ", typeof newDocRef.id);
+    const docID = newDocRef.id;
+    await updateDoc(newDocRef, { taskID: docID });
+    task.taskID = docID;
+    return docID;
   } catch (error) {
     console.log("Error adding document: ", error);
   }
@@ -68,9 +91,8 @@ const findDocumentIdFromFirestore = async (taskID) => {
 
 // 2) Update document
 export const updateDocumentToFirestore = async (item) => {
-  const documentId = await findDocumentIdFromFirestore(item.taskID);
   try {
-    await updateDoc(doc(FIRESTORE_DB, "Task", documentId), {
+    await updateDoc(doc(FIRESTORE_DB, "Task", item.taskID), {
       taskName: item.taskName,
       taskDetail: item.taskDetail,
       taskCategory: item.taskCategory,

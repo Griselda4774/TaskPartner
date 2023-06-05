@@ -34,16 +34,16 @@ const AddTaskModal = ({ visible, onRequestClose }) => {
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const now = new Date();
-  let newID;
-  if (taskList.length == 0) {
-    newID = 1;
-  } else {
-    const taskListSorted = [...taskList].sort((a, b) => a.taskID - b.taskID);
-    newID = taskListSorted[taskListSorted.length - 1].taskID + 1;
-  }
+  // let newID;
+  // if (taskList.length == 0) {
+  //   newID = 1;
+  // } else {
+  //   const taskListSorted = [...taskList].sort((a, b) => a.taskID - b.taskID);
+  //   newID = taskListSorted[taskListSorted.length - 1].taskID + 1;
+  // }
   now.setHours(now.getHours() + 2);
   const [task, setTask] = useState({
-    taskID: newID,
+    taskID: "",
     taskName: "",
     taskDetail: "",
     taskCategory: "Design",
@@ -56,7 +56,7 @@ const AddTaskModal = ({ visible, onRequestClose }) => {
   useEffect(() => {
     setFocusedId("1");
     setTask({
-      taskID: newID,
+      ...task,
       taskName: "",
       taskDetail: "",
       taskCategory: "Design",
@@ -67,15 +67,15 @@ const AddTaskModal = ({ visible, onRequestClose }) => {
     });
   }, [visible]);
 
-  useEffect(() => {
-    if (taskList.length == 0) {
-      setTask((prevTask) => ({ ...prevTask, taskID: 1 }));
-    } else {
-      const taskListSorted = [...taskList].sort((a, b) => a.taskID - b.taskID);
-      const newID = taskListSorted[taskListSorted.length - 1].taskID + 1;
-      setTask((prevTask) => ({ ...prevTask, taskID: newID }));
-    }
-  }, [taskList]);
+  // useEffect(() => {
+  //   if (taskList.length == 0) {
+  //     setTask((prevTask) => ({ ...prevTask, taskID: 1 }));
+  //   } else {
+  //     const taskListSorted = [...taskList].sort((a, b) => a.taskID - b.taskID);
+  //     const newID = taskListSorted[taskListSorted.length - 1].taskID + 1;
+  //     setTask((prevTask) => ({ ...prevTask, taskID: newID }));
+  //   }
+  // }, [taskList]);
 
   const [enableChooseCategory, setEnableChooseCategory] = useState(false);
   const [enableChoosePriority, setEnableChoosePriority] = useState(false);
@@ -195,9 +195,12 @@ const AddTaskModal = ({ visible, onRequestClose }) => {
             <TouchableOpacity
               style={styles.task_props_item}
               disabled={enableAddTask}
-              onPress={() => {
+              onPress={async () => {
+                const taskID = await addTaskToFirestore(task);
+                console.log("new task ID: ", taskID.toString());
+                // setTask({ ...task, taskID: taskID });
+                // const taskWithID = { ...task, taskID: taskID };
                 dispatch(addTask(task));
-                addTaskToFirestore(task);
                 onRequestClose();
               }}
             >

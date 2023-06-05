@@ -24,7 +24,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import AddTaskModal from "../components/AddTaskModal";
 import { getTasks, resetTasks } from "../redux/actions";
-import { fetchTasks } from "../firebase/task";
+import { fetchTasks, fetchTasksByUser } from "../firebase/task";
 
 const HomeScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -33,20 +33,22 @@ const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [enableAddTask, setEnableAddTask] = useState(false);
 
-  // Get all task from firestore
+  // Get task from firestore
   useEffect(() => {
     const fetchTasksData = async () => {
-      try {
-        const tasks = await fetchTasks();
-        dispatch(resetTasks());
-        dispatch(getTasks(tasks));
-      } catch (error) {
-        console.log("Error fetching tasks: ", error);
+      if (user.email != "") {
+        try {
+          const tasks = await fetchTasksByUser(user.email);
+          dispatch(resetTasks());
+          dispatch(getTasks(tasks));
+        } catch (error) {
+          console.log("Error fetching: ", error);
+        }
+
+        fetchTasksData();
       }
     };
-
-    fetchTasksData();
-  }, []);
+  }, [user]);
 
   return (
     <View
