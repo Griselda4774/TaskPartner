@@ -43,9 +43,10 @@ const styles = StyleSheet.create({
 
   section_title_text: {
     fontWeight: 400,
-    fontSize: 14,
+    fontSize: 16,
     color: "#AFAFAF",
     marginBottom: 10,
+    fontFamily: "Lato-Regular",
   },
 });
 

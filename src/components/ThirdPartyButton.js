@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
       fontWeight: 500,
       fontSize: 18,
       color: "#fff",
+      fontFamily: "Lato-Regular",
     },
 
     image: {

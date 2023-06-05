@@ -1,71 +1,122 @@
-import { StyleSheet, Text, View, Image, KeyboardAvoidingView } from "react-native";
-import { useState } from "react";
+import { StyleSheet, Text, View, KeyboardAvoidingView, Keyboard, Pressable } from "react-native";
+import { useState, useEffect } from "react";
 import GlobalStyle from "../components/GlobalStyle";
 import UsernameBox from "../components/UsernameBox";
 import PasswordBox from "../components/PasswordBox";
 import PurpleButton from "../components/PurpleButton";
-import GoBackButton from "../components/GoBackButton";
 import ThirdPartyButton from "../components/ThirdPartyButton";
 import AuthenticateFooter from "../components/AuthenticateFooter";
+import { LATO_FONTS } from "../constants/constants";
 
 
 export default function LoginScreen({navigation}) {
+  //Use States:
+  const [LoginEmail, SetLoginEmail] = useState("");
+  const [LoginPassword, SetLoginPassword] = useState("");
+
+  const [isValidEmail, SetIsValidEmail] = useState(true);
+  const [isValidPassword, SetIsValidPassword] = useState(true);
+
+  const [emailErrorMessage, SetEmailErrorMessage] = useState("");
+  const [passwordErrorMessage, SetPasswordErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (!isValidEmail) {
+      if (!checkValidEmail(LoginEmail)) SetEmailErrorMessage("* Invalid email");
+      else SetEmailErrorMessage("* Incorrect email");
+    }
+
+    if (!isValidPassword) {
+      SetPasswordErrorMessage("* Incorrect password");
+    }
+    if (isValidEmail) {
+      SetEmailErrorMessage("");
+    }
+    if (isValidPassword) {
+      SetPasswordErrorMessage("");
+    }
+  }, [isValidEmail, isValidPassword]);
 
   // Navigators:
-  const onBackPressHandler = () => {
-    navigation.navigate("Start_Screen");
-  };
-
   const onRegisterPressHandler = () => {
+    SetIsValidEmail(true);
+    SetIsValidPassword(true);
     navigation.navigate("Register_Screen");
   };
 
-  //Use States:
-  const [LoginUsername, SetLoginUsername] = useState("");
-  const [LoginPassword, SetLoginPassword] = useState("");
-
-  const [IsEmptyLoginInput, SetIsEmptyLoginInput] = useState(true);
-  const [IsEmptyLoginUsername, SetIsEmptyLoginUsername] = useState(true);
-  const [IsEmptyLoginPassword, SetIsEmptyLoginPassword] = useState(true);
-
-  function onLoginUsernameTextChange(value) {
-    SetLoginUsername(value);
-    if (LoginUsername.trim().length === 0) SetIsEmptyLoginUsername(true);
-    else {
-      SetIsEmptyLoginUsername(false);
-      if (IsEmptyLoginPassword === false) SetIsEmptyLoginInput(false);
-    }
+  //Function
+  function onLoginEmailTextChange(value) {
+    SetLoginEmail(value);
+    SetIsValidEmail(true);
   }
 
   function onLoginPasswordTextChange(value) {
     SetLoginPassword(value);
-    if (LoginPassword.trim().length === 0) SetIsEmptyLoginPassword(true);
-    else {
-      SetIsEmptyLoginPassword(false);
-      if (IsEmptyLoginUsername === false) SetIsEmptyLoginInput(false);
-    }
+    SetIsValidPassword(true);
   }
+
+  function checkValidEmail(email) {
+    // Regular expression for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  //TESTING DATA, DELETE LATER:
+  let correctEmail = "admin@gmail.com";
+  let correctPassword = "admin";
+  //TESTING DATA, DELETE LATER:
+
+  const onLoginPressHandler = () => {
+    if (LoginEmail === correctEmail && LoginPassword === correctPassword) {
+      //Login authenticate
+      SetIsValidEmail(true);
+      SetIsValidPassword(true);
+      alert("Login successful");
+      // navigation.replace("BottomTab");
+    } else {
+      if (LoginEmail !== correctEmail) SetIsValidEmail(false);
+      if (LoginPassword !== correctPassword) SetIsValidPassword(false);
+    }
+  };
+
+  const onBackGroundPressHandler = () => Keyboard.dismiss();
 
   return (
     // <KeyboardAvoidingWrapper>
     <View style={GlobalStyle.container}>
-      <GoBackButton onPressFunction={onBackPressHandler} />
-      <Text style={[GlobalStyle.utils_title_text, { marginLeft: 24, marginTop: 20, }]}>
+      <Text
+        style={[
+          GlobalStyle.utils_title_text,
+          { marginLeft: 24, marginTop: 100 },
+        ]}
+      >
         Login
       </Text>
-      <View style={[styles.login_container, { justifyContent: "center"}]}>
+      <Pressable
+        onPress={onBackGroundPressHandler}
+        style={[styles.login_container, { justifyContent: "center" }]}
+      >
         <UsernameBox
-          style={{ marginTop: 30, marginBottom: 20, }}
-          onChangeText={onLoginUsernameTextChange}
+          style={{
+            marginTop: 30,
+            marginBottom: 30,
+          }}
+          onChangeText={onLoginEmailTextChange}
+          title="Email"
+          placeholder="Enter your email"
+          errorMessage={emailErrorMessage}
+          isValid={isValidEmail}
         />
         <PasswordBox
-          style={{ marginBottom: 70 }}
+          style={{ marginBottom: 70, flex: 1 }}
           title="Password"
           onChangeText={onLoginPasswordTextChange}
+          errorMessage={passwordErrorMessage}
+          isValid={isValidPassword}
         />
-      </View>
+      </Pressable>
       <View style={[{ flex: 1 }, styles.login_flexbox_container]}>
-        <PurpleButton isDisable={IsEmptyLoginInput} title="Login"/>
+        <PurpleButton title="Login" onPressFunction={onLoginPressHandler} />
         <View
           style={{
             borderBottomColor: "#fff",
@@ -92,7 +143,7 @@ export default function LoginScreen({navigation}) {
         onOptionPressFunction={onRegisterPressHandler}
       />
     </View>
-    // </KeyboardAvoidingWrapper> 
+    // </KeyboardAvoidingWrapper>
   );
 }
 

@@ -29,11 +29,6 @@ const App = () => {
     //   </MainStack.Navigator>
     // </NavigationContainer>
 
-
-    // <SafeAreaProvider>
-    //   <SettingsScreen/>
-    // </SafeAreaProvider>
-
     <SafeAreaProvider>
       <NavigationContainer>
         <StackNavigator />

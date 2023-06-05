@@ -116,7 +116,7 @@ const CalendarTopBar = ({onSelectedDateReceived}) => {
         ]}
       >
         <View style={{ flex: 1, justifyContent: "center" }}>
-          <Text style={[styles.dayText, isWeekend && styles.todayText]}>
+          <Text style={[styles.dayText, isWeekend && styles.weekendText]}>
             {dayOfWeek}
           </Text>
         </View>
@@ -239,6 +239,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
   dayContainer: {
     width: 50,
     height: 65,
@@ -248,24 +249,29 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   dayText: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#fff",
+    fontFamily: "Lato-Regular",
   },
-  todayText: {
+
+  weekendText: {
     color: "red",
+    fontFamily: "Lato-Regular",
   },
 
   month_text: {
     color: "#fff",
     fontWeight: 600,
-    fontSize: 14,
+    fontSize: 16,
+    fontFamily: "Lato-Regular",
   },
 
   year_text: {
     color: "#AFAFAF",
     fontWeight: 600,
     fontSize: 12,
+    fontFamily: "Lato-Regular",
   },
 
   circle: {

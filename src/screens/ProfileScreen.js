@@ -86,13 +86,15 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     fontSize: 26,
     color: "#fff",
+    fontFamily: "Lato-Regular",
   },
 
   section_title_text: {
     fontWeight: 400,
-    fontSize: 14,
+    fontSize: 16,
     color: "#AFAFAF",
     marginBottom: 10,
+    fontFamily: "Lato-Regular",
   },
 });
 

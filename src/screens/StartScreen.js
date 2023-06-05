@@ -12,7 +12,7 @@ export default function StartScreen({ navigation }){
     };
 
     const onLoginPressHandler = () => {
-      navigation.navigate("Authenticate");
+      navigation.replace("Authenticate");
     };
 
     const onGuestPressHandler = () => {
@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     fontSize: 20,
     color: "#fff",
+    fontFamily: "Lato-Regular",
   },
 
   footer_container: {

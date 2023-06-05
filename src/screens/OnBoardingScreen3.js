@@ -29,7 +29,7 @@ export default function OnBoardingScreen3({ navigation }) {
           source={require("../../assets/onBoardingPic3.png")}
           style={GlobalStyle.image}
         />
-        <Text style={GlobalStyle.utils_title_text}>Mange your tasks</Text>
+        <Text style={GlobalStyle.utils_title_text}>Organize your tasks</Text>
         <Text style={GlobalStyle.utils_info_text}>
           You can organize your daily tasks by adding your tasks into separate
           categories

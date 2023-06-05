@@ -62,7 +62,7 @@ export default function OnBoardingScreen2({ navigation }) {
           source={require("../../assets/onBoardingPic2.png")}
           style={OnBoardingStyle.image}
         />
-        <Text style={OnBoardingStyle.utils_title_text}>Mange your tasks</Text>
+        <Text style={OnBoardingStyle.utils_title_text}>Create daily routine</Text>
         <Text style={OnBoardingStyle.utils_info_text}>
           In TaskPartner you can create your personalized routine to stay productive
         </Text>

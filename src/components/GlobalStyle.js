@@ -22,6 +22,7 @@ export default StyleSheet.create({
     fontWeight: 700,
     color: "#fff",
     marginTop: 50,
+    fontFamily: "Lato-Regular",
   },
 
   utils_info_text: {
@@ -44,6 +45,7 @@ export default StyleSheet.create({
     color: "rgba(255, 255, 255, 0.44)",
     fontSize: 16,
     fontWeight: 400,
+    fontFamily: "Lato-Regular",
   },
 
   next_pressable: {
@@ -54,12 +56,14 @@ export default StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
+    fontFamily: "Lato-Regular",
   },
 
   next_pressable_text: {
     color: "#fff",
     fontSize: 16,
     fontWeight: 400,
+    fontFamily: "Lato-Regular",
   },
 
   footer_view: {
@@ -73,5 +77,6 @@ export default StyleSheet.create({
     fontSize: 22,
     fontWeight: 400,
     marginBottom: 15,
+    fontFamily: "Lato-Regular",
   },
 });

@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
   button: {
     width: 137,
     height: 49,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 4,
     borderWidth: 2,
     margin: 15,
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     fontSize: 16,
     color: "#FFFFFF",
+    fontFamily: "Lato-Regular",
   },
 });
 
