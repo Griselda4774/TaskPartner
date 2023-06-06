@@ -32,8 +32,11 @@ import {
   updateDocIdState,
   updateEmailState,
   updateUserState,
+  resetTasks,
+  getTasks,
 } from "../redux/actions";
 import { useIsFocused } from "@react-navigation/native";
+import { fetchTasksByUser } from "../firebase/task";
 
 export default function LoginScreen({ navigation }) {
   const userState = useSelector((state) => state.user.user);
@@ -122,10 +125,17 @@ export default function LoginScreen({ navigation }) {
         console.log("user: ", user);
         await updateUserVerifyToFirestore(user);
         await fetchUserData(user);
+        console.log("Login successful");
         dispatch(updateUserState(user));
         dispatch(login());
-        console.log("Login successful");
-        navigation.navigate("Task");
+        try {
+          const tasks = await fetchTasksByUser(user);
+          dispatch(resetTasks());
+          dispatch(getTasks(tasks));
+        } catch (error) {
+          console.log("Error fetching: ", error);
+        }
+        navigation.replace("Task");
       } else {
         console.log("Login unsuccessful");
       }

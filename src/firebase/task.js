@@ -33,7 +33,7 @@ export const fetchTasksByUser = async (user) => {
   try {
     const q = query(
       collection(FIRESTORE_DB, "Task"),
-      where("userID", "==", user.email)
+      where("userID", "==", user.userID)
     );
     const querySnapshot = await getDocs(q);
     const tasks = [];
@@ -107,9 +107,8 @@ export const updateDocumentToFirestore = async (item) => {
 
 // Delete task from firestore
 export const deleteTaskFromFirestore = async (item) => {
-  const documentId = await findDocumentIdFromFirestore(item.taskID);
   try {
-    await deleteDoc(doc(FIRESTORE_DB, "Task", documentId));
+    await deleteDoc(doc(FIRESTORE_DB, "Task", item.taskID));
     console.log("Document successfully deleted!");
   } catch (error) {
     console.log("Error deleting document: ", error);

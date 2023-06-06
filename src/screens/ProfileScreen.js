@@ -6,28 +6,41 @@ import { SvgXml } from "react-native-svg";
 import { ScrollView } from "react-native-virtualized-view";
 import GlobalStyle from "../components/GlobalStyle";
 import OptionNavigatorBar from "../components/OptionNavigatorBar";
-import { CameraIcon, FlashIcon, InfoCircleIcon, KeyIcon, LikeIcon, LogOutIcon, MenuIcon, SettingIcon, UserIcon } from "../constants/Icons";
+import {
+  CameraIcon,
+  FlashIcon,
+  InfoCircleIcon,
+  KeyIcon,
+  LikeIcon,
+  LogOutIcon,
+  MenuIcon,
+  SettingIcon,
+  UserIcon,
+} from "../constants/Icons";
 
-const ProfileScreen = ({navigation}) => {
-
+const ProfileScreen = ({ navigation }) => {
   const onSettingPressHandler = () => {
     navigation.navigate("Option_Setting_Screen");
   };
 
   return (
     <View style={styles.container}>
-      <View style={{ alignItems: "center", marginTop: 50, }}>
-        <Text style={GlobalStyle.screen_header_text}>Profile</Text>
-        <Image
-          style={styles.avatar}
-          source={require("../../assets/avatar.jpg")}
-        />
-        <Text style={styles.name_text}>Martha Hays</Text>
-      </View>
       <ScrollView>
+        <View style={{ alignItems: "center", marginTop: 50 }}>
+          <Text style={GlobalStyle.screen_header_text}>Profile</Text>
+          <Image
+            style={styles.avatar}
+            source={require("../../assets/avatar.jpg")}
+          />
+          <Text style={styles.name_text}>Martha Hays</Text>
+        </View>
         <View style={{ marginHorizontal: 20, marginTop: 30 }}>
           <Text style={styles.section_title_text}>Settings</Text>
-          <OptionNavigatorBar title="App Settings" icon={SettingIcon} onPressFunction={onSettingPressHandler}/>
+          <OptionNavigatorBar
+            title="App Settings"
+            icon={SettingIcon}
+            onPressFunction={onSettingPressHandler}
+          />
         </View>
 
         <View style={{ marginHorizontal: 20, marginTop: 30 }}>
@@ -72,6 +85,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#000",
     flex: 1,
+    paddingBottom: 32,
   },
 
   avatar: {

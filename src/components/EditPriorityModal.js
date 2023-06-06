@@ -15,7 +15,7 @@ import Priorities from "../../assets/data/Priorities";
 import { SvgXml } from "react-native-svg";
 import { FlagIcon } from "../constants/Icons";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editTask } from "../redux/actions";
 import { updateDocumentToFirestore } from "../firebase/task";
 
@@ -25,6 +25,7 @@ const EditPriorityModal = ({ visible, onRequestClose, task }) => {
   useEffect(() => {
     setSelectedID(task.taskPriority);
   }, [visible]);
+  const user = useSelector((state) => state.user.user);
 
   return (
     <Modal visible={visible} transparent={true} animationType="slide">
@@ -76,7 +77,9 @@ const EditPriorityModal = ({ visible, onRequestClose, task }) => {
               onPress={() => {
                 task.taskPriority = selectedID;
                 dispatch(editTask(task));
-                updateDocumentToFirestore(task);
+                if (user.userID !== "") {
+                  updateDocumentToFirestore(task);
+                }
                 onRequestClose();
               }}
             >
