@@ -1,71 +1,79 @@
 import { View, Text, StyleSheet, FlatList, Pressable } from "react-native";
-import React from 'react'
+import React from "react";
 import GlobalStyle from "./GlobalStyle";
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 import { SvgXml } from "react-native-svg";
 import { BackIcon } from "../constants/Icons";
 
-const CalendarTopBar = ({onSelectedDateReceived}) => {
-  
+const CalendarTopBar = ({ onSelectedDateReceived }) => {
   //Use states:
   const [selectedDate, SetSelectedDate] = useState(new Date());
-  
+
   const [currentDate, SetCurrentDate] = useState(new Date());
-  
+
   const [chosenMonth, SetChosenMonth] = useState(new Date().getMonth());
   const [chosenYear, SetChosenYear] = useState(new Date().getFullYear());
-  
-  const months = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER",
-                  "OCTOBER", "NOVEMBER", "DECEMBER"];
-  
+
+  const months = [
+    "JANUARY",
+    "FEBRUARY",
+    "MARCH",
+    "APRIL",
+    "MAY",
+    "JUNE",
+    "JULY",
+    "AUGUST",
+    "SEPTEMBER",
+    "OCTOBER",
+    "NOVEMBER",
+    "DECEMBER",
+  ];
+
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  
-    //Function:
 
-    // const selectedDateHandler = (date) => {
-    //   SetSelectedDate(date);
-    //   onSelectedDateReceived(selectedDate);
-    // };
-    
-    const onNextPressHandler = () => {
+  //Function:
 
-      let tempMonth = chosenMonth;
-      let tempYear = chosenYear;
-      tempMonth = tempMonth + 1;
-      if(tempMonth > 11)
-      {
-        tempYear = tempYear + 1;
-        tempMonth = 0;
-      }
-      SetChosenMonth(tempMonth);
-      SetChosenYear(tempYear);
-    };
+  // const selectedDateHandler = (date) => {
+  //   SetSelectedDate(date);
+  //   onSelectedDateReceived(selectedDate);
+  // };
 
-    const onPreviousPressHandler = () => {
-      let tempMonth = chosenMonth;
-      let tempYear = chosenYear;
-      tempMonth = tempMonth - 1;
-      if(tempMonth < 0)
-      {
-        tempYear = tempYear - 1;
-        tempMonth = 11;
-      }
-      SetChosenMonth(tempMonth);
-      SetChosenYear(tempYear);
-    };
-
-    function getDaysInMonth(month, year) {
-      var date = new Date(year, month, 1);
-      var days = [];
-      while (date.getMonth() === month) {
-        days.push(new Date(date));
-        date.setDate(date.getDate() + 1);
-      }
-      return days;
+  const onNextPressHandler = () => {
+    let tempMonth = chosenMonth;
+    let tempYear = chosenYear;
+    tempMonth = tempMonth + 1;
+    if (tempMonth > 11) {
+      tempYear = tempYear + 1;
+      tempMonth = 0;
     }
+    SetChosenMonth(tempMonth);
+    SetChosenYear(tempYear);
+  };
 
-    const daysInCurrentMonth = getDaysInMonth(chosenMonth, chosenYear);
-    
+  const onPreviousPressHandler = () => {
+    let tempMonth = chosenMonth;
+    let tempYear = chosenYear;
+    tempMonth = tempMonth - 1;
+    if (tempMonth < 0) {
+      tempYear = tempYear - 1;
+      tempMonth = 11;
+    }
+    SetChosenMonth(tempMonth);
+    SetChosenYear(tempYear);
+  };
+
+  function getDaysInMonth(month, year) {
+    var date = new Date(year, month, 1);
+    var days = [];
+    while (date.getMonth() === month) {
+      days.push(new Date(date));
+      date.setDate(date.getDate() + 1);
+    }
+    return days;
+  }
+
+  const daysInCurrentMonth = getDaysInMonth(chosenMonth, chosenYear);
+
   // Update current date every second
   useEffect(() => {
     const timer = setInterval(() => {
@@ -76,20 +84,18 @@ const CalendarTopBar = ({onSelectedDateReceived}) => {
       clearInterval(timer);
     };
   }, []);
-  
 
   const renderDay = (item) => {
-
     const dayOfWeek = daysOfWeek[item.getDay()];
     const dateOfMonth = item.getDate();
-    
 
     // const date = new Date();
     // const currentDayIndex = currentDate.getDay();
 
-    const isSelected = (item.getDate() === selectedDate.getDate() &&
-                        item.getMonth() === selectedDate.getMonth() &&
-                        selectedDate.getFullYear() === item.getFullYear());
+    const isSelected =
+      item.getDate() === selectedDate.getDate() &&
+      item.getMonth() === selectedDate.getMonth() &&
+      selectedDate.getFullYear() === item.getFullYear();
 
     // //Check to see if the Date in the array is today or not
     // if (item < currentDayIndex) {
@@ -105,11 +111,14 @@ const CalendarTopBar = ({onSelectedDateReceived}) => {
     //   date.getMonth() === currentDate.getMonth() &&
     //   date.getFullYear() === currentDate.getFullYear();
 
-    const isWeekend = (item.getDay() === 0 || item.getDay() === 6) ? true : false;
-      
+    const isWeekend = item.getDay() === 0 || item.getDay() === 6 ? true : false;
+
     return (
       <Pressable
-        onPress={() => {SetSelectedDate(item); onSelectedDateReceived(item)}}
+        onPress={() => {
+          SetSelectedDate(item);
+          onSelectedDateReceived(item);
+        }}
         style={[
           styles.dayContainer,
           { backgroundColor: isSelected ? "#8687E7" : "#272727" },
@@ -122,9 +131,7 @@ const CalendarTopBar = ({onSelectedDateReceived}) => {
         </View>
 
         <View style={{ flex: 1, justifyContent: "center" }}>
-          <Text style={styles.dayText}>
-            {dateOfMonth}
-          </Text>
+          <Text style={styles.dayText}>{dateOfMonth}</Text>
         </View>
       </Pressable>
     );
@@ -177,7 +184,7 @@ const CalendarTopBar = ({onSelectedDateReceived}) => {
         <View
           style={{ flex: 7, alignItems: "center", justifyContent: "center" }}
         >
-          <View style={{alignItems: 'center', marginTop: 10,}}>
+          <View style={{ alignItems: "center", marginTop: 10 }}>
             <Text style={styles.month_text}>{months[chosenMonth]}</Text>
             <Text style={styles.year_text}>{chosenYear}</Text>
           </View>
@@ -229,7 +236,7 @@ const CalendarTopBar = ({onSelectedDateReceived}) => {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -242,14 +249,14 @@ const styles = StyleSheet.create({
 
   dayContainer: {
     width: 50,
-    height: 65,
+    height: 60,
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: 10,
     borderRadius: 4,
   },
   dayText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#fff",
     fontFamily: "Lato-Regular",
@@ -283,4 +290,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CalendarTopBar
+export default CalendarTopBar;

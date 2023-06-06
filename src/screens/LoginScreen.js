@@ -5,7 +5,9 @@ import {
   View,
   Image,
   KeyboardAvoidingView,
-  Keyboard, Pressable,
+  Keyboard,
+  Pressable,
+  Alert,
 } from "react-native";
 import { useState } from "react";
 import GlobalStyle from "../components/GlobalStyle";
@@ -15,20 +17,35 @@ import PurpleButton from "../components/PurpleButton";
 import ThirdPartyButton from "../components/ThirdPartyButton";
 import AuthenticateFooter from "../components/AuthenticateFooter";
 import {
+  findUserDocumentIdFromFirestore,
   loginUser,
-  loginWithGoogle,
-  loginWithGoogle2,
   logoutUser,
+  fetchUserData,
+  updateUserVerifyToFirestore,
 } from "../firebase/user";
 import { onAuthStateChanged, getRedirectResult } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../redux/actions";
+import {
+  login,
+  logout,
+  updateDocIdState,
+  updateEmailState,
+  updateUserState,
+} from "../redux/actions";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function LoginScreen({ navigation }) {
+  const userState = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
   //Use States:
   const [LoginEmail, SetLoginEmail] = useState("");
   const [LoginPassword, SetLoginPassword] = useState("");
+
+  useEffect(() => {
+    SetLoginEmail("");
+    SetLoginPassword("");
+  }, [useIsFocused()]);
 
   const [isValidEmail, SetIsValidEmail] = useState(true);
   const [isValidPassword, SetIsValidPassword] = useState(true);
@@ -62,7 +79,7 @@ export default function LoginScreen({ navigation }) {
 
   //Function
   function onLoginEmailTextChange(value) {
-    SetLoginEmail(value);
+    SetLoginEmail(value.toLowerCase());
     SetIsValidEmail(true);
   }
 
@@ -77,7 +94,7 @@ export default function LoginScreen({ navigation }) {
     return emailRegex.test(email);
   }
 
-  const onLoginPressHandler = () => {
+  const onLoginPressHandler = async () => {
     // if (LoginEmail === correctEmail && LoginPassword === correctPassword) {
     //   //Login authenticate
     //   SetIsValidEmail(true);
@@ -94,69 +111,83 @@ export default function LoginScreen({ navigation }) {
     //   if (LoginEmail !== correctEmail) SetIsValidEmail(false);
     //   if (LoginPassword !== correctPassword) SetIsValidPassword(false);
     // }
+    dispatch(logout());
+    let user = userState;
+    user.email = LoginEmail;
     try {
-            loginUser(LoginEmail, LoginPassword);
-            // navigation.replace("BottomTab");
-            navigation.navigate("Task");
-          } catch (error) {
-              console.log(error);
-          }
-    
+      await loginUser(user, LoginPassword);
+      const docID = await findUserDocumentIdFromFirestore(user);
+      user.docID = docID;
+      if (user.isVerified) {
+        console.log("user: ", user);
+        await updateUserVerifyToFirestore(user);
+        await fetchUserData(user);
+        dispatch(updateUserState(user));
+        dispatch(login());
+        console.log("Login successful");
+        navigation.navigate("Task");
+      } else {
+        console.log("Login unsuccessful");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onBackGroundPressHandler = () => Keyboard.dismiss();
 
-  const userState = useSelector((state) => state.user.user);
-  useEffect(() => {
-    console.log("userState: ", userState);
-  }, [userState]);
-
   return (
     // <KeyboardAvoidingWrapper>
-    <View style={GlobalStyle.container}>
-      <Text
-        style={[
-          GlobalStyle.utils_title_text,
-          { marginLeft: 24, marginTop: 100 },
-        ]}
-      >
-        Login
-      </Text>
-      <Pressable
-        onPress={onBackGroundPressHandler}
-        style={[styles.login_container, { justifyContent: "center" }]}
-      >
-        <UsernameBox
+    <View
+      style={[
+        GlobalStyle.container,
+        {
+          justifyContent: "center",
+          flexDirection: "column",
+        },
+      ]}
+    >
+      <View style={{ marginBottom: 86 }}>
+        <Text style={[GlobalStyle.utils_title_text, { marginLeft: 24 }]}>
+          Login
+        </Text>
+        <Pressable
+          onPress={onBackGroundPressHandler}
+          style={[styles.login_container, { justifyContent: "center" }]}
+        >
+          <UsernameBox
+            style={{
+              marginTop: 30,
+              marginBottom: 30,
+            }}
+            onChangeText={onLoginEmailTextChange}
+            title="Email"
+            placeholder="Enter your email"
+            errorMessage={emailErrorMessage}
+            isValid={isValidEmail}
+            value={LoginEmail}
+          />
+          <PasswordBox
+            style={{ marginBottom: 70, flex: 1 }}
+            title="Password"
+            onChangeText={onLoginPasswordTextChange}
+            errorMessage={passwordErrorMessage}
+            isValid={isValidPassword}
+            value={LoginPassword}
+          />
+        </Pressable>
+        <View style={[{}, styles.login_flexbox_container]}>
+          <PurpleButton title="Login" onPressFunction={onLoginPressHandler} />
+          {/* <View
           style={{
-            marginTop: 30,
-            marginBottom: 30,
-          }}
-          onChangeText={onLoginEmailTextChange}
-          title="Email"
-          placeholder="Enter your email"
-          errorMessage={emailErrorMessage}
-          isValid={isValidEmail}
-        />
-        <PasswordBox
-          style={{ marginBottom: 70, flex: 1 }}
-          title="Password"
-          onChangeText={onLoginPasswordTextChange}
-          errorMessage={passwordErrorMessage}
-          isValid={isValidPassword}
-        />
-      </Pressable>
-      <View style={[{ flex: 1 }, styles.login_flexbox_container]}>
-        <PurpleButton title="Login" onPressFunction={onLoginPressHandler} />
-        <View
-          style={{
-            borderBottomColor: "#fff",
-            borderBottomWidth: StyleSheet.hairlineWidth,
-            height: "10%",
+            // borderBottomColor: "#fff",
+            // borderBottomWidth: StyleSheet.hairlineWidth,
+            height: ,
             marginTop: 0,
             margin: 24,
           }}
-        />
-        <ThirdPartyButton
+        /> */}
+          {/* <ThirdPartyButton
           thirdPartyName="Google"
           pressableStyle={{ marginTop: 10 }}
           imageSource={require("../../assets/googleIcon.png")}
@@ -172,13 +203,14 @@ export default function LoginScreen({ navigation }) {
               console.log(error);
             }
           }}
+        /> */}
+        </View>
+        <AuthenticateFooter
+          footerText="Don't have an account?"
+          optionChose="Register"
+          onOptionPressFunction={onRegisterPressHandler}
         />
       </View>
-      <AuthenticateFooter
-        footerText="Don't have an account?"
-        optionChose="Register"
-        onOptionPressFunction={onRegisterPressHandler}
-      />
     </View>
     // </KeyboardAvoidingWrapper>
   );
@@ -187,7 +219,6 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   login_flexbox_container: {
     backgroundColor: "#000",
-    height: "100%",
   },
 
   login_container: {

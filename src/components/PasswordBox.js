@@ -2,7 +2,14 @@ import { StyleSheet, Text, View, Image, Pressable, Button } from "react-native";
 import { useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
 
-const PasswordBox = ({ style, title, onChangeText, errorMessage, isValid }) => {
+const PasswordBox = ({
+  style,
+  title,
+  onChangeText,
+  errorMessage,
+  isValid,
+  value,
+}) => {
   return (
     <View style={[styles.container, { ...style }]}>
       <Text style={styles.title_text}>{title}</Text>
@@ -19,6 +26,7 @@ const PasswordBox = ({ style, title, onChangeText, errorMessage, isValid }) => {
         secureTextEntry
         onChangeText={onChangeText}
         keyboardAppearance="dark"
+        defaultValue={value}
       />
       <Text style={styles.errormessage_text}>{errorMessage}</Text>
     </View>

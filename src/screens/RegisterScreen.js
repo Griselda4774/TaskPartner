@@ -5,7 +5,7 @@ import {
   Image,
   KeyboardAvoidingView,
   Keyboard,
-  Pressable
+  Pressable,
 } from "react-native";
 import { useState, useEffect } from "react";
 import GlobalStyle from "../components/GlobalStyle";
@@ -14,11 +14,17 @@ import PasswordBox from "../components/PasswordBox";
 import PurpleButton from "../components/PurpleButton";
 import GoBackButton from "../components/GoBackButton";
 import AuthenticateFooter from "../components/AuthenticateFooter";
-import { registerUser } from "../firebase/user";
+import { addUserToFirestore, registerUser } from "../firebase/user";
 
 import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
+import { useDispatch, useSelector } from "react-redux";
+import { login, updateUserState } from "../redux/actions";
+import { useIsFocused } from "@react-navigation/native";
 
-export default function RegisterScreen({navigation}) {
+export default function RegisterScreen({ navigation }) {
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.user.user);
+
   //Use States:
   const [email, SetEmail] = useState("");
   const [firstName, SetFirstName] = useState("");
@@ -36,11 +42,11 @@ export default function RegisterScreen({navigation}) {
   const [firstNameErrorMessage, SetFirstNameErrorMessage] = useState("");
   const [lastNameErrorMessage, SetLastNameErrorMessage] = useState("");
   const [passwordErrorMessage, SetPasswordErrorMessage] = useState("");
-  const [confirmPasswordErrorMessage, SetConfirmPasswordErrorMessage] = useState("");
+  const [confirmPasswordErrorMessage, SetConfirmPasswordErrorMessage] =
+    useState("");
 
   useEffect(() => {
-    if (!isValidEmail)
-      SetEmailErrorMessage("* Invalid email");
+    if (!isValidEmail) SetEmailErrorMessage("* Invalid email");
     if (!isValidFirstName) {
       SetFirstNameErrorMessage("* Empty input");
     }
@@ -69,8 +75,21 @@ export default function RegisterScreen({navigation}) {
     if (isValidConfirmPassword) {
       SetConfirmPasswordErrorMessage("");
     }
-  }, [isValidEmail, isValidPassword, isValidFirstName, isValidLastName, isValidConfirmPassword]);
+  }, [
+    isValidEmail,
+    isValidPassword,
+    isValidFirstName,
+    isValidLastName,
+    isValidConfirmPassword,
+  ]);
 
+  useEffect(() => {
+    SetEmail("");
+    SetFirstName("");
+    SetLastName("");
+    SetPassword("");
+    SetConfirmPassword("");
+  }, [useIsFocused()]);
 
   //Navigators:
   const onGoToLoginHandler = () => {
@@ -83,7 +102,7 @@ export default function RegisterScreen({navigation}) {
 
   //Function:
   function onEmailTextChange(value) {
-    SetEmail(value);
+    SetEmail(value.toLowerCase());
     SetIsValidEmail(true);
   }
 
@@ -96,7 +115,7 @@ export default function RegisterScreen({navigation}) {
     SetFirstName(value);
     SetIsValidFirstName(true);
   }
-  
+
   function onPasswordTextChange(value) {
     SetPassword(value);
     SetIsValidPassword(true);
@@ -114,37 +133,45 @@ export default function RegisterScreen({navigation}) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
-  
-  const onRegisterPressHandler = () => {      
 
-      if(lastName.trim().length < 1 || firstName.trim().length < 1 || !(checkValidEmail(email)) 
-        || password.trim().length < 5 || (confirmPassword !== password || confirmPassword.trim().length === 0))
-      {
-        if (lastName.trim().length < 1) SetIsValidLastName(false);
+  const onRegisterPressHandler = async () => {
+    if (
+      lastName.trim().length < 1 ||
+      firstName.trim().length < 1 ||
+      !checkValidEmail(email) ||
+      password.trim().length < 5 ||
+      confirmPassword !== password ||
+      confirmPassword.trim().length === 0
+    ) {
+      if (lastName.trim().length < 1) SetIsValidLastName(false);
 
-        if (firstName.trim().length < 1) SetIsValidFirstName(false);
+      if (firstName.trim().length < 1) SetIsValidFirstName(false);
 
-        if (!checkValidEmail(email)) SetIsValidEmail(false);
+      if (!checkValidEmail(email)) SetIsValidEmail(false);
 
-        if (password.trim().length < 5) SetIsValidPassword(false);
+      if (password.trim().length < 5) SetIsValidPassword(false);
 
-        if (confirmPassword !== password || confirmPassword.trim().length === 0)
-          SetIsValidConfirmPassword(false);
-      }
-      else
-      {
-        try {
-              registerUser(email, password);
-              navigation.navigate("Login_Screen");
-            } catch (error) {
-              console.log(error);
-            }
-      }
+      if (confirmPassword !== password || confirmPassword.trim().length === 0)
+        SetIsValidConfirmPassword(false);
+    } else {
+      let user = userState;
+      user.email = email;
+      user.succesfulRegister = false;
+      user.lastName = lastName;
+      user.firstName = firstName;
+      try {
+        await registerUser(user, password);
+        if (user.succesfulRegister) {
+          await addUserToFirestore(user);
+          navigation.navigate("Login_Screen");
+        }
+      } catch (error) {}
+    }
   };
 
   return (
     // <KeyboardAvoidingWrapper>
-    <View style={GlobalStyle.container}>
+    <View style={[GlobalStyle.container, { paddingBottom: 86 }]}>
       <GoBackButton onPressFunction={onBackPressHandler} />
       <Text
         style={[
@@ -161,23 +188,25 @@ export default function RegisterScreen({navigation}) {
           { justifyContent: "center", backgroundColor: "#000" },
         ]}
       >
-        <View style={{ flexDirection: "row", flex: 1, marginTop: 20, }}>
+        <View style={{ flexDirection: "row", flex: 1, marginTop: 20 }}>
           <UsernameBox
-            style={{ marginTop: 0, flex: 1 }}
+            style={{ marginTop: 0, flex: 5 }}
             onChangeText={onLastNameTextChange}
             title="Last Name"
             placeholder="Enter your last name"
             isValid={isValidLastName}
             errorMessage={lastNameErrorMessage}
+            value={lastName}
           />
 
           <UsernameBox
-            style={{ marginTop: 0, flex: 2, marginLeft: 30 }}
+            style={{ marginTop: 0, flex: 6, marginLeft: 30 }}
             onChangeText={onFirstNameTextChange}
             title="First Name"
             placeholder="Enter your first name"
             isValid={isValidFirstName}
             errorMessage={firstNameErrorMessage}
+            value={firstName}
           />
         </View>
 
@@ -188,6 +217,7 @@ export default function RegisterScreen({navigation}) {
           placeholder="Enter your email"
           isValid={isValidEmail}
           errorMessage={emailErrorMessage}
+          value={email}
         />
 
         <PasswordBox
@@ -196,6 +226,7 @@ export default function RegisterScreen({navigation}) {
           onChangeText={onPasswordTextChange}
           isValid={isValidPassword}
           errorMessage={passwordErrorMessage}
+          value={password}
         />
         <PasswordBox
           style={{ flex: 1 }}
@@ -203,16 +234,21 @@ export default function RegisterScreen({navigation}) {
           onChangeText={onConfirmPasswordTextChange}
           isValid={isValidConfirmPassword}
           errorMessage={confirmPasswordErrorMessage}
+          value={confirmPassword}
         />
       </Pressable>
       <View style={[{ flex: 1 }, styles.login_flexbox_container]}>
-        <PurpleButton viewStyle={{ marginTop: 30, height: "33%" }} title="Register" onPressFunction={onRegisterPressHandler} />
+        <PurpleButton
+          viewStyle={{ marginTop: 30 }}
+          title="Register"
+          onPressFunction={onRegisterPressHandler}
+        />
+        <AuthenticateFooter
+          footerText="Already have an account?"
+          optionChose="Login"
+          onOptionPressFunction={onGoToLoginHandler}
+        />
       </View>
-      <AuthenticateFooter
-        footerText="Already have an account?"
-        optionChose="Login"
-        onOptionPressFunction={onGoToLoginHandler}
-      />
     </View>
     // </KeyboardAvoidingWrapper>
   );

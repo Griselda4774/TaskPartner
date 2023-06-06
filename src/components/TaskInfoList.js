@@ -72,14 +72,12 @@ const TaskCategory = ({ categories, item }) => {
 };
 
 const DisplayMode = (navigation, isCompletedMode, selectedDate) => {
-
   if (isCompletedMode) {
     return (
       <FlatList
         data={Tasks}
         keyExtractor={(item) => item.taskID}
         renderItem={({ item }) => {
-
           const itemOnPressHandler = (item) => {
             navigation.navigate("EditTask", item);
           };
@@ -93,7 +91,7 @@ const DisplayMode = (navigation, isCompletedMode, selectedDate) => {
 
           return (
             <View>
-              {(item.isCompleted && isSelectedDate) ? (
+              {item.isCompleted && isSelectedDate ? (
                 <TouchableOpacity
                   onPress={() => {
                     itemOnPressHandler(item);
@@ -101,7 +99,7 @@ const DisplayMode = (navigation, isCompletedMode, selectedDate) => {
                 >
                   <View style={styles.task_item_wrapper}>
                     <View style={styles.check_button_wrapper}>
-                      <CheckButton size={24} task={item}/>
+                      <CheckButton size={24} task={item} />
                     </View>
                     <View style={styles.task_infor_wrapper}>
                       <View style={styles.task_title_wrapper}>
@@ -138,9 +136,7 @@ const DisplayMode = (navigation, isCompletedMode, selectedDate) => {
                     </View>
                   </View>
                 </TouchableOpacity>
-              ) : (
-                null
-              )}
+              ) : null}
             </View>
           );
         }}
@@ -149,11 +145,10 @@ const DisplayMode = (navigation, isCompletedMode, selectedDate) => {
   } else {
     return (
       <FlatList
-        style={{height: 200}}
+        style={{ height: 200 }}
         data={Tasks}
         keyExtractor={(item) => item.taskID}
         renderItem={({ item }) => {
-
           const itemOnPressHandler = (item) => {
             navigation.navigate("EditTask", item);
           };
@@ -164,7 +159,7 @@ const DisplayMode = (navigation, isCompletedMode, selectedDate) => {
             dueDate.getDate() === selectedDate.getDate() &&
             dueDate.getMonth() === selectedDate.getMonth() &&
             dueDate.getFullYear() === selectedDate.getFullYear();
-          
+
           return (
             <View>
               {isSelectedDate ? (
@@ -175,7 +170,7 @@ const DisplayMode = (navigation, isCompletedMode, selectedDate) => {
                 >
                   <View style={styles.task_item_wrapper}>
                     <View style={styles.check_button_wrapper}>
-                      <CheckButton size={24} />
+                      <CheckButton size={24} task={item} />
                     </View>
                     <View style={styles.task_infor_wrapper}>
                       <View style={styles.task_title_wrapper}>
@@ -212,9 +207,7 @@ const DisplayMode = (navigation, isCompletedMode, selectedDate) => {
                     </View>
                   </View>
                 </TouchableOpacity>
-              ) : (
-                null
-              )}
+              ) : null}
             </View>
           );
         }}
@@ -223,8 +216,7 @@ const DisplayMode = (navigation, isCompletedMode, selectedDate) => {
   }
 };
 
-const TaskInfoList = ({ navigation, isCompletedMode, selectedDate}) => {
-
+const TaskInfoList = ({ navigation, isCompletedMode, selectedDate }) => {
   const [heightLayout, setHeightLayout] = useState(0);
   const [expanded, setExpanded] = useState(true);
   useEffect(() => {
@@ -234,7 +226,6 @@ const TaskInfoList = ({ navigation, isCompletedMode, selectedDate}) => {
       setHeightLayout(0);
     }
   }, [expanded]);
-
 
   return (
     <View style={{ flex: 1 }}>

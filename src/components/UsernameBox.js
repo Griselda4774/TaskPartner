@@ -2,8 +2,15 @@ import { StyleSheet, Text, View, Image, Pressable, Button } from "react-native";
 import { useState, useEffect } from "react";
 import { TextInput } from "react-native-gesture-handler";
 
-const UsernameBox = ({ style, onChangeText, isValid, title, placeholder, errorMessage }) => {
-
+const UsernameBox = ({
+  style,
+  onChangeText,
+  isValid,
+  title,
+  placeholder,
+  errorMessage,
+  value,
+}) => {
   return (
     <View style={[styles.container, { ...style }]}>
       <Text style={styles.title_text}>{title}</Text>
@@ -14,10 +21,14 @@ const UsernameBox = ({ style, onChangeText, isValid, title, placeholder, errorMe
           {
             borderColor: isValid ? "#979797" : "#FF4949",
             borderWidth: isValid ? 0.8 : 1.5,
+            fontSize: 16,
+            padding: 4,
           },
         ]}
         placeholderTextColor="#535353"
         onChangeText={onChangeText}
+        keyboardAppearance="dark"
+        defaultValue={value}
       />
       <Text style={styles.errormessage_text}>{errorMessage}</Text>
     </View>

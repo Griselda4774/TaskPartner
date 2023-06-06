@@ -72,22 +72,22 @@ export const addTaskToFirestore = async (task) => {
 
 // Update task to firestore
 // 1) Get document id
-const findDocumentIdFromFirestore = async (taskID) => {
-  const q = query(
-    collection(FIRESTORE_DB, "Task"),
-    where("taskID", "==", taskID)
-  );
-  try {
-    const querySnapshot = await getDocs(q);
-    let documentId;
-    querySnapshot.forEach((doc) => {
-      documentId = doc.id;
-    });
-    return documentId;
-  } catch (error) {
-    console.log("Error finding document id: ", error);
-  }
-};
+// const findDocumentIdFromFirestore = async (taskID) => {
+//   const q = query(
+//     collection(FIRESTORE_DB, "Task"),
+//     where("taskID", "==", taskID)
+//   );
+//   try {
+//     const querySnapshot = await getDocs(q);
+//     let documentId;
+//     querySnapshot.forEach((doc) => {
+//       documentId = doc.id;
+//     });
+//     return documentId;
+//   } catch (error) {
+//     console.log("Error finding document id: ", error);
+//   }
+// };
 
 // 2) Update document
 export const updateDocumentToFirestore = async (item) => {

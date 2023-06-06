@@ -25,6 +25,7 @@ import { useSelector, useDispatch } from "react-redux";
 import AddTaskModal from "../components/AddTaskModal";
 import { getTasks, resetTasks } from "../redux/actions";
 import { fetchTasks, fetchTasksByUser } from "../firebase/task";
+import { logoutUser } from "../firebase/user";
 
 const HomeScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -75,11 +76,7 @@ const HomeScreen = ({ navigation }) => {
             // addTask(task[task.length - 1].taskID + 1);
             // console.log(task);
             // deleteTask(8);
-            console.log(
-              taskList.sort((a, b) => {
-                a.taskID - b.taskID;
-              })
-            );
+            console.log(user);
           }}
         >
           <Image
@@ -90,9 +87,14 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.header_title_wrapper}>
           <Text style={styles.header_title_text}>Home</Text>
         </View>
-        <View style={styles.icon_wrapper}>
+        <TouchableOpacity
+          style={styles.icon_wrapper}
+          onPress={() => {
+            logoutUser();
+          }}
+        >
           <SvgXml xml={RepeatIcon} height={32} width={32} />
-        </View>
+        </TouchableOpacity>
       </View>
       <View style={styles.body}>
         {taskList.filter((task) => task.userID == user.email).length == 0 ? (
