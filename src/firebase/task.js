@@ -57,7 +57,7 @@ export const addTaskToFirestore = async (task) => {
       taskCategory: task.taskCategory,
       taskPriority: task.taskPriority,
       taskDueDate: task.taskDueDate,
-      isCompleted: false,
+      isCompleted: task.isCompleted,
       userID: task.userID,
     });
     console.log("Document written with ID: ", typeof newDocRef.id);

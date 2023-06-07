@@ -23,8 +23,17 @@ const EditDateDueModal = ({ visible, onRequestClose, task }) => {
       hour12: false,
     })
   );
+  const [dateChanged, setDateChanged] = useState(false);
   useEffect(() => {
     setDateString(new Date(task.taskDueDate).toLocaleDateString("en-CA"));
+    setTimeString(
+      new Date(task.taskDueDate).toLocaleString("en-CA", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      })
+    );
+    setDateChanged(false);
   }, [visible]);
 
   const dispatch = useDispatch();
@@ -53,6 +62,7 @@ const EditDateDueModal = ({ visible, onRequestClose, task }) => {
               minuteInterval={1}
               onDateChange={(date) => {
                 setDateString(date);
+                setDateChanged(true);
               }}
               onTimeChange={(time) => {
                 setTimeString(time);
@@ -73,15 +83,27 @@ const EditDateDueModal = ({ visible, onRequestClose, task }) => {
                 ]}
                 activeOpacity={0.3}
                 onPress={() => {
-                  const [year, month, day] = dateString.split("/");
-                  const [hours, minutes] = timeString.split(":");
-                  task.taskDueDate = new Date(
-                    year,
-                    month - 1,
-                    day,
-                    hours,
-                    minutes
-                  ).toString();
+                  if (dateChanged) {
+                    const [year, month, day] = dateString.split("/");
+                    const [hours, minutes] = timeString.split(":");
+                    task.taskDueDate = new Date(
+                      year,
+                      month - 1,
+                      day,
+                      hours,
+                      minutes
+                    ).toString();
+                  } else {
+                    const [year, month, day] = dateString.split("-");
+                    const [hours, minutes] = timeString.split(":");
+                    task.taskDueDate = new Date(
+                      year,
+                      month - 1,
+                      day,
+                      hours,
+                      minutes
+                    ).toString();
+                  }
                   dispatch(editTask(task));
                   if (user.userID !== "") {
                     updateDocumentToFirestore(task);

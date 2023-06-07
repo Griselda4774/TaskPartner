@@ -21,7 +21,7 @@ const EditTaskTitleModal = ({ visible, onRequestClose, task }) => {
   const dispatch = useDispatch();
   const [taskName, setTaskName] = useState(task.taskName);
   const [taskDetail, setTaskDetail] = useState(task.taskDetail);
-  const user = useSelector((state) => state.userState);
+  const user = useSelector((state) => state.user.user);
 
   return (
     <Modal

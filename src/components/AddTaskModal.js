@@ -26,11 +26,12 @@ import ChooseCategoriesModal from "./ChooseCategoriesModal";
 import ChoosePriorityModal from "./ChoosePriorityModal";
 import ChooseDateDueModal from "./ChooseDateDueModal";
 import { useSelector, useDispatch } from "react-redux";
-import { addTask } from "../redux/actions";
+import { addTask, updateLocalId } from "../redux/actions";
 import { addTaskToFirestore } from "../firebase/task";
 
 const AddTaskModal = ({ visible, onRequestClose }) => {
   const user = useSelector((state) => state.user.user);
+  const localID = useSelector((state) => state.localID.localID);
   const dispatch = useDispatch();
   const now = new Date();
   // let newID;
@@ -196,12 +197,18 @@ const AddTaskModal = ({ visible, onRequestClose }) => {
               disabled={enableAddTask}
               onPress={async () => {
                 setEnableAddTask(false);
-                if (user.userID !== "") {
+                if (user.isLogin === true) {
                   const taskID = await addTaskToFirestore(task);
                   console.log("new task ID: ", taskID.toString());
+                } else {
+                  task.taskID = localID;
+                  console.log("new task ID: ", task.taskID);
+                  dispatch(updateLocalId());
+                  console.log("new local ID: ", localID);
                 }
                 // setTask({ ...task, taskID: taskID });
                 // const taskWithID = { ...task, taskID: taskID };
+                console.log("new task: ", task);
                 dispatch(addTask(task));
                 onRequestClose();
               }}

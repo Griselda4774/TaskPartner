@@ -4,12 +4,13 @@ import { PURPLE_COLOR } from "../constants/constants";
 import ModalStyles from "./ModalStyles";
 import { LATO_FONTS } from "../constants/constants";
 import { useFonts } from "expo-font";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteTask } from "../redux/actions";
 import { deleteTaskFromFirestore } from "../firebase/task";
 
 const DeleteTaskModal = ({ visible, onRequestClose, task, navigation }) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   return (
     <Modal visible={visible} transparent={true} animationType="slide">
       <View style={ModalStyles.wrapper}>
@@ -51,7 +52,9 @@ const DeleteTaskModal = ({ visible, onRequestClose, task, navigation }) => {
               activeOpacity={0.3}
               onPress={() => {
                 dispatch(deleteTask(task));
-                deleteTaskFromFirestore(task);
+                if (user.isLogin === true) {
+                  deleteTaskFromFirestore(task);
+                }
                 onRequestClose();
                 navigation.navigate("Home");
               }}

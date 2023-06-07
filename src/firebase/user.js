@@ -9,6 +9,7 @@ import {
   signInWithRedirect,
   getRedirectResult,
   sendEmailVerification,
+  signInAnonymously,
 } from "firebase/auth";
 import {
   FIREBASE_APP,

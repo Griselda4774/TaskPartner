@@ -15,6 +15,7 @@ import PurpleButton from "../components/PurpleButton";
 import GoBackButton from "../components/GoBackButton";
 import AuthenticateFooter from "../components/AuthenticateFooter";
 import { addUserToFirestore, registerUser } from "../firebase/user";
+import { addTaskToFirestore } from "../firebase/task";
 
 import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +25,7 @@ import { useIsFocused } from "@react-navigation/native";
 export default function RegisterScreen({ navigation }) {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user.user);
+  const taskList = useSelector((state) => state.tasks.tasks);
 
   //Use States:
   const [email, SetEmail] = useState("");
@@ -163,6 +165,12 @@ export default function RegisterScreen({ navigation }) {
         await registerUser(user, password);
         if (user.succesfulRegister) {
           await addUserToFirestore(user);
+          if (taskList.length > 0) {
+            taskList.forEach((task) => {
+              task.userID = user.userID;
+              addTaskToFirestore(task);
+            });
+          }
           navigation.navigate("Login_Screen");
         }
       } catch (error) {}

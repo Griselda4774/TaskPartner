@@ -14,6 +14,8 @@ export const UPDATE_ISVERIFIED_STATE = "UPDATE_ISVERIFIED_STATE";
 export const UPDATE_FIRSTNAME_STATE = "UPDATE_FIRSTNAME_STATE";
 export const UPDATE_LASTNAME_STATE = "UPDATE_LASTNAME_STATE";
 
+export const UPDATE_LOCAL_ID = "UPDATE_LOCAL_ID";
+
 // Action creators
 
 //Tasks actions
@@ -78,4 +80,8 @@ export const updateFirstNameState = (firstName) => ({
 export const updateLastNameState = (lastName) => ({
   type: UPDATE_LASTNAME_STATE,
   payload: lastName,
+});
+
+export const updateLocalId = () => ({
+  type: UPDATE_LOCAL_ID,
 });

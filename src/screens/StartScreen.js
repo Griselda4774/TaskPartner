@@ -3,6 +3,7 @@ import { useState } from "react";
 import GlobalStyle from "../components/GlobalStyle";
 import { SvgXml } from "react-native-svg";
 import { LogoIcon } from "../constants/Icons";
+import { loginAnonymous } from "../firebase/user";
 
 export default function StartScreen({ navigation }) {
   const [pressableSkipIsHovering, SetPressableSkipIsHovering] = useState(false);
@@ -15,7 +16,7 @@ export default function StartScreen({ navigation }) {
     navigation.navigate("Login_Screen");
   };
 
-  const onGuestPressHandler = () => {
+  const onGuestPressHandler = async () => {
     navigation.replace("Task");
   };
 

@@ -40,7 +40,13 @@ const ProfileScreen = ({ navigation }) => {
         <View style={{ alignItems: "center", marginTop: 50 }}>
           <Text style={GlobalStyle.screen_header_text}>Profile</Text>
           {user.isLogin ? (
-            <View>
+            <View
+              style={{
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <View style={styles.avatar}>
                 <Text style={styles.avatar_text}>{user.lastName[0]}</Text>
               </View>
@@ -158,7 +164,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: PURPLE_COLOR,
   },
-  avatar_text: { color: WHITE_TEXT_COLOR, fontSize: 50, textAlign: "center" },
+  avatar_text: { color: WHITE_TEXT_COLOR, fontSize: 56, textAlign: "center" },
 
   name_text: {
     marginTop: 20,

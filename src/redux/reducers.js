@@ -10,6 +10,7 @@ import {
   UPDATE_USER_STATE,
   UPDATE_EMAIL_STATE,
   UPDATE_DOCID_STATE,
+  UPDATE_LOCAL_ID,
 } from "./actions";
 
 const taskListInitialState = {
@@ -115,6 +116,22 @@ export const userReducer = (state = userInitialState, action) => {
           ...state.user,
           docID: action.payload,
         },
+      };
+    default:
+      return state;
+  }
+};
+
+const initialLocalIdState = {
+  localID: 1,
+};
+
+export const localIdReducer = (state = initialLocalIdState, action) => {
+  switch (action.type) {
+    case UPDATE_LOCAL_ID:
+      return {
+        ...state,
+        localID: state.localID + 1,
       };
     default:
       return state;

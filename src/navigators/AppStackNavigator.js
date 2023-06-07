@@ -4,7 +4,7 @@ import IntroStackNavigator from "./IntroStackNavigator";
 import AuthenticateStackNavigator from "./AuthenticateStackNavigator";
 import TaskStackNavigator from "./TaskStackNavigator";
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../redux/actions";
+import { anonymousLogin, login, logout } from "../redux/actions";
 import { onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 import StartScreen from "../screens/StartScreen";
