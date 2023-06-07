@@ -51,22 +51,17 @@ const HomeScreen = ({ navigation }) => {
         <TouchableOpacity
           style={styles.avatar_wrapper}
           onPress={() => {
-            // let task = [...tasks];
-            // task.sort((a, b) => {
-            //   return a.taskID - b.taskID;
-            // });
-            // console.log(task);
-            // // updateDocument();
-            // addTask(task[task.length - 1].taskID + 1);
-            // console.log(task);
-            // deleteTask(8);
-            console.log(user);
-            console.log(taskList);
+            navigation.navigate("Profile");
           }}
         >
           {user.isLogin ? <Avatar size={56} /> : null}
         </TouchableOpacity>
-        <View style={styles.header_title_wrapper}>
+        <View
+          style={[
+            styles.header_title_wrapper,
+            user.isLogin ? { marginLeft: -56 } : {},
+          ]}
+        >
           <Text style={styles.header_title_text}>Home</Text>
         </View>
         <TouchableOpacity

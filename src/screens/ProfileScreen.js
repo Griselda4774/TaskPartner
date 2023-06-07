@@ -37,9 +37,11 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <View style={{ width: "100%", marginTop: 50, alignItems: "center" }}>
+        <Text style={GlobalStyle.screen_header_text}>Profile</Text>
+      </View>
       <ScrollView>
-        <View style={{ alignItems: "center", marginTop: 50 }}>
-          <Text style={GlobalStyle.screen_header_text}>Profile</Text>
+        <View style={{ alignItems: "center", marginTop: 15 }}>
           {user.isLogin ? (
             <View
               style={{
