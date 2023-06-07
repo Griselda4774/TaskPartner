@@ -2,7 +2,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useState } from "react";
 import HomeScreen from "../screens/HomeScreen";
 import CalendarScreen from "../screens/CalendarScreen";
-import FocuseScreen from "../screens/FocuseScreen";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 import { View, TouchableOpacity, Text } from "react-native";
 import {
@@ -24,7 +23,7 @@ import {
 } from "../constants/Icons";
 import EmptyScreen from "../screens/EmptyScreen";
 import AddTaskModal from "../components/AddTaskModal";
-
+import StatisticScreen from "../screens/StatisticScreen";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -115,8 +114,8 @@ const BottomTabNavigator = () => {
         }}
       />
       <BottomTab.Screen
-        name="Focuse"
-        component={FocuseScreen}
+        name="Statictis"
+        component={StatisticScreen}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (

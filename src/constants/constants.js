@@ -2,6 +2,7 @@ import { Dimensions } from "react-native";
 export const BLACK_BACKGROUND_COLOR = "#090909";
 export const GREY_BACKGROUND_COLOR = "#363636";
 export const PURPLE_COLOR = "#8687E7";
+export const PURPLE_SECOND_COLOR = "#A15B9E";
 export const GREY_COLOR = "#606060";
 export const WHITE_TEXT_COLOR = "#eaeaea";
 export const GREY_TEXT_COLOR = "#a1a1a1";

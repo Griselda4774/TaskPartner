@@ -26,6 +26,7 @@ import AddTaskModal from "../components/AddTaskModal";
 import { getTasks, resetTasks } from "../redux/actions";
 import { fetchTasks, fetchTasksByUser } from "../firebase/task";
 import { logoutUser } from "../firebase/user";
+import Avatar from "../components/Avatar";
 
 const HomeScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -63,10 +64,7 @@ const HomeScreen = ({ navigation }) => {
             console.log(taskList);
           }}
         >
-          <Image
-            source={require("../../assets/avatar.jpg")}
-            style={styles.avatar}
-          />
+          {user.isLogin ? <Avatar size={56} /> : null}
         </TouchableOpacity>
         <View style={styles.header_title_wrapper}>
           <Text style={styles.header_title_text}>Home</Text>
@@ -76,9 +74,7 @@ const HomeScreen = ({ navigation }) => {
           onPress={() => {
             logoutUser();
           }}
-        >
-          <SvgXml xml={RepeatIcon} height={32} width={32} />
-        </TouchableOpacity>
+        ></TouchableOpacity>
       </View>
       <View style={styles.body}>
         {taskList.length == 0 ? (
@@ -121,7 +117,7 @@ const styles = StyleSheet.create({
     fontFamily: "Lato-Regular",
     fontSize: 22,
   },
-  icon_wrapper: { padding: 8 },
+  icon_wrapper: {},
   body: { flex: 1 },
 });
 

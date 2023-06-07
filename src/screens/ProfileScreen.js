@@ -25,6 +25,7 @@ import {
 } from "../constants/constants";
 import { logoutUser } from "../firebase/user";
 import { resetTasks } from "../redux/actions";
+import Avatar from "../components/Avatar";
 
 const ProfileScreen = ({ navigation }) => {
   const user = useSelector((state) => state.user.user);
@@ -47,12 +48,12 @@ const ProfileScreen = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              <View style={styles.avatar}>
-                <Text style={styles.avatar_text}>{user.lastName[0]}</Text>
+              <Avatar size={112} style={{ marginTop: 20 }} />
+              <View>
+                <Text
+                  style={styles.name_text}
+                >{`${user.lastName} ${user.firstName}`}</Text>
               </View>
-              <Text
-                style={styles.name_text}
-              >{`${user.lastName} ${user.firstName}`}</Text>
             </View>
           ) : (
             <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -154,26 +155,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingBottom: 20,
   },
-
-  avatar: {
-    width: 112,
-    height: 112,
-    borderRadius: 56,
-    marginTop: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: PURPLE_COLOR,
-  },
-  avatar_text: { color: WHITE_TEXT_COLOR, fontSize: 56, textAlign: "center" },
-
-  name_text: {
-    marginTop: 20,
-    fontWeight: 500,
-    fontSize: 26,
-    color: "#fff",
-    fontFamily: "Lato-Regular",
-  },
-
   section_title_text: {
     fontWeight: 400,
     fontSize: 16,
@@ -199,6 +180,13 @@ const styles = StyleSheet.create({
   button_text: {
     color: WHITE_TEXT_COLOR,
     fontSize: 16,
+    fontFamily: "Lato-Regular",
+  },
+  name_text: {
+    marginTop: 20,
+    fontWeight: 500,
+    fontSize: 26,
+    color: "#fff",
     fontFamily: "Lato-Regular",
   },
 });
