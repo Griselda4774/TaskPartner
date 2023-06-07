@@ -10,9 +10,13 @@ export default function AuthenticateStackNavigator() {
       screenOptions={{
         header: () => null,
       }}
+      initialRouteName="Login_Screen"
     >
       <AuthenticateStack.Screen name="Login_Screen" component={LoginScreen} />
-      <AuthenticateStack.Screen name="Register_Screen" component={RegisterScreen}/>
+      <AuthenticateStack.Screen
+        name="Register_Screen"
+        component={RegisterScreen}
+      />
     </AuthenticateStack.Navigator>
   );
 }

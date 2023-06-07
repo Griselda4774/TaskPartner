@@ -97,7 +97,7 @@ export default function RegisterScreen({ navigation }) {
   };
 
   const onBackPressHandler = () => {
-    navigation.navigate("Login_Screen");
+    navigation.goBack();
   };
 
   //Function:

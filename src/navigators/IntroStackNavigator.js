@@ -25,7 +25,7 @@ export default function IntroStackNavigator() {
         name="OnBoardingScreen_3"
         component={OnBoardingScreen3}
       />
-      <IntroStack.Screen name="Start_Screen" component={StartScreen} />
+      {/* <IntroStack.Screen name="Start_Screen" component={StartScreen} /> */}
     </IntroStack.Navigator>
   );
 }

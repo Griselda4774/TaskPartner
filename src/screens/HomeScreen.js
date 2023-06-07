@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   header_title_text: {
     color: WHITE_TEXT_COLOR,
     fontFamily: "Lato-Regular",
-    fontSize: 20,
+    fontSize: 22,
   },
   icon_wrapper: { padding: 8 },
   body: { flex: 1 },

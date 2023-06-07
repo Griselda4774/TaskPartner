@@ -34,6 +34,7 @@ import Setting from "../../assets/otherIcons/ProfileScreen/setting.svg";
 import Language from "../../assets/otherIcons/ProfileScreen/language-square.svg";
 import Brush from "../../assets/otherIcons/ProfileScreen/brush.svg";
 import Text from "../../assets/otherIcons/ProfileScreen/text.svg";
+import Logo from "../../assets/image/logo.svg";
 
 import User from "../../assets/otherIcons/user.svg";
 import UserFocused from "../../assets/otherIcons/userFocused.svg";
@@ -67,6 +68,7 @@ export const AddIcon = Add.toString();
 export const SearchIcon = Search.toString();
 export const ArrowDownIcon = ArrowDown.toString();
 export const BackIcon = Back.toString();
+export const LogoIcon = Logo.toString();
 
 //ProfileScreen
 export const CameraIcon = Camera.toString();

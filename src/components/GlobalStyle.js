@@ -76,7 +76,6 @@ export default StyleSheet.create({
   screen_header_text: {
     color: "#fff",
     fontSize: 22,
-    fontWeight: 400,
     marginBottom: 15,
     fontFamily: "Lato-Regular",
   },
