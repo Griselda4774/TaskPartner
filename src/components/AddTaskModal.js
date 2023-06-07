@@ -22,7 +22,7 @@ import {
 } from "../constants/Icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { TextInput } from "react-native-paper";
-import ChooseCategoriesModal from "./ChooseCategoriesModal";
+import ChooseCategoriesModal from "./chooseCategoriesModal";
 import ChoosePriorityModal from "./ChoosePriorityModal";
 import ChooseDateDueModal from "./ChooseDateDueModal";
 import { useSelector, useDispatch } from "react-redux";
