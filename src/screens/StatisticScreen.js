@@ -234,8 +234,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: BLACK_BACKGROUND_COLOR,
-    borderWidth: 4,
-    borderColor: "red",
   },
   wrapper: {
     alignItems: "center",
