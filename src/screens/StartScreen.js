@@ -12,7 +12,7 @@ export default function StartScreen({ navigation }) {
   };
 
   const onLoginPressHandler = () => {
-    navigation.navigate("Login_Screen");
+    navigation.navigate("Authenticate");
   };
 
   const onGuestPressHandler = () => {

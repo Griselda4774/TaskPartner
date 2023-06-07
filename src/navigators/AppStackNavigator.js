@@ -39,12 +39,12 @@ const AppStackNavigator = () => {
     >
       <Stack.Screen name="Intro" component={IntroStackNavigator} />
       <Stack.Screen name="Start_Screen" component={StartScreen} />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Authenticate"
         component={AuthenticateStackNavigator}
-      /> */}
-      <Stack.Screen name="Login_Screen" component={LoginScreen} />
-      <Stack.Screen name="Register_Screen" component={RegisterScreen} />
+      />
+      {/* <Stack.Screen name="Login_Screen" component={LoginScreen} />
+      <Stack.Screen name="Register_Screen" component={RegisterScreen} /> */}
       <Stack.Screen name="Task" component={TaskStackNavigator} />
     </Stack.Navigator>
   );

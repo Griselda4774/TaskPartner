@@ -36,11 +36,11 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Text style={[GlobalStyle.screen_header_text, {textAlign: "center", marginTop: 50}]}>Profile</Text>
       <ScrollView>
-        <View style={{ alignItems: "center", marginTop: 50 }}>
-          <Text style={GlobalStyle.screen_header_text}>Profile</Text>
+        <View style={{ alignItems: "center", marginTop: 15, }}>
           {user.isLogin ? (
-            <View>
+            <View style={{alignItems: "center",}}>
               <View style={styles.avatar}>
                 <Text style={styles.avatar_text}>{user.lastName[0]}</Text>
               </View>
@@ -54,7 +54,7 @@ const ProfileScreen = ({ navigation }) => {
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => {
-                    navigation.navigate("Login_Screen");
+                    navigation.replace("Authenticate");
                   }}
                 >
                   <Text style={styles.button_text}>Login</Text>
