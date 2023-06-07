@@ -8,7 +8,7 @@ import {
 import ModalStyles from "./ModalStyles";
 import { useFonts } from "expo-font";
 import { TextInput } from "react-native-paper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editTask } from "../redux/actions";
 import { updateDocumentToFirestore } from "../firebase/task";
 
@@ -21,6 +21,7 @@ const EditTaskTitleModal = ({ visible, onRequestClose, task }) => {
   const dispatch = useDispatch();
   const [taskName, setTaskName] = useState(task.taskName);
   const [taskDetail, setTaskDetail] = useState(task.taskDetail);
+  const user = useSelector((state) => state.userState);
 
   return (
     <Modal
@@ -102,7 +103,9 @@ const EditTaskTitleModal = ({ visible, onRequestClose, task }) => {
                 task.taskName = taskName;
                 task.taskDetail = taskDetail;
                 dispatch(editTask(task));
-                updateDocumentToFirestore(task);
+                if (user.userID !== "") {
+                  updateDocumentToFirestore(task);
+                }
                 onRequestClose();
               }}
             >

@@ -19,8 +19,11 @@ import {
 import { Tasks } from "../../assets/data/Tasks";
 import CheckButton from "./CheckButton";
 import Categories from "../../assets/data/Categories";
+import { useSelector } from "react-redux";
+import { ScrollView } from "react-native-virtualized-view";
 
 const TaskDueDateText = ({ item }) => {
+  const taskList = useSelector((state) => state.tasks.tasks);
   const [overTime, setOverTime] = useState(
     new Date() < new Date(item.taskDueDate)
   );
@@ -71,27 +74,31 @@ const TaskCategory = ({ categories, item }) => {
   );
 };
 
-const DisplayMode = (navigation, isCompletedMode, selectedDate) => {
+const DisplayMode = (navigation, isCompletedMode, selectedDate, taskList) => {
+  const isSelectedDate = (taskDueDate) => {
+    const dueDate = new Date(taskDueDate);
+    return (
+      dueDate.getDate() === selectedDate.getDate() &&
+      dueDate.getMonth() === selectedDate.getMonth() &&
+      dueDate.getFullYear() === selectedDate.getFullYear()
+    );
+  };
   if (isCompletedMode) {
     return (
       <FlatList
-        data={Tasks}
+        data={taskList.filter(
+          (item) => item.isCompleted && isSelectedDate(item.taskDueDate)
+        )}
         keyExtractor={(item) => item.taskID}
         renderItem={({ item }) => {
           const itemOnPressHandler = (item) => {
             navigation.navigate("EditTask", item);
           };
-
-          const dueDate = new Date(item.taskDueDate);
-
-          const isSelectedDate =
-            dueDate.getDate() === selectedDate.getDate() &&
-            dueDate.getMonth() === selectedDate.getMonth() &&
-            dueDate.getFullYear() === selectedDate.getFullYear();
+          const isSelected = isSelectedDate(item.taskDueDate);
 
           return (
             <View>
-              {item.isCompleted && isSelectedDate ? (
+              {item.isCompleted && isSelected ? (
                 <TouchableOpacity
                   onPress={() => {
                     itemOnPressHandler(item);
@@ -145,24 +152,26 @@ const DisplayMode = (navigation, isCompletedMode, selectedDate) => {
   } else {
     return (
       <FlatList
-        style={{ height: 200 }}
-        data={Tasks}
+        data={taskList.filter(
+          (item) => !item.isCompleted && isSelectedDate(item.taskDueDate)
+        )}
         keyExtractor={(item) => item.taskID}
         renderItem={({ item }) => {
           const itemOnPressHandler = (item) => {
             navigation.navigate("EditTask", item);
           };
 
-          const dueDate = new Date(item.taskDueDate);
+          const isSelected = isSelectedDate(item.taskDueDate);
+          // const dueDate = new Date(item.taskDueDate);
 
-          const isSelectedDate =
-            dueDate.getDate() === selectedDate.getDate() &&
-            dueDate.getMonth() === selectedDate.getMonth() &&
-            dueDate.getFullYear() === selectedDate.getFullYear();
+          // const isSelectedDate =
+          //   dueDate.getDate() === selectedDate.getDate() &&
+          //   dueDate.getMonth() === selectedDate.getMonth() &&
+          //   dueDate.getFullYear() === selectedDate.getFullYear();
 
           return (
             <View>
-              {isSelectedDate ? (
+              {isSelected && !item.isCompleted ? (
                 <TouchableOpacity
                   onPress={() => {
                     itemOnPressHandler(item);
@@ -216,7 +225,12 @@ const DisplayMode = (navigation, isCompletedMode, selectedDate) => {
   }
 };
 
-const TaskInfoList = ({ navigation, isCompletedMode, selectedDate }) => {
+const TaskInfoList = ({
+  navigation,
+  isCompletedMode,
+  selectedDate,
+  taskList,
+}) => {
   const [heightLayout, setHeightLayout] = useState(0);
   const [expanded, setExpanded] = useState(true);
   useEffect(() => {
@@ -228,8 +242,10 @@ const TaskInfoList = ({ navigation, isCompletedMode, selectedDate }) => {
   }, [expanded]);
 
   return (
-    <View style={{ flex: 1 }}>
-      {DisplayMode(navigation, isCompletedMode, selectedDate)}
+    <View style={{ height: 476 }}>
+      <ScrollView nestedScrollEnabled={true}>
+        {DisplayMode(navigation, isCompletedMode, selectedDate, taskList)}
+      </ScrollView>
     </View>
   );
 };

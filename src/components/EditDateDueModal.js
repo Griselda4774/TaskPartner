@@ -8,7 +8,7 @@ import {
   PURPLE_COLOR,
   WHITE_TEXT_COLOR,
 } from "../constants/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editTask } from "../redux/actions";
 import { updateDocumentToFirestore } from "../firebase/task";
 
@@ -28,6 +28,7 @@ const EditDateDueModal = ({ visible, onRequestClose, task }) => {
   }, [visible]);
 
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
 
   return (
     <Modal visible={visible} transparent={true} animationType="slide">
@@ -82,7 +83,9 @@ const EditDateDueModal = ({ visible, onRequestClose, task }) => {
                     minutes
                   ).toString();
                   dispatch(editTask(task));
-                  updateDocumentToFirestore(task);
+                  if (user.userID !== "") {
+                    updateDocumentToFirestore(task);
+                  }
                   onRequestClose();
                 }}
               >

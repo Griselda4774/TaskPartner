@@ -34,23 +34,6 @@ const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [enableAddTask, setEnableAddTask] = useState(false);
 
-  // Get task from firestore
-  useEffect(() => {
-    const fetchTasksData = async () => {
-      if (user.email != "") {
-        try {
-          const tasks = await fetchTasksByUser(user.email);
-          dispatch(resetTasks());
-          dispatch(getTasks(tasks));
-        } catch (error) {
-          console.log("Error fetching: ", error);
-        }
-
-        fetchTasksData();
-      }
-    };
-  }, [user]);
-
   return (
     <View
       style={[
@@ -77,6 +60,7 @@ const HomeScreen = ({ navigation }) => {
             // console.log(task);
             // deleteTask(8);
             console.log(user);
+            console.log(taskList);
           }}
         >
           <Image
@@ -97,13 +81,10 @@ const HomeScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.body}>
-        {taskList.filter((task) => task.userID == user.email).length == 0 ? (
+        {taskList.length == 0 ? (
           <HomeScreenBodyWithNoTask />
         ) : (
-          <HomeScreenBodyWithTask
-            navigation={navigation}
-            taskList={taskList.filter((task) => task.userID == user.email)}
-          />
+          <HomeScreenBodyWithTask navigation={navigation} taskList={taskList} />
         )}
       </View>
 
@@ -138,7 +119,7 @@ const styles = StyleSheet.create({
   header_title_text: {
     color: WHITE_TEXT_COLOR,
     fontFamily: "Lato-Regular",
-    fontSize: 20,
+    fontSize: 22,
   },
   icon_wrapper: { padding: 8 },
   body: { flex: 1 },

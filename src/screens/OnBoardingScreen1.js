@@ -3,20 +3,19 @@ import { useState } from "react";
 import GlobalStyle from "../components/GlobalStyle";
 
 export default function OnBoardingScreen1({ navigation }) {
-
   const onSkipPressHandler = () => {
-    navigation.navigate('Start_Screen');
-  }
+    navigation.replace("Start_Screen");
+  };
 
   const onNextPressHandler = () => {
     navigation.navigate("OnBoardingScreen_2");
-  }
+  };
 
   const [pressableSkipIsHovering, SetPressableSkipIsHovering] = useState(false);
 
   const SkipPressInHandler = () => {
     SetPressableSkipIsHovering(true);
-  }
+  };
 
   const SkipPressOutHandler = () => {
     SetPressableSkipIsHovering(false);
@@ -54,10 +53,7 @@ export default function OnBoardingScreen1({ navigation }) {
         </Text>
       </View>
       <View style={GlobalStyle.footer_view}>
-        <Pressable
-          style={[GlobalStyle.pressable]}
-        >
-        </Pressable>
+        <Pressable style={[GlobalStyle.pressable]}></Pressable>
         <Pressable
           style={({ pressed }) => [
             GlobalStyle.next_pressable,

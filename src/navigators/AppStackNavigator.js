@@ -7,6 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../redux/actions";
 import { onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
+import StartScreen from "../screens/StartScreen";
+import LoginScreen from "../screens/LoginScreen";
+import RegisterScreen from "../screens/RegisterScreen";
 
 const Stack = createStackNavigator();
 
@@ -35,10 +38,13 @@ const AppStackNavigator = () => {
       }}
     >
       <Stack.Screen name="Intro" component={IntroStackNavigator} />
-      <Stack.Screen
+      <Stack.Screen name="Start_Screen" component={StartScreen} />
+      {/* <Stack.Screen
         name="Authenticate"
         component={AuthenticateStackNavigator}
-      />
+      /> */}
+      <Stack.Screen name="Login_Screen" component={LoginScreen} />
+      <Stack.Screen name="Register_Screen" component={RegisterScreen} />
       <Stack.Screen name="Task" component={TaskStackNavigator} />
     </Stack.Navigator>
   );

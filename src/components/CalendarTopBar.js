@@ -4,8 +4,9 @@ import GlobalStyle from "./GlobalStyle";
 import { useState, useEffect } from "react";
 import { SvgXml } from "react-native-svg";
 import { BackIcon } from "../constants/Icons";
+import { PURPLE_COLOR } from "../constants/constants";
 
-const CalendarTopBar = ({ onSelectedDateReceived }) => {
+const CalendarTopBar = ({ onSelectedDateReceived, taskList }) => {
   //Use states:
   const [selectedDate, SetSelectedDate] = useState(new Date());
 
@@ -124,15 +125,30 @@ const CalendarTopBar = ({ onSelectedDateReceived }) => {
           { backgroundColor: isSelected ? "#8687E7" : "#272727" },
         ]}
       >
-        <View style={{ flex: 1, justifyContent: "center" }}>
+        <View style={{ justifyContent: "center" }}>
           <Text style={[styles.dayText, isWeekend && styles.weekendText]}>
             {dayOfWeek}
           </Text>
         </View>
-
-        <View style={{ flex: 1, justifyContent: "center" }}>
+        <View style={{ justifyContent: "center" }}>
           <Text style={styles.dayText}>{dateOfMonth}</Text>
         </View>
+        <View
+          style={[
+            {
+              height: 4,
+              width: 4,
+              borderRadius: 50,
+            },
+            taskList.filter(
+              (task) =>
+                new Date(task.taskDueDate).toLocaleDateString("en-US") ===
+                item.toLocaleDateString("en-US")
+            ).length > 0
+              ? { backgroundColor: PURPLE_COLOR }
+              : { backgroundColor: "transparent" },
+          ]}
+        ></View>
       </Pressable>
     );
   };
@@ -248,10 +264,10 @@ const styles = StyleSheet.create({
   },
 
   dayContainer: {
-    width: 50,
-    height: 60,
+    width: 52,
+    height: 64,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     marginHorizontal: 10,
     borderRadius: 4,
   },

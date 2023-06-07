@@ -30,7 +30,6 @@ import { addTask } from "../redux/actions";
 import { addTaskToFirestore } from "../firebase/task";
 
 const AddTaskModal = ({ visible, onRequestClose }) => {
-  const taskList = useSelector((state) => state.tasks.tasks);
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const now = new Date();
@@ -50,7 +49,7 @@ const AddTaskModal = ({ visible, onRequestClose }) => {
     taskPriority: 1,
     taskDueDate: now.toString(),
     isCompleted: false,
-    userID: user.email,
+    userID: user.userID,
   });
   const [focusedId, setFocusedId] = useState("1");
   useEffect(() => {
@@ -63,7 +62,7 @@ const AddTaskModal = ({ visible, onRequestClose }) => {
       taskPriority: 1,
       taskDueDate: now.toString(),
       isCompleted: false,
-      userID: user.email,
+      userID: user.userID,
     });
   }, [visible]);
 
@@ -196,8 +195,11 @@ const AddTaskModal = ({ visible, onRequestClose }) => {
               style={styles.task_props_item}
               disabled={enableAddTask}
               onPress={async () => {
-                const taskID = await addTaskToFirestore(task);
-                console.log("new task ID: ", taskID.toString());
+                setEnableAddTask(false);
+                if (user.userID !== "") {
+                  const taskID = await addTaskToFirestore(task);
+                  console.log("new task ID: ", taskID.toString());
+                }
                 // setTask({ ...task, taskID: taskID });
                 // const taskWithID = { ...task, taskID: taskID };
                 dispatch(addTask(task));

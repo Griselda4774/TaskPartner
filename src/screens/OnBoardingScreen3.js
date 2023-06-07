@@ -3,13 +3,12 @@ import { useState } from "react";
 import GlobalStyle from "../components/GlobalStyle";
 
 export default function OnBoardingScreen3({ navigation }) {
-
   const onBackPressHandler = () => {
     navigation.navigate("OnBoardingScreen_2");
   };
 
   const onStartPressHandler = () => {
-    navigation.navigate("Start_Screen");
+    navigation.replace("Start_Screen");
   };
 
   const [pressableBackIsHovering, SetPressableBackIsHovering] = useState(false);
@@ -24,7 +23,7 @@ export default function OnBoardingScreen3({ navigation }) {
 
   return (
     <View style={GlobalStyle.container}>
-      <View style={[GlobalStyle.body, {marginTop: 85}]}>
+      <View style={[GlobalStyle.body, { marginTop: 85 }]}>
         <Image
           source={require("../../assets/onBoardingPic3.png")}
           style={GlobalStyle.image}

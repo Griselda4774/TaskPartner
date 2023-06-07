@@ -11,12 +11,13 @@ import Categories from "../../assets/data/Categories";
 import { PURPLE_COLOR } from "../constants/constants";
 import ModalStyles from "./ModalStyles";
 import { SvgXml } from "react-native-svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editTask } from "../redux/actions";
 import { updateDocumentToFirestore } from "../firebase/task";
 
 const EditCategoriesModal = ({ visible, onRequestClose, task }) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   const [selected, setSelected] = useState(task.taskCategory);
   useEffect(() => {
     setSelected(task.taskCategory);
@@ -85,7 +86,9 @@ const EditCategoriesModal = ({ visible, onRequestClose, task }) => {
                   return category.name == selected;
                 }).name;
                 dispatch(editTask(task));
-                updateDocumentToFirestore(task);
+                if (user.userID !== "") {
+                  updateDocumentToFirestore(task);
+                }
                 onRequestClose();
               }}
             >
