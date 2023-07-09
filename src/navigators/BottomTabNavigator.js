@@ -114,7 +114,7 @@ const BottomTabNavigator = () => {
         }}
       />
       <BottomTab.Screen
-        name="Statictis"
+        name="Statistic"
         component={StatisticScreen}
         options={{
           tabBarIcon: ({ focused }) =>

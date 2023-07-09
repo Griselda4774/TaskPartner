@@ -48,28 +48,23 @@ const HomeScreen = ({ navigation }) => {
       ]}
     >
       <View style={styles.header}>
+        <TouchableOpacity style={styles.icon_wrapper}></TouchableOpacity>
+        <View
+          style={[
+            styles.header_title_wrapper,
+            user.isLogin ? { marginLeft: 52 } : {},
+          ]}
+        >
+          <Text style={styles.header_title_text}>Home</Text>
+        </View>
         <TouchableOpacity
           style={styles.avatar_wrapper}
           onPress={() => {
             navigation.navigate("Profile");
           }}
         >
-          {user.isLogin ? <Avatar size={56} /> : null}
+          {user.isLogin ? <Avatar size={52} /> : null}
         </TouchableOpacity>
-        <View
-          style={[
-            styles.header_title_wrapper,
-            user.isLogin ? { marginLeft: -56 } : {},
-          ]}
-        >
-          <Text style={styles.header_title_text}>Home</Text>
-        </View>
-        <TouchableOpacity
-          style={styles.icon_wrapper}
-          onPress={() => {
-            logoutUser();
-          }}
-        ></TouchableOpacity>
       </View>
       <View style={styles.body}>
         {taskList.length == 0 ? (

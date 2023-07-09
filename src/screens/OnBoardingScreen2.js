@@ -3,7 +3,6 @@ import { useState } from "react";
 import OnBoardingStyle from "../components/GlobalStyle";
 
 export default function OnBoardingScreen2({ navigation }) {
-
   const onSkipPressHandler = () => {
     navigation.navigate("Start_Screen");
   };
@@ -15,7 +14,7 @@ export default function OnBoardingScreen2({ navigation }) {
   const onNextPressHandler = () => {
     navigation.navigate("OnBoardingScreen_3");
   };
-    
+
   const [pressableSkipIsHovering, SetPressableSkipIsHovering] = useState(false);
 
   const SkipPressInHandler = () => {
@@ -62,9 +61,12 @@ export default function OnBoardingScreen2({ navigation }) {
           source={require("../../assets/onBoardingPic2.png")}
           style={OnBoardingStyle.image}
         />
-        <Text style={OnBoardingStyle.utils_title_text}>Create daily routine</Text>
+        <Text style={OnBoardingStyle.utils_title_text}>
+          Create daily routine
+        </Text>
         <Text style={OnBoardingStyle.utils_info_text}>
-          In TaskPartner you can create your personalized routine to stay productive
+          In TaskPartner you can create your personalized routine to stay
+          productive
         </Text>
       </View>
       <View style={OnBoardingStyle.footer_view}>
